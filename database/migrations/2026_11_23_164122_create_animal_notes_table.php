@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pelt_colors', function (Blueprint $table) {
+        Schema::create('animal_notes', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
-            $table->string('hex');
+            $table->foreignId('animal_id')->constrained();
+            $table->string('title');
+            $table->text('text');
 
             $table->timestamps();
         });
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pelt_colors');
+        Schema::dropIfExists('animal_notes');
     }
 };

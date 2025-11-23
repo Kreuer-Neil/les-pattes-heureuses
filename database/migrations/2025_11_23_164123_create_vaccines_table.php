@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pelt_colors', function (Blueprint $table) {
+        Schema::create('vaccines', function (Blueprint $table) {
             $table->id();
 
             $table->string('name');
-            $table->string('hex');
+            // TODO Add intermediate table to link vaccine to specie later?
 
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pelt_colors');
+        Schema::dropIfExists('vaccines');
     }
 };

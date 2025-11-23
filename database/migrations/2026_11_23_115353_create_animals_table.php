@@ -30,6 +30,7 @@ return new class extends Migration
             $table->text('personnality');
             $table->dateTime('born_at');
             // Vaccine = intermediate table
+            // Same goes for the notes
 
             $table->timestamps();
         });
