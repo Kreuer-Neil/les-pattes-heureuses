@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        foreach (AnimalStatus::cases() as $animalStatus) {
+        foreach (Status::cases() as $animalStatus) {
             AnimalStatus::factory([
                     'name' => $animalStatus->value,
                 ]
