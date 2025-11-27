@@ -21,7 +21,7 @@ return new class extends Migration
 
             // Specie and sub scpecie
             $table->foreignId('specie_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('sub_specie_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('breed_id')->nullable()->constrained()->nullOnDelete();
 
             $table->foreignId('pelt_color_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('secondary_pelt_color_id')->nullable()->constrained('pelt_color','id')->nullOnDelete();
