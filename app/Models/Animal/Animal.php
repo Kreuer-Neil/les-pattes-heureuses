@@ -1,14 +1,7 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Animal;
 
-use App\Models\Animal\AnimalVaccine;
-use App\Models\Animal\Breed;
-use App\Models\Animal\AnimalNote;
-use App\Models\Animal\PeltColor;
-use App\Models\Animal\PeltSchema;
-use App\Models\Animal\Specie;
-use App\Models\Animal\AnimalStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
