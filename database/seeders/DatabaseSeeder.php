@@ -50,8 +50,8 @@ class DatabaseSeeder extends Seeder
             )->create();
         }
 
-        /*
-         * Animal breeds
+        /**
+         * Seeds animal breeds
          */
         // Dogs
         foreach (DogBreed::cases() as $breed) {

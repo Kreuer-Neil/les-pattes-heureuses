@@ -1,14 +1,14 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\animal;
 
-use App\Models\Animal\AnimalStatus;
+use App\Models\Animal\Specie;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
-class AnimalStatusFactory extends Factory
+class SpecieFactory extends Factory
 {
-    protected $model = AnimalStatus::class;
+    protected $model = Specie::class;
 
     public function definition(): array
     {
