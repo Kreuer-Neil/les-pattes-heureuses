@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Animal;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SubSpecie extends Model
+class PeltSchema extends Model
 {
     //
 }

@@ -2,11 +2,17 @@
 
 namespace App\Models;
 
+use App\Models\Animal\AnimalVaccine;
+use App\Models\Animal\Breed;
+use App\Models\Animal\AnimalNote;
+use App\Models\Animal\PeltColor;
+use App\Models\Animal\PeltSchema;
+use App\Models\Animal\Specie;
+use App\Models\Animal\AnimalStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Collection;
 
 class Animal extends Model
 {
@@ -26,7 +32,7 @@ class Animal extends Model
 
     public function subSpecie(): BelongsTo
     {
-        return $this->belongsTo(SubSpecie::class);
+        return $this->belongsTo(Breed::class);
     }
 
     public function peltColor(): BelongsTo
