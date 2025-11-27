@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Animal;
+namespace App\Models\Animals;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

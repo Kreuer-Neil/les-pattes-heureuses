@@ -2,18 +2,21 @@
 
 namespace Database\Seeders;
 
-use App\Enum\AnimalBreeds\BirdBreed;
-use App\Enum\AnimalBreeds\CatBreed;
-use App\Enum\AnimalBreeds\DogBreed;
-use App\Enum\AnimalBreeds\HorseBreed;
-use App\Enum\AnimalBreeds\ReptileBreeds;
-use App\Enum\AnimalSpecie;
-use App\Enum\Status;
-use App\Models\Animal\AnimalStatus;
-use App\Models\Animal\Breed;
-use App\Models\Animal\Specie;
+use App\Enums\Animals\Breeds\BirdBreed;
+use App\Enums\Animals\Breeds\CatBreed;
+use App\Enums\Animals\Breeds\DogBreed;
+use App\Enums\Animals\Breeds\HorseBreed;
+use App\Enums\Animals\Breeds\ReptileBreed;
+use App\Enums\Animals\Pelts\Color;
+use App\Enums\Animals\Status;
+use App\Enums\Animals\Specie as SpecieEnum;
+use App\Models\Animals\AnimalStatus;
+use App\Models\Animals\Breed;
+use App\Models\Animals\PeltColor;
+use App\Models\Animals\Specie;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Str;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -43,7 +46,7 @@ class DatabaseSeeder extends Seeder
         }
 
 
-        foreach (AnimalSpecie::cases() as $animalSpecie) {
+        foreach (SpecieEnum::cases() as $animalSpecie) {
             Specie::factory([
                     'name' => $animalSpecie->value,
                 ]
@@ -90,10 +93,20 @@ class DatabaseSeeder extends Seeder
         }
 
         // Reptiles
-        foreach (ReptileBreeds::cases() as $breed) {
+        foreach (ReptileBreed::cases() as $breed) {
             Breed::factory([
                     'name' => $breed->value,
                     'specie_id' => 5
+                ]
+            )->create();
+        }
+
+
+        // Pelt colors
+        foreach (Color::cases() as $peltColor) {
+            PeltColor::factory([
+                    'name' => Str::lower($peltColor->name),
+                    'color' => ('#' . $peltColor->value),
                 ]
             )->create();
         }

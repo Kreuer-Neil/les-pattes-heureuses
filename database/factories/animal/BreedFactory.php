@@ -2,7 +2,7 @@
 
 namespace Database\Factories\animal;
 
-use App\Models\Animal\Breed;
+use App\Models\Animals\Breed;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

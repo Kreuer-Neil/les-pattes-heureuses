@@ -1,0 +1,11 @@
+<?php
+
+namespace App\Enums\Animals;
+
+enum Status: string
+{
+    case Available = 'available';
+    case Pending = 'pending';
+    case Adopted = 'adopted';
+    case Healing = 'healing';
+}

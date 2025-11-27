@@ -2,7 +2,7 @@
 
 namespace Database\Factories\animal;
 
-use App\Models\Animal\Specie;
+use App\Models\Animals\Specie;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 

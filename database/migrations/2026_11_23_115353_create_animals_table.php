@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('name');
-            $table->string('sex');
+            $table->string('gender');
             $table->string('chip')->unique();
             $table->foreignId('animal_status_id')->nullable()->constrained()->nullOnDelete();
 
