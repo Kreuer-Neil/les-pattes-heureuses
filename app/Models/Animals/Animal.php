@@ -40,7 +40,7 @@ class Animal extends Model
 
     public function peltSchema(): BelongsTo
     {
-        return $this->belongsTo(PeltSchema::class);
+        return $this->belongsTo(PeltPattern::class);
     }
 
     // More specific fn

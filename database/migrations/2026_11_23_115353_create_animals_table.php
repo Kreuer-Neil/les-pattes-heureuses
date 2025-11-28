@@ -25,9 +25,9 @@ return new class extends Migration
 
             $table->foreignId('pelt_color_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('secondary_pelt_color_id')->nullable()->constrained('pelt_colors','id')->nullOnDelete();
-            $table->foreignId('pelt_schema_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('pelt_pattern_id')->nullable()->constrained()->nullOnDelete();
 
-            $table->text('personnality');
+            $table->text('personality');
             $table->dateTime('born_at');
             // Vaccine = intermediate table
             // Same goes for the notes

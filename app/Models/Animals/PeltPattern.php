@@ -4,7 +4,7 @@ namespace App\Models\Animals;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PeltSchema extends Model
+class PeltPattern extends Model
 {
     //
 }

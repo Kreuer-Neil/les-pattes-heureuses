@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pelt_schemas', function (Blueprint $table) {
+        Schema::create('pelt_patterns', function (Blueprint $table) {
             $table->id();
 
             $table->string('name');
