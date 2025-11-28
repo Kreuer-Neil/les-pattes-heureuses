@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Animals\Animal;
 use App\Models\User;
 
 BeforeEach(function () {
@@ -16,11 +17,11 @@ test('anyone can visit the homepage', function () {
     $this->get(route('homepage'))->assertStatus(200);
 });
 
-//test('the number of adopted animals is right', function () {
-//    $request = $this->get(route('home'));
-//
-//    $adoptedAnimals = Adoption::all()->count()->toString();
-//
-//    $request->assertSee($adoptedAnimals);
-//});
+test('the number of found animals is right', function () {
+    $request = $this->get(route('home'));
+
+    $adoptedAnimals = Animal::all()->count();
+
+    $request->assertSee($adoptedAnimals);
+});
 
