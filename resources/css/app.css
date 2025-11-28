@@ -9,7 +9,7 @@
 
 @theme {
     --font-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
+        'Inter', ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
 
@@ -59,15 +59,32 @@
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
+
+    /* custom colors */
+    --color-navbar-hover: var(--navbar-hover);
 }
 
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
+    /* Base values */
+    --pure-white: oklch(1 0 0);
+    --ink-black: oklch(0.145 0 0);
+
+    /* Custom base values */
+    --sandy-brown: oklch(0.7956 0.1191 59.11);
+    --sunflower-gold: oklch(0.8092 0.1586 75.44);
+    --cerulean: oklch(0.491 0.1031 234.27);
+    --pearl-aqua: oklch(0.7772 0.0679 187.48);
+    --banana-cream: oklch(0.9398 0.1487 102.66);
+
+
+
+    /* light theme values */
+    --background: var(--pure-white);
+    --foreground: var(--ink-black);
+    --card: var(--pure-white);
+    --card-foreground: var(--ink-black);
+    --popover: var(--pure-white);
+    --popover-foreground: var(--ink-black);
     --primary: oklch(0.205 0 0);
     --primary-foreground: oklch(0.985 0 0);
     --secondary: oklch(0.97 0 0);
@@ -87,22 +104,25 @@
     --chart-4: oklch(0.828 0.189 84.429);
     --chart-5: oklch(0.769 0.188 70.08);
     --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar: var(--sandy-brown);
+    --sidebar-foreground: var(--ink-black);
     --sidebar-primary: oklch(0.205 0 0);
     --sidebar-primary-foreground: oklch(0.985 0 0);
     --sidebar-accent: oklch(0.97 0 0);
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.87 0 0);
+
+    /* custom values */
+    --navbar-hover: var(--sunflower-gold);
 }
 
 .dark {
-    --background: oklch(0.145 0 0);
+    --background: var(--ink-black);
     --foreground: oklch(0.985 0 0);
-    --card: oklch(0.145 0 0);
+    --card: var(--ink-black);
     --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.145 0 0);
+    --popover: var(--ink-black);
     --popover-foreground: oklch(0.985 0 0);
     --primary: oklch(0.985 0 0);
     --primary-foreground: oklch(0.205 0 0);
@@ -139,5 +159,18 @@
 
     body {
         @apply bg-background text-foreground;
+    }
+
+    .navbar {
+        @apply min-h-16 flex justify-between bg-sidebar;
+    }
+
+    .navbar-item {
+        @apply flex items-center justify-center h-full text-xl font-medium underline lg:px-4 hover:bg-navbar-hover;
+    }
+
+    .navbar-item-active>span {
+        background: url("/resources/icons/active-navicon.svg") top left no-repeat;
+        background-size: 24px 24px;
     }
 }
