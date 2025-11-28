@@ -8,11 +8,13 @@ use App\Enums\Animals\Breeds\DogBreed;
 use App\Enums\Animals\Breeds\HorseBreed;
 use App\Enums\Animals\Breeds\ReptileBreed;
 use App\Enums\Animals\Pelts\Color;
+use App\Enums\Animals\Pelts\Pattern;
 use App\Enums\Animals\Status;
 use App\Enums\Animals\Specie as SpecieEnum;
 use App\Models\Animals\AnimalStatus;
 use App\Models\Animals\Breed;
 use App\Models\Animals\PeltColor;
+use App\Models\Animals\PeltPattern;
 use App\Models\Animals\Specie;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -107,6 +109,14 @@ class DatabaseSeeder extends Seeder
             PeltColor::factory([
                     'name' => Str::lower($peltColor->name),
                     'color' => ('#' . $peltColor->value),
+                ]
+            )->create();
+        }
+
+        // Pelt patterns
+        foreach (Pattern::cases() as $peltPattern) {
+            PeltPattern::factory([
+                    'name' => $peltPattern->value
                 ]
             )->create();
         }
