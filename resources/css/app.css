@@ -209,7 +209,7 @@
     }
 
     .client-bgimg:before {
-        @apply absolute top-0 left-0 right-0 bottom-0 -z-10 bg-background-1;
+        @apply absolute top-0 left-0 right-0 bottom-0 -z-10 bg-background-1 bg-no-repeat;
         content: '';
         -webkit-clip-path: url("/resources/svg/bg/background.svg#1");
         clip-path: url("/resources/svg/bg/background.svg#1");
