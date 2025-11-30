@@ -203,12 +203,19 @@
     }
 
     .client-bgimg {
-        /*@apply relative;*/
-        background: no-repeat url("/resources/svg/bg/background-1.svg") right center;
-        background-size: cover;
+        @apply relative;
+        /*background: no-repeat url("/resources/svg/bg/background-1.svg") right center;
+        background-size: cover;*/
     }
 
-    .client-bgimg:nth-child(4) {
+    .client-bgimg:before {
+        @apply absolute top-0 left-0 right-0 bottom-0 -z-10 bg-background-1;
+        content: '';
+        -webkit-clip-path: url("/resources/svg/bg/background.svg#1");
+        clip-path: url("/resources/svg/bg/background.svg#1");
+    }
+
+    /*.client-bgimg:nth-child(4) {
         background-image: url("/resources/svg/bg/background-2.svg");
         background-position: left center;
     }
@@ -221,6 +228,10 @@
         background-image: url("/resources/svg/bg/background-4.svg");
         background-position: left center;
     }
+    .client-bgimg:nth-child(7) {
+        background-image: url("/resources/svg/bg/background-3.svg");
+        background-position: left center;
+    }*/
 
     /*.client-bgimg:before {
         @apply absolute w-full h-full -z-10;
