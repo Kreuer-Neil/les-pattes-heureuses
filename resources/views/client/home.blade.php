@@ -7,13 +7,31 @@
                           :content="__('client.homepage.article1')"
                           :img="[
                             'url' => '/',
-                            'alt' => 'cute_dog',
+                            'alt' => 'cat_dog',
                           ]"
-                          :button="[
+                          {{--:button="[
                             'text' => 'Test',
                             'href' => '/'
+                          ]"--}}
+        />
+        <section class="flex flex-col p-6 gap-6 items-center bg-background-1">
+            <h2 class="title">{{ __('client.stats_title') }}</h2>
+            <div class="flex gap-12 items-center justify-center flex-wrap">
+                @foreach($statItems as $statTitle => $statValue)
+                    <x-client.stat-item :title="$statTitle" :value="$statValue" />
+                @endforeach
+            </div>
+        </section>
+        <x-client.section align="left"
+                          :content="__('client.homepage.article2')"
+                          :img="[
+                            'url' => '/',
+                            'alt' => 'shelter',
                           ]"
-        >
-        </x-client.section>
+                          {{--:button="[
+                            'text' => 'Test',
+                            'href' => '/'
+                          ]"--}}
+        />
     </main>
 </x-layout.app>

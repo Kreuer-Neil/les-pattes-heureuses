@@ -1,4 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 1280 520">
+<!--    <clipPath id="main" clipPathUnits="objectBoundingBox" transform="scale(0,00078125 0,001923076923)">-->
     <path fill="#83C5BE"
           d="M0 520h1280v-46.4c0-27.3-1.5-85.4-92-99.6-90.5-14.2-212.5 94.5-417 99.6-190 4.7-370-299.4-197.5-342.1 145-36 74-99.4-17.7-131.5H0v520Z"/>
+<!--    </clipPath>-->
 </svg>
