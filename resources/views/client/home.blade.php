@@ -1,6 +1,6 @@
 <x-layout.app>
     <x-client.navbar />
-    <main>
+    <main class="flex flex-col items-center">
         <h1 class="sr-only">{{ config('app.name', 'Les pattes heureuses') . ' - ' . __('client.nav.home') }}</h1>
 
         <x-client.section align="right"
@@ -9,7 +9,7 @@
                             'url' => asset('/images/cat_dog.jpg'),
                             'alt' => 'cat_dog',
                           ]" />
-        <section class="flex flex-col p-6 gap-6 items-center bg-background-1">
+        <section class="flex flex-col p-6 gap-6 items-center bg-background-1 max-w-7xl w-full">
             <h2 class="title">{{ __('client.stats_title') }}</h2>
             <div class="flex gap-12 items-center justify-center flex-wrap">
                 @foreach($statItems as $statTitle => $statValue)
