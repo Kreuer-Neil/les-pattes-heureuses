@@ -62,6 +62,8 @@
 
     /* custom colors */
     --color-navbar-hover: var(--navbar-hover);
+
+    --color-main-btn: var(--main-btn);
 }
 
 :root {
@@ -115,6 +117,7 @@
 
     /* custom values */
     --navbar-hover: var(--sunflower-gold);
+    --main-btn: var(--cerulean);
 }
 
 .dark {
@@ -161,6 +164,23 @@
         @apply bg-background text-foreground;
     }
 
+    .title {
+        @apply font-semibold text-[2rem];
+    }
+
+    .subtitle {
+        @apply font-medium text-2xl;
+    }
+
+    .labor-text {
+        @apply text-xl;
+    }
+
+    .custom-btn {
+        @apply p-1 py-2 rounded bg-main-btn flex justify-center w-full max-w-md /*mx-2*/ text-white font-medium text-xl;
+    }
+
+    /* Clientside specific style */
     .navbar {
         @apply min-h-16 flex justify-between bg-sidebar;
     }
@@ -172,5 +192,15 @@
     .navbar-item-active>span {
         background: url("/resources/icons/active-navicon.svg") top left no-repeat;
         background-size: 24px 24px;
+    }
+
+    .client-bgimg {
+        background: url("/resources/svg/bg/background-1.svg") no-repeat center top;
+        -webkit-background-size: 100%;
+        background-size: 100%;
+    }
+
+    .client-bgimg:nth-child(2) {
+        background: url("/resources/svg/bg/background-1.svg") no-repeat;
     }
 }

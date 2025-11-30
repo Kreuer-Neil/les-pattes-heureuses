@@ -4,5 +4,6 @@ return [
         'home' => 'home',
         'animals' => 'adopting',
         'contact_us' => 'contact us',
-    ]
+    ],
+    'home' => 'home'
 ];

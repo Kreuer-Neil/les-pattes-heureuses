@@ -30,7 +30,7 @@
         }
     </style>--}}
 
-    <title>{{ config('app.name', 'Les pattes heureuses') }}</title>
+    <title>{{ config('app.name', 'Les pattes heureuses') . ' – ' . ucfirst(__('client.nav.home')) }}</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
