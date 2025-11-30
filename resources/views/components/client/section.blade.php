@@ -31,5 +31,5 @@
             @endif
         </div>
         <img src="{{ $img['url'] }}" alt="{{ __('client.img.' . $img['alt']) }}"
-             class="bg-gray-200 rounded mx-3 max-w-3xl w-full lg:w-3/5 aspect-[570/290] {{ $alignmentClasses }}">
+             class="rounded mx-3 max-w-3xl w-full lg:w-3/5 aspect-[570/290] {{ $alignmentClasses }}">
 </article>

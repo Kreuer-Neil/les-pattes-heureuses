@@ -6,7 +6,7 @@
         <x-client.section align="right"
                           :content="__('client.homepage.article1')"
                           :img="[
-                            'url' => '/',
+                            'url' => asset('/images/cat_dog.jpg'),
                             'alt' => 'cat_dog',
                           ]" />
         <section class="flex flex-col p-6 gap-6 items-center bg-background-1">
@@ -20,19 +20,19 @@
         <x-client.section align="left"
                           :content="__('client.homepage.article2')"
                           :img="[
-                            'url' => '/',
+                            'url' => asset('/images/infrastructure.jpg'),
                             'alt' => 'shelter',
                           ]" />
         <x-client.section align="right"
                           :content="__('client.homepage.article3')"
                           :img="[
-                            'url' => '/',
+                            'url' => asset('/images/cat_dog.jpg'),
                             'alt' => 'cat_dog',
                           ]" />
         <x-client.section align="left"
                           :content="__('client.homepage.article4')"
                           :img="[
-                            'url' => '/',
+                            'url' => asset('/images/cat_dog.jpg'),
                             'alt' => 'cat_dog',
                           ]"
                           :button="[
@@ -42,7 +42,7 @@
         <x-client.section align="right"
                           :content="__('client.homepage.article5')"
                           :img="[
-                            'url' => '/',
+                            'url' => asset('/images/cat_dog.jpg'),
                             'alt' => 'cat_dog',
                           ]"
                           :button="[
