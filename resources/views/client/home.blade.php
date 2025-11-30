@@ -8,12 +8,7 @@
                           :img="[
                             'url' => '/',
                             'alt' => 'cat_dog',
-                          ]"
-                          {{--:button="[
-                            'text' => 'Test',
-                            'href' => '/'
-                          ]"--}}
-        />
+                          ]" />
         <section class="flex flex-col p-6 gap-6 items-center bg-background-1">
             <h2 class="title">{{ __('client.stats_title') }}</h2>
             <div class="flex gap-12 items-center justify-center flex-wrap">
@@ -27,11 +22,33 @@
                           :img="[
                             'url' => '/',
                             'alt' => 'shelter',
+                          ]" />
+        <x-client.section align="right"
+                          :content="__('client.homepage.article3')"
+                          :img="[
+                            'url' => '/',
+                            'alt' => 'cat_dog',
+                          ]" />
+        <x-client.section align="left"
+                          :content="__('client.homepage.article4')"
+                          :img="[
+                            'url' => '/',
+                            'alt' => 'cat_dog',
                           ]"
-                          {{--:button="[
-                            'text' => 'Test',
-                            'href' => '/'
-                          ]"--}}
-        />
+                          :button="[
+                            'url' => '/',
+                            'text' => 'see_animals',
+                          ]" />
+        <x-client.section align="right"
+                          :content="__('client.homepage.article5')"
+                          :img="[
+                            'url' => '/',
+                            'alt' => 'cat_dog',
+                          ]"
+                          :button="[
+                            'url' => '/',
+                            'text' => 'volunteer',
+                          ]" />
+
     </main>
 </x-layout.app>

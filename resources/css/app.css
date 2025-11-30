@@ -210,6 +210,16 @@
 
     .client-bgimg:nth-child(4) {
         background-image: url("/resources/svg/bg/background-2.svg");
+        background-position: left center;
+    }
+
+    .client-bgimg:nth-child(5) {
+        background-image: url("/resources/svg/bg/background-3.svg");
+    }
+
+    .client-bgimg:nth-child(6) {
+        background-image: url("/resources/svg/bg/background-4.svg");
+        background-position: left center;
     }
 
     /*.client-bgimg:before {
@@ -217,7 +227,7 @@
         content: '';
     }
 
-    /*.client-bgimg:nth-child(2):before {
+    .client-bgimg:nth-child(2):before {
         clip-path: url("/resources/svg/bg/background-2.svg#main");
     }*/
 }

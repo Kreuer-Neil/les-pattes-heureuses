@@ -27,7 +27,7 @@
                 {{ $content['text'] }}
             </p>
             @if(isset($button))
-                <a href="{{ $button['href'] }}" class="custom-btn">{{ $button['text'] }}</a>
+                <a href="{{ $button['url'] }}" class="custom-btn">{{ __('client.homepage.buttons.' . $button['text']) }}</a>
             @endif
         </div>
         <img src="{{ $img['url'] }}" alt="{{ __('client.img.' . $img['alt']) }}"
