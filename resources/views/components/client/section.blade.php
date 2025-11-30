@@ -16,8 +16,7 @@
     };
 @endphp
 
-<article class="client-bgimg">
-    <div class="flex flex-col lg:flex-row gap-6 lg:gap-3 items-center p-6 min-h-[32rem]">
+<article class="client-bgimg flex flex-col lg:flex-row gap-6 lg:gap-3 items-center p-6 min-h-[32rem]">
         <div class="flex flex-col gap-6 items-center">
             <h2 class="title text-center flex flex-col gap-2 items-center">{{ $content['title'] }}
                 @if(isset($content['subtitle']))
@@ -33,5 +32,4 @@
         </div>
         <img src="{{ $img['url'] }}" alt="{{ __('client.img.' . $img['alt']) }}"
              class="bg-gray-200 rounded mx-3 max-w-3xl w-full lg:w-3/5 aspect-[570/290] {{ $alignmentClasses }}">
-    </div>
 </article>
