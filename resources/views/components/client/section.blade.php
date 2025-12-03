@@ -16,7 +16,7 @@
     };
 @endphp
 
-<article class="client-bgimg flex flex-col lg:flex-row gap-6 lg:gap-3 items-center justify-center p-6 min-h-[32rem] max-w-7xl w-full">
+<article class="client-bgimg general-section lg:flex-row lg:gap-3 min-h-[32rem] xl:min-h-[42rem] 2xl:min-h-[50rem]">
         <div class="flex flex-col gap-6 items-center">
             <h2 class="title text-center flex flex-col gap-2 items-center">{{ $content['title'] }}
                 @if(isset($content['subtitle']))

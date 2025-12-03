@@ -82,6 +82,7 @@
     --pearl-aqua: oklch(0.7772 0.0679 187.48);
     --banana-cream: oklch(0.9398 0.1487 102.66);
 
+    /* other custom values */
 
 
     /* light theme values */
@@ -172,6 +173,11 @@
         @apply bg-background text-foreground;
     }
 
+    /* Page max width */
+    .max-w-page {
+        max-width: 120rem;
+    }
+
     .title {
         @apply font-semibold text-[2rem];
     }
@@ -202,15 +208,18 @@
         background-size: 24px 24px;
     }
 
+    .general-section {
+        @apply flex flex-col p-6 gap-6 items-center justify-center max-w-[120rem] w-full;
+    }
+
     .client-bgimg {
-        /*@apply relative;*/
-        background: no-repeat url("/resources/svg/bg/background-1.svg") right center;
+        background: no-repeat url("/resources/svg/bg/background-1.svg") right bottom;
         background-size: cover;
     }
 
     .client-bgimg:nth-child(4) {
         background-image: url("/resources/svg/bg/background-2.svg");
-        background-position: left center;
+        background-position: left top;
     }
 
     .client-bgimg:nth-child(5) {
@@ -219,7 +228,10 @@
 
     .client-bgimg:nth-child(6) {
         background-image: url("/resources/svg/bg/background-4.svg");
-        background-position: left center;
+        background-position: left top;
+    }
+    .client-bgimg:nth-child(7) {
+        background-image: url("/resources/svg/bg/background-3.svg");
     }
 
     /*.client-bgimg:before {
