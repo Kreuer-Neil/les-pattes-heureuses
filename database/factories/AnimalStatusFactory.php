@@ -1,19 +1,18 @@
 <?php
 
-namespace Database\Factories\animal;
+namespace Database\Factories;
 
-use App\Models\Animals\Breed;
-use Carbon\Carbon;
+use App\Models\AnimalStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
 
-class BreedFactory extends Factory
+class AnimalStatusFactory extends Factory
 {
-    protected $model = Breed::class;
+    protected $model = AnimalStatus::class;
 
     public function definition(): array
     {
         return [
-
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

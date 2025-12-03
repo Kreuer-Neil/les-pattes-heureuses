@@ -15,20 +15,21 @@ return new class extends Migration
             $table->id();
 
             $table->string('name');
+            $table->string('image')->nullable();
             $table->string('gender');
             $table->string('chip')->unique();
-            $table->foreignId('animal_status_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('animal_status')->default(1);
 
             // Specie and sub scpecie
             $table->foreignId('specie_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('breed_id')->nullable()->constrained()->nullOnDelete();
 
-            $table->foreignId('pelt_color_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('secondary_pelt_color_id')->nullable()->constrained('pelt_colors','id')->nullOnDelete();
-            $table->foreignId('pelt_pattern_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('fur_color_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('secondary_fur_color_id')->nullable()->constrained('fur_colors','id')->nullOnDelete();
+            $table->foreignId('fur_pattern_id')->nullable()->constrained()->nullOnDelete();
 
             $table->text('personality');
-            $table->dateTime('born_at');
+            $table->date('born_at');
             // Vaccine = intermediate table
             // Same goes for the notes
 

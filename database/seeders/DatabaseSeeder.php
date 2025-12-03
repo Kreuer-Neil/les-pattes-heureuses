@@ -9,14 +9,14 @@ use App\Enums\Animals\Breeds\HorseBreed;
 use App\Enums\Animals\Breeds\ReptileBreed;
 use App\Enums\Animals\Pelts\Color;
 use App\Enums\Animals\Pelts\Pattern;
-use App\Enums\Animals\Status;
 use App\Enums\Animals\Specie as SpecieEnum;
-use App\Models\Animals\AnimalStatus;
-use App\Models\Animals\Breed;
-use App\Models\Animals\PeltColor;
-use App\Models\Animals\PeltPattern;
-use App\Models\Animals\Specie;
+use App\Models\Animal;
+use App\Models\Breed;
+use App\Models\FurColor;
+use App\Models\FurPattern;
+use App\Models\Specie;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Str;
 
@@ -40,17 +40,9 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        foreach (Status::cases() as $animalStatus) {
-            AnimalStatus::factory([
-                    'name' => $animalStatus->value,
-                ]
-            )->create();
-        }
-
-
         foreach (SpecieEnum::cases() as $animalSpecie) {
             Specie::factory([
-                    'name' => $animalSpecie->value,
+                    'name' => $animalSpecie->value
                 ]
             )->create();
         }
@@ -106,7 +98,7 @@ class DatabaseSeeder extends Seeder
 
         // Pelt colors
         foreach (Color::cases() as $peltColor) {
-            PeltColor::factory([
+            FurColor::factory([
                     'name' => Str::lower($peltColor->name),
                     'color' => ('#' . $peltColor->value),
                 ]
@@ -115,10 +107,28 @@ class DatabaseSeeder extends Seeder
 
         // Pelt patterns
         foreach (Pattern::cases() as $peltPattern) {
-            PeltPattern::factory([
+            FurPattern::factory([
                     'name' => $peltPattern->value
                 ]
             )->create();
+        }
+
+        $pets = require 'animalsList.php';
+        foreach ($pets as $pet) {
+            Animal::factory([
+                'name' => $pet['name'],
+                'gender' => $pet['gender'],
+                'chip' => $pet['chip'],
+                'animal_status' => $pet['animal_status'],
+                'specie_id' => Specie::where('name', $pet['specie'])->first()->id,
+                'breed_id' => Breed::where('name', $pet['breed'])->first()->id,
+                'fur_color_id' => ($pet['fur_color'] ? FurColor::where('name', $pet['fur_color'])->first()->id : NULL),
+                'secondary_fur_color_id' => ($pet['secondary_fur_color'] ? FurColor::where('name', $pet['secondary_fur_color'])->first()->id : NULL),
+                'fur_pattern_id' => ($pet['fur_pattern'] ? FurPattern::where('name', $pet['fur_pattern'])->first()->id : NULL),
+                'personality' => $pet['personality'],
+                'born_at' => Carbon::createFromFormat('d/m/Y',$pet['born_at'])->format('Y-m-d'),
+            ])
+            ->create();
         }
 
 

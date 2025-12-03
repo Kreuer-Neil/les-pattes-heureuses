@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Models\Animals;
+namespace App\Models;
 
+use App\Models\Animals\AnimalStatus;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -9,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Animal extends Model
 {
+    use HasFactory;
     protected $fillable = [
         'name'
     ];
@@ -23,24 +26,24 @@ class Animal extends Model
         return $this->belongsTo(Specie::class);
     }
 
-    public function subSpecie(): BelongsTo
+    public function breed(): BelongsTo
     {
         return $this->belongsTo(Breed::class);
     }
 
-    public function peltColor(): BelongsTo
+    public function furColor(): BelongsTo
     {
-        return $this->belongsTo(PeltColor::class);
+        return $this->belongsTo(FurColor::class);
     }
 
-    public function secondaryPeltColor(): BelongsTo
+    public function secondaryFurColor(): BelongsTo
     {
-        return $this->belongsTo(PeltColor::class, 'secondary_pelt_color_id');
+        return $this->belongsTo(FurColor::class, 'secondary_fur_color_id');
     }
 
-    public function peltSchema(): BelongsTo
+    public function furSchema(): BelongsTo
     {
-        return $this->belongsTo(PeltPattern::class);
+        return $this->belongsTo(FurPattern::class);
     }
 
     // More specific fn
