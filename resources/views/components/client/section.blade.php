@@ -18,13 +18,13 @@
 
 <article class="client-bgimg general-section lg:flex-row lg:gap-3 min-h-[32rem] xl:min-h-[42rem] 2xl:min-h-[50rem]">
         <div class="flex flex-col gap-6 items-center">
-            <h2 class="title text-center flex flex-col gap-2 items-center">{{ $content['title'] }}
+            <h2 class="title text-center flex flex-col gap-2 items-center">{!! $content['title'] !!}
                 @if(isset($content['subtitle']))
-                    <span class="subtitle text-center">{{ $content['subtitle'] }}</span>
+                    <span class="subtitle text-center">{!! $content['subtitle'] !!}</span>
                 @endif
             </h2>
             <p class="labor-text">
-                {{ $content['text'] }}
+                {!! $content['text'] !!}
             </p>
             @if(isset($button))
                 <a href="{{ $button['url'] }}" class="custom-btn">{{ __('client.homepage.buttons.' . $button['text']) }}</a>

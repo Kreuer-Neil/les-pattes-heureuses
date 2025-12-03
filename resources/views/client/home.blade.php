@@ -50,5 +50,6 @@
                             'text' => 'volunteer',
                           ]" />
 
+        <x-client.contact-form class="bg-background-1" />
     </main>
 </x-layout.app>

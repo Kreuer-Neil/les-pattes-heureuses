@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Animals\Animal;
+use App\Models\Animal;
 use App\Models\User;
 
 BeforeEach(function () {
@@ -25,3 +25,9 @@ test('the number of found animals is right', function () {
     $request->assertSee($adoptedAnimals);
 });
 
+test('users with JS can swich to the volunteer form', function () {
+
+});
+test('users can send a message trough the contact form', function () {
+
+});

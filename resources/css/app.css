@@ -194,6 +194,42 @@
         @apply p-1 py-2 rounded bg-main-btn flex justify-center w-full max-w-md /*mx-2*/ text-white font-medium text-xl;
     }
 
+    .form {
+        @apply flex flex-col gap-4 bg-secondary text-secondary-foreground rounded-xl max-sm:px-3 p-4 w-full mx-2 lg:mx-6 max-w-3xl;
+    }
+
+    fieldset {
+        @apply flex flex-col gap-4;
+    }
+
+    .form-item {
+        @apply flex flex-col gap-1;
+    }
+
+    .label {
+        @apply text-xl pl-2 font-medium;
+    }
+
+    .input {
+        @apply text-xl p-1 px-2 border border-main-btn rounded-md;
+    }
+
+    .textarea {
+        @apply min-h-32 max-h-64;
+    }
+
+    .items-select {
+        @apply bg-secondary p-1 flex gap-2 rounded-lg w-fit;
+    }
+
+    .items-select-item {
+        @apply cursor-pointer p-1 px-3 w-fit min-w-16 rounded font-medium text-2xl;
+    }
+
+    .items-selected {
+        @apply bg-white;
+    }
+
     /* Clientside specific style */
     .navbar {
         @apply min-h-16 flex justify-between bg-sidebar;
@@ -230,6 +266,8 @@
         background-image: url("/resources/svg/bg/background-4.svg");
         background-position: left top;
     }
+
+    /* TODO fix color */
     .client-bgimg:nth-child(7) {
         background-image: url("/resources/svg/bg/background-3.svg");
     }

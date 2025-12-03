@@ -14,10 +14,9 @@
     ])
 
 <nav class="navbar">
-    <h2 class="sr-only">{{__('client.nav.main-nav')}}</h2>
+    <h2 class="sr-only">{!!__('client.nav.main_nav')!!}</h2>
     <a href="{{ route('homepage') }}" class="flex min-h-16 h-full items-center justify-center px-2">
             <x-app-logo textClass="not-sm:sr-only" />
-
     </a>
 
     <ul class="flex">
@@ -26,7 +25,7 @@
                 <a href="{{$navbarItem['url']}}"
                    class="navbar-item {{ $navbarItem['url'] == Request::url() ? 'navbar-item-active' :'' }}">
                     <span class="p-2 px-4">
-                        {{ ucfirst(__($navbarItem['name'])) }}
+                        {!! ucfirst(__($navbarItem['name'])) !!}
                     </span>
                 </a>
             </li>

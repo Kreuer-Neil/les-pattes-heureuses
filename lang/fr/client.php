@@ -1,10 +1,10 @@
 <?php
 return [
     'nav' => [
-        'home' => 'accueil',
-        'animals' => 'adopter',
-        'contact_us' => 'nous contacter',
-        'main-nav' => 'navigation principale',
+        'home' => 'Accueil',
+        'animals' => 'Adopter',
+        'contact_us' => 'Nous contacter',
+        'main_nav' => 'Navigation principale',
     ],
     'home' => 'accueil',
     'stats_title' => 'Quelques statistiques sur nos animaux',
@@ -48,5 +48,10 @@ return [
         'shelter' => 'L’abri dans lequel logent les animaux. Il y a des rangées de grandes cages de chaque côté, un haut plafond, et de la lumière partout.',
     ],
 
-
+    'contact' => [
+        'title' => 'Contact',
+        'volunteer' => 'Bénévolat',
+        'volunteer_text' => 'Si vous souhaitez nous rejoindre, vous pouvez le faire via ce formulaire ! Veuillez avant tout remplir les informations nécessaires afin que nous puissions vous répondre.',
+        'text' => 'Si vous souhaitez nous contactez, vous pouvez le faire via ce formulaire ! Veuillez avant tout remplir les informations nécessaires afin que nous puissions vous répondre.',
+    ],
 ];

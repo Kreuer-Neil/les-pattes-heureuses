@@ -9,6 +9,9 @@ use Laravel\Fortify\Features;
 Route::get('/', [HomeController::class, 'index'])
 ->name('homepage');
 
+Route::post('/contact', [HomeController::class, 'contact'])
+    ->name('client.contact');
+
 /*Route::get('/animals', [Client\AnimalController::class, 'index'])
 ->name('client.animals');*/
 

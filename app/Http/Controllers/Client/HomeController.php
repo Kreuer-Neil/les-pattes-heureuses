@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\ContactMessage;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -20,5 +21,13 @@ class HomeController extends Controller
     {
         $statItems = $this->statItems;
         return view('client/home', compact('statItems'));
+    }
+
+    // TODO move to ContactMessageController
+    /* Technically a store for ContactMessage */
+    public function contact()
+    {
+        $contactMessage = new ContactMessage;
+
     }
 }
