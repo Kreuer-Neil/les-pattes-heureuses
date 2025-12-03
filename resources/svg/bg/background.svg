@@ -1,19 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 1280 520">
-    <path fill="#83C5BE"
-          d="M0 520h1280v-46.4c0-27.3-1.5-85.4-92-99.6-90.5-14.2-212.5 94.5-417 99.6-190 4.7-370-299.4-197.5-342.1 145-36 74-99.4-17.7-131.5H0v520Z"/>
-    <clipPath id="1" clipPathUnits="objectBoundingBox" transform="scale(0,00078125 0,001923076923)">
-        <path
+    <clipPath id="path1" clipPathUnits="objectBoundingBox" transform="scale(0.00078125 0.001923076923)">
+        <path fill="f1f1f1"
             d="M0 520h1280v-46.4c0-27.3-1.5-85.4-92-99.6-90.5-14.2-212.5 94.5-417 99.6-190 4.7-370-299.4-197.5-342.1 145-36 74-99.4-17.7-131.5H0v520Z"/>
     </clipPath>
-    <clipPath id="2" clipPathUnits="objectBoundingBox" transform="scale(0,00078125 0,001923076923)">
-        <path
+    <clipPath id="path2" clipPathUnits="objectBoundingBox" transform="scale(0.00078125 0.001923076923)">
+        <path fill="f1f1f1"
             d="M1280 0H0v111.5c61.2-10.5 215.8-34 345-34 502.5 0 535.5 452 665.5 442s248.5-247 269.5-312V0Z"/>
     </clipPath>
-    <clipPath id="3" clipPathUnits="objectBoundingBox" transform="scale(0,00078125 0,001923076923)">
-        <path d="M1280 520H0V22.5s422.5 7 560 260S1280 448 1280 448v72Z"/>
+    <clipPath id="path3" clipPathUnits="objectBoundingBox" transform="scale(0.00078125 0.001923076923)">
+        <path fill="f1f1f1"
+              d="M1280 520H0V22.5s422.5 7 560 260S1280 448 1280 448v72Z"/>
     </clipPath>
-    <clipPath id="4" clipPathUnits="objectBoundingBox" transform="scale(0,00078125 0,001923076923)">
-        <path
+    <clipPath id="path4" clipPathUnits="objectBoundingBox" transform="scale(0.00078125 0.001923076923)">
+        <path fill="f1f1f1"
             d="M1280.1 0H.1v46.5c14.2 35.5 241.9 47 382.4 47 140.5 0 343-49 471.5-57s140 109.5 72 165-91 218.4 69.5 299.5c141.5 71.5 357.1-106.5 250-244-70.5-90.5-81-130-48.5-196.5 26-53.2 66.3-46.2 83.1-36V0Z"/>
     </clipPath>
 </svg>
