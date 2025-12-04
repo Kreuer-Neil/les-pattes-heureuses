@@ -25,9 +25,7 @@ test('the number of found animals is right', function () {
     $request->assertSee($adoptedAnimals);
 });
 
-test('users with JS can swich to the volunteer form', function () {
-
+/*test('users with JS can switch to the volunteer form', function () {
 });
 test('users can send a message trough the contact form', function () {
-
-});
+});*/

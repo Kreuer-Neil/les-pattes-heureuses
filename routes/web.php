@@ -7,7 +7,7 @@ use Laravel\Fortify\Features;
 
 
 Route::get('/', [HomeController::class, 'index'])
-->name('homepage');
+    ->name('homepage');
 
 Route::post('/contact', [HomeController::class, 'contact'])
     ->name('client.contact');
@@ -15,16 +15,21 @@ Route::post('/contact', [HomeController::class, 'contact'])
 /*Route::get('/animals', [Client\AnimalController::class, 'index'])
 ->name('client.animals');*/
 
-/*Route::get('/', function () {
+/*Route::get('/welcome', function () {
     return Inertia::render('welcome', [
         'canRegister' => Features::enabled(Features::registration()),
     ]);
 })->name('home');*/
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
+
+Route::middleware(['guest'])->group(function() {
+    Route::get('/login', function () {
+        return Inertia::render('auth/login', [
+            'canRegister' => Features::enabled(Features::registration()),
+        ]);
+    })->name('login');
+
 });
 
-require __DIR__.'/settings.php';
+require __DIR__ . '/settings.php';
+require __DIR__ . '/dashboard.php';

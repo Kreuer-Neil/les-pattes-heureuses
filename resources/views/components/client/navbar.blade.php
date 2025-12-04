@@ -16,7 +16,7 @@
 <nav class="navbar">
     <h2 class="sr-only">{!!__('client.nav.main_nav')!!}</h2>
     <a href="{{ route('homepage') }}" class="flex min-h-16 h-full items-center justify-center px-2">
-            <x-app-logo textClass="not-sm:sr-only" />
+        <x-app-logo textClass="not-sm:sr-only" />
     </a>
 
     <ul class="flex">
