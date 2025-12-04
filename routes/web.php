@@ -6,6 +6,16 @@ use Inertia\Inertia;
 use Laravel\Fortify\Features;
 
 
+// Laravel recommends putting subdomain routes before root routes, to not let URIs get overwritten
+// Just in case.
+Route::domain('admin.' . 'les-pattes-heureuses.test')->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
+        require __DIR__ . '/dashboard.php';
+        // Put only admin-access auth routes here
+    });
+});
+
+
 Route::get('/', [HomeController::class, 'index'])
     ->name('homepage');
 
@@ -15,14 +25,8 @@ Route::post('/contact', [HomeController::class, 'contact'])
 /*Route::get('/animals', [Client\AnimalController::class, 'index'])
 ->name('client.animals');*/
 
-/*Route::get('/welcome', function () {
-    return Inertia::render('welcome', [
-        'canRegister' => Features::enabled(Features::registration()),
-    ]);
-})->name('home');*/
 
-
-Route::middleware(['guest'])->group(function() {
+Route::middleware(['guest'])->group(function () {
     Route::get('/login', function () {
         return Inertia::render('auth/login', [
             'canRegister' => Features::enabled(Features::registration()),
@@ -32,4 +36,3 @@ Route::middleware(['guest'])->group(function() {
 });
 
 require __DIR__ . '/settings.php';
-require __DIR__ . '/dashboard.php';
