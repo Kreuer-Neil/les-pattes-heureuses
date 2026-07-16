@@ -280,4 +280,22 @@
     .client-bgimg:nth-child(2):before {
         clip-path: url("/resources/svg/bg/background-2.svg#main");
     }*/
+
+
+    /* Shared style */
+
+
+
+    /* To overwrite style from browsers like Firefox */
+    dialog:modal {
+        max-width: min(calc(100vw - 0.75rem), 48rem);
+    }
+
+    .modal {
+        @apply m-auto w-full max-w-[calc(100%-2rem)] sm:max-w-lg bg-background rounded-lg border p-6 shadow-lg;
+
+        &::backdrop {
+            @apply bg-modal-behind;
+        }
+    }
 }
