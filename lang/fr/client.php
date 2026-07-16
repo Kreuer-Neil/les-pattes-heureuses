@@ -1,4 +1,5 @@
 <?php
+
 return [
     'nav' => [
         'home' => 'Accueil',
@@ -36,7 +37,6 @@ return [
             'text' => 'Nous avons toujours un peu de place pour l’aide de bénévoles ! Le travail, c’est pas ce qui manque pour s’occuper de ces petits bouts de chou. Car nous nous y mettons corps et âme afin de prendre au mieux soin de nos bébés !',
         ],
 
-
         'buttons' => [
             'see_animals' => 'Voir nos animaux',
             'volunteer' => 'Devenir bénévole',
@@ -53,5 +53,49 @@ return [
         'volunteer' => 'Bénévolat',
         'volunteer_text' => 'Si vous souhaitez nous rejoindre, vous pouvez le faire via ce formulaire ! Veuillez avant tout remplir les informations nécessaires afin que nous puissions vous répondre.',
         'text' => 'Si vous souhaitez nous contactez, vous pouvez le faire via ce formulaire ! Veuillez avant tout remplir les informations nécessaires afin que nous puissions vous répondre.',
+        'cta' => 'Nous contacter',
+        'send' => 'Envoyer',
+    ],
+
+    'species' => [
+        'dog' => 'Chien',
+        'cat' => 'Chat',
+        'bird' => 'Oiseau',
+        'horse' => 'Cheval',
+        'reptile' => 'Reptile',
+    ],
+
+    'animals' => [
+        'title' => 'Nos animaux à l’adoption',
+        'intro' => 'Découvrez les compagnons qui attendent une famille.',
+        'empty' => 'Aucun animal n’est disponible à l’adoption pour le moment.',
+    ],
+
+    'animal' => [
+        'gender' => 'Sexe',
+        'genders' => [
+            'M' => 'Mâle',
+            'F' => 'Femelle',
+        ],
+        'born_at' => 'Date de naissance',
+        'age' => 'Âge',
+        'age_years' => '{0} Nouveau-né|{1} :count an|[2,*] :count ans',
+        'statuses' => [
+            'available' => 'Disponible',
+            'healing' => 'En soins',
+        ],
+        'request_visit' => 'Je voudrais planifier un rendez-vous',
+        'request_text' => 'Laissez-nous vos coordonnées et nous vous recontacterons pour organiser une rencontre avec :name.',
+        'send_request' => 'Envoyer la demande',
+        'back_to_list' => 'Retour à la liste',
+    ],
+
+    'dialog' => [
+        'close' => 'Fermer',
+    ],
+
+    'status' => [
+        'message-sent' => 'Votre message a bien été envoyé, merci !',
+        'adoption-request-sent' => 'Votre demande a bien été envoyée, nous vous recontacterons bientôt.',
     ],
 ];

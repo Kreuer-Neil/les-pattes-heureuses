@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\Animals\Status;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,8 +13,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Animal extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'name', 'image', 'breed_id','fur_color_id','fur_pattern_id','secondary_fur_color_id','specie_id', 'animal_status_id'
+        'name', 'image', 'breed_id', 'fur_color_id', 'fur_pattern_id', 'secondary_fur_color_id', 'specie_id', 'animal_status_id',
+    ];
+
+    protected $casts = [
+        'born_at' => 'date',
     ];
 
     public function status(): BelongsTo
@@ -51,27 +58,22 @@ class Animal extends Model
         return $this->hasMany(AnimalNote::class);
     }
 
-    public function vaccines():BelongsToMany
+    public function vaccines(): BelongsToMany
     {
         return $this->belongsToMany(Vaccine::class, AnimalVaccine::class)->withPivotValue('vaccinated_at');
     }
 
-
-    // Static fn to return specific lists of animals
-    /*public static function available()
+    public function scopeAvailable(Builder $query): Builder
     {
-        return Animal::all()->where('status_id', '=', 1);
+        return $query->whereHas('status', fn (Builder $status) => $status->where('name', Status::Available->value));
     }
 
-    public static function adopted()
+    public function scopeVisible(Builder $query): Builder
     {
-        return Animal::all()->where('status_id', '=', 3);
+        return $query->whereHas('status', fn (Builder $status) => $status->whereIn('name', [
+            Status::Available->value,
+            Status::Healing->value,
+            // Status::Pending->value,
+        ]));
     }
-
-    public static function healing()
-    {
-        return Animal::all()->where('status_id', '=', 4);
-    }*/
-
-
 }

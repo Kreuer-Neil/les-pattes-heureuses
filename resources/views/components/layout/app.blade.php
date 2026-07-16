@@ -45,6 +45,9 @@
     @vite('resources/css/app.css')
 </head>
 <body class="font-sans antialiased">
+@if(session('status'))
+    <div class="status-banner" role="status">{{ __('client.status.' . session('status')) }}</div>
+@endif
 {{ $slot }}
 </body>
 </html>

@@ -16,7 +16,7 @@
     };
 @endphp
 
-<article class="client-bgimg general-section lg:flex-row lg:gap-3 min-h-[32rem] xl:min-h-[42rem] 2xl:min-h-[50rem]">
+<article class="bg-decoration general-section lg:flex-row lg:gap-3 min-h-[32rem] xl:min-h-[42rem] 2xl:min-h-[50rem]">
         <div class="flex flex-col gap-6 items-center">
             <h2 class="title text-center flex flex-col gap-2 items-center">{!! $content['title'] !!}
                 @if(isset($content['subtitle']))
@@ -27,7 +27,13 @@
                 {!! $content['text'] !!}
             </p>
             @if(isset($button))
-                <a href="{{ $button['url'] }}" class="custom-btn">{{ __('client.homepage.buttons.' . $button['text']) }}</a>
+                @if(isset($button['dialog']))
+                    <button type="button" command="show-modal" commandfor="{{ $button['dialog'] }}" class="custom-btn">
+                        {{ __('client.homepage.buttons.' . $button['text']) }}
+                    </button>
+                @else
+                    <a href="{{ $button['url'] }}" class="custom-btn">{{ __('client.homepage.buttons.' . $button['text']) }}</a>
+                @endif
             @endif
         </div>
         <img src="{{ $img['url'] }}" alt="{{ __('client.img.' . $img['alt']) }}"

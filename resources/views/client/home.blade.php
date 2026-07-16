@@ -36,7 +36,7 @@
                             'alt' => 'cat_dog',
                           ]"
                           :button="[
-                            'url' => '/',
+                            'url' => route('client.animals'),
                             'text' => 'see_animals',
                           ]" />
         <x-client.section align="right"
@@ -46,10 +46,18 @@
                             'alt' => 'cat_dog',
                           ]"
                           :button="[
-                            'url' => '/',
+                            'dialog' => 'volunteer-dialog',
                             'text' => 'volunteer',
                           ]" />
 
-        <x-client.contact-form class="bg-background-1" />
+        <section class="general-section items-center bg-background-1" id="contact">
+            <h2 class="title text-center">{{ __('client.contact.title') }}</h2>
+            <p class="labor-text text-center">{{ __('client.contact.text') }}</p>
+            <button type="button" command="show-modal" commandfor="site-contact-dialog" class="custom-btn w-fit">
+                {{ __('client.contact.cta') }}
+            </button>
+        </section>
     </main>
+
+    <x-client.volunteer-dialog />
 </x-layout.app>

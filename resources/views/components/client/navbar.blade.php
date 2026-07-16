@@ -5,12 +5,8 @@
         ],
         'animals' => [
             'name' => 'client.nav.animals',
-            'url' => route('homepage') /*route('client.animals')*/,
+            'url' => route('client.animals'),
         ],
-        '' => [
-            'name' => 'client.nav.contact_us',
-            'url' => route('homepage', ['volounteering' => true]) . '#contact'
-        ]
     ])
 
 <nav class="navbar">
@@ -30,5 +26,14 @@
                 </a>
             </li>
         @endforeach
+        <li>
+            <button type="button" command="show-modal" commandfor="site-contact-dialog" class="navbar-item">
+                <span class="p-2 px-4">
+                    {!! ucfirst(__('client.nav.contact_us')) !!}
+                </span>
+            </button>
+        </li>
     </ul>
 </nav>
+
+<x-client.contact-dialog />
