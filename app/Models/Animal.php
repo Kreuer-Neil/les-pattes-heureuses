@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Animals\AnimalStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,7 +12,7 @@ class Animal extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name'
+        'name', 'image', 'breed_id','fur_color_id','fur_pattern_id','secondary_fur_color_id','specie_id', 'animal_status_id'
     ];
 
     public function status(): BelongsTo

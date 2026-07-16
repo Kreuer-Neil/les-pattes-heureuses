@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('title');
             $table->text('text');
 
+            $table->index('animal_id');
+            
             $table->timestamps();
         });
     }

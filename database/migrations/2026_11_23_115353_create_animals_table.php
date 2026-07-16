@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('gender');
             $table->string('chip')->unique();
-            $table->string('animal_status')->default(1);
+            $table->foreignId('animal_status_id')->constrained('animal_statuses');
 
             // Specie and sub scpecie
             $table->foreignId('specie_id')->nullable()->constrained()->nullOnDelete();
@@ -33,6 +33,8 @@ return new class extends Migration
             // Vaccine = intermediate table
             // Same goes for the notes
 
+            $table->index(['animal_status_id','specie_id']);
+            
             $table->timestamps();
         });
     }

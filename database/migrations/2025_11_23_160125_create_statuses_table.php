@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('animal_vaccines', function (Blueprint $table) {
+        Schema::create('animal_statuses', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('animal_id')->constrained();
-            $table->foreignId('vaccine_id')->constrained();
-            $table->date('vaccinated_at');
-
-            $table->unique(['animal_id', 'vaccine_id', 'vaccinated_at']);
-            $table->index(['animal_id','vaccine_id']);
+            $table->string('name')->unique();
 
             $table->timestamps();
         });
@@ -30,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('animal_vaccines');
+        Schema::dropIfExists('animal_statuses');
     }
 };

@@ -27,5 +27,5 @@ test('the number of found animals is right', function () {
 
 /*test('users with JS can switch to the volunteer form', function () {
 });
-test('users can send a message trough the contact form', function () {
+test('users can send a message through the contact form', function () {
 });*/

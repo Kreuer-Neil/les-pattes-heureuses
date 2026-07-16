@@ -3,8 +3,8 @@
 namespace Database\Factories;
 
 use App\Enums\Animals\Gender;
-use App\Enums\Animals\Status;
 use App\Models\Animal;
+use App\Models\AnimalStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
@@ -19,7 +19,7 @@ class AnimalFactory extends Factory
             'image' => '',
             'gender' => Gender::cases()[random_int(0,1)],
             'chip' => $this->faker->word(),
-            'animal_status' => Status::cases()[random_int(0,3)],
+            'animal_status_id' => AnimalStatus::inRandomOrder()->value('id'),
             /*'specie_id' => $this->faker->randomNumber(),
             'breed_id' => $this->faker->randomNumber(),
             'fur_color_id' => $this->faker->randomNumber(),
