@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('chip')->unique();
             $table->foreignId('animal_status_id')->constrained('animal_statuses');
 
-            // Specie and sub scpecie
             $table->foreignId('specie_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('breed_id')->nullable()->constrained()->nullOnDelete();
 
@@ -30,9 +29,7 @@ return new class extends Migration
             $table->foreignId('fur_pattern_id')->nullable()->constrained()->nullOnDelete();
 
             $table->text('personality');
-            $table->date('born_at');
-            // Vaccine = intermediate table
-            // Same goes for the notes
+            $table->date('born_at'); // Could be nullable? Date could be unknown
 
             $table->index(['animal_status_id','specie_id']);
 

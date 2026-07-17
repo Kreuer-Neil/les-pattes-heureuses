@@ -1,5 +1,5 @@
 import { login } from '@/routes';
-import { store } from '@/routes/register';
+// import { store } from '@/routes/register';
 import { Form, Head } from '@inertiajs/react';
 
 import InputError from '@/components/input-error';
@@ -17,8 +17,8 @@ export default function Register() {
             description="Enter your details below to create your account"
         >
             <Head title="Register" />
+            {/*{...store.form()}*/}
             <Form
-                {...store.form()}
                 resetOnSuccess={['password', 'password_confirmation']}
                 disableWhileProcessing
                 className="flex flex-col gap-6"

@@ -42,7 +42,12 @@ export interface User {
     [key: string]: unknown; // This allows for additional properties...
 }
 
-export type AnimalStatusName = 'unknown' | 'available' | 'pending' | 'adopted' | 'healing';
+export type AnimalStatusName =
+    | 'unknown'
+    | 'available'
+    | 'pending'
+    | 'adopted'
+    | 'healing';
 
 export interface ISpecie {
     id: number;
@@ -51,6 +56,7 @@ export interface ISpecie {
 export interface IBreed {
     id: number;
     name: string;
+    specieId: number;
 }
 
 export interface IFurColor {
@@ -69,7 +75,7 @@ export interface IFurPattern {
     name: string;
 }
 
-export interface IAnimalFilters {
+export interface IAnimalTaxonomy {
     species: ISpecie[];
     breeds: IBreed[];
     statuses: IAnimalStatus[];

@@ -76,5 +76,30 @@
         "striped": "Striped",
         "dotted": "Dotted",
         "tabby": "Tabby"
+    },
+
+    "create": {
+        "title": "Add an animal",
+        "description": "Register a new animal at the shelter.",
+        "name": "Name",
+        "namePlaceholder": "e.g. Tommy",
+        "chip": "Chip number",
+        "chipPlaceholder": "e.g. e45r6t7ziu",
+        "gender": "Gender",
+        "status": "Status",
+        "specie": "Species",
+        "breed": "Breed",
+        "furColor": "Fur color",
+        "secondaryFurColor": "Secondary fur color",
+        "furPattern": "Fur pattern",
+        "bornAt": "Date of birth",
+        "personality": "Personality",
+        "personalityPlaceholder": "Temperament, habits, likes and dislikes…",
+        "image": "Image URL",
+        "imagePlaceholder": "https://…",
+        "selectPlaceholder": "Select…",
+        "noResults": "No results found.",
+        "submit": "Add animal",
+        "cancel": "Cancel"
     }
 }

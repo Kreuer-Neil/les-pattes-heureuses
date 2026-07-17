@@ -8,6 +8,3 @@ Route::redirect('/','dashboard');
 
 Route::get('dashboard', [DashboardController::class, 'render'])
     ->name('dashboard');
-
-Route::get('animals', [AnimalController::class, 'index'])
-    ->name('animals.index');

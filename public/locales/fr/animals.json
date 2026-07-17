@@ -76,5 +76,30 @@
         "striped": "Rayé",
         "dotted": "Tacheté",
         "tabby": "Tigré"
+    },
+
+    "create": {
+        "title": "Ajouter un animal",
+        "description": "Enregistrer un nouvel animal au refuge.",
+        "name": "Nom",
+        "namePlaceholder": "ex. Tommy",
+        "chip": "Numéro de puce",
+        "chipPlaceholder": "ex. e45r6t7ziu",
+        "gender": "Sexe",
+        "status": "Statut",
+        "specie": "Espèce",
+        "breed": "Race",
+        "furColor": "Couleur du pelage",
+        "secondaryFurColor": "Couleur secondaire du pelage",
+        "furPattern": "Motif du pelage",
+        "bornAt": "Date de naissance",
+        "personality": "Caractère",
+        "personalityPlaceholder": "Tempérament, habitudes, préférences…",
+        "image": "URL de l'image",
+        "imagePlaceholder": "https://…",
+        "selectPlaceholder": "Sélectionner…",
+        "noResults": "Aucun résultat.",
+        "submit": "Ajouter l'animal",
+        "cancel": "Annuler"
     }
 }

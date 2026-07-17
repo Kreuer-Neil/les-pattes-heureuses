@@ -1,7 +1,20 @@
-import {ReactNode, useEffect, useRef} from "react";
-import {cn} from "@/lib/utils";
-import {XIcon} from "lucide-react";
-import {Button} from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { XIcon } from 'lucide-react';
+import {
+    createContext,
+    ReactNode,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from 'react';
+
+const ModalContainerContext = createContext<HTMLElement | null>(null);
+
+function useModalContainer() {
+    return useContext(ModalContainerContext);
+}
 
 interface CustomReactModalProps {
     showModal: boolean;
@@ -11,59 +24,71 @@ interface CustomReactModalProps {
     children: ReactNode | ReactNode[];
 }
 
-function ModalContent({className, children, ...props}: React.ComponentProps<"div">) {
+function ModalContent({
+    className,
+    children,
+    ...props
+}: React.ComponentProps<'div'>) {
     return (
-        <div
-            className={cn(
-                "grid gap-4",
-                className
-            )}
-            {...props}
-        >
+        <div className={cn('grid gap-4', className)} {...props}>
             {children}
         </div>
     );
 }
 
-function ModalHeader({className, ...props}: React.ComponentProps<"div">) {
+function ModalHeader({ className, ...props }: React.ComponentProps<'div'>) {
     return (
         <div
-            className={cn("flex flex-col gap-2 text-center sm:text-left", className)}
+            className={cn(
+                'flex flex-col gap-2 text-center sm:text-left',
+                className,
+            )}
             {...props}
         />
     );
 }
 
-function ModalFooter({className, ...props}: React.ComponentProps<"div">) {
+function ModalFooter({ className, ...props }: React.ComponentProps<'div'>) {
     return (
         <div
-            className={cn("flex flex-col gap-2 sm:flex-row items-center justify-center", className)}
+            className={cn(
+                'flex flex-col items-center justify-center gap-2 sm:flex-row',
+                className,
+            )}
             {...props}
         />
     );
 }
 
-function ModalTitle({className, ...props}: React.ComponentProps<"h2">) {
+function ModalTitle({ className, ...props }: React.ComponentProps<'h2'>) {
     return (
         <h2
-            className={cn("text-lg leading-none font-semibold", className)}
+            className={cn('text-lg leading-none font-semibold', className)}
             {...props}
         />
     );
 }
 
-function ModalDescription({className, ...props}: React.ComponentProps<"p">) {
+function ModalDescription({ className, ...props }: React.ComponentProps<'p'>) {
     return (
         <p
-            className={cn("text-muted-foreground text-sm", className)}
+            className={cn('text-sm text-muted-foreground', className)}
             {...props}
         />
     );
 }
 
-export default function CustomModal({showModal, onClose, id, className = '', children}: CustomReactModalProps) {
-
+export default function CustomModal({
+    showModal,
+    onClose,
+    id,
+    className = '',
+    children,
+}: CustomReactModalProps) {
     const dialogRef = useRef<HTMLDialogElement>(null);
+    const [dialogNode, setDialogNode] = useState<HTMLDialogElement | null>(
+        null,
+    );
 
     useEffect(() => {
         if (showModal) {
@@ -74,22 +99,37 @@ export default function CustomModal({showModal, onClose, id, className = '', chi
     }, [showModal]);
 
     return (
-        <dialog ref={dialogRef}
-                closedby="any"
-                id={id}
-                onClose={onClose}
-                className={cn("modal", className)}>
-            <Button size="icon-sm"
-                    variant="ghost"
-                    onClick={onClose}
-                    className="absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 text-foreground"
+        <dialog
+            ref={(node) => {
+                dialogRef.current = node;
+                setDialogNode(node);
+            }}
+            closedby="any"
+            id={id}
+            onClose={onClose}
+            className={cn('modal', className)}
+        >
+            <Button
+                size="icon-sm"
+                variant="ghost"
+                onClick={onClose}
+                className="absolute top-4 right-4 rounded-xs text-foreground opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
             >
-                <XIcon/>
+                <XIcon />
                 <span className="sr-only">Close</span>
             </Button>
-            {children}
+            <ModalContainerContext.Provider value={dialogNode}>
+                {children}
+            </ModalContainerContext.Provider>
         </dialog>
     );
 }
 
-export {ModalContent, ModalHeader, ModalFooter, ModalTitle, ModalDescription}
+export {
+    ModalContent,
+    ModalDescription,
+    ModalFooter,
+    ModalHeader,
+    ModalTitle,
+    useModalContainer,
+};

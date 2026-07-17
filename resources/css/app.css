@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -9,9 +9,8 @@
 
 @theme {
     --font-sans:
-        'Inter', ui-sans-serif, system-ui, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-        'Noto Color Emoji';
+        'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -85,7 +84,6 @@
     --banana-cream: oklch(0.9398 0.1487 102.66);
 
     /* other custom values */
-
 
     /* light theme values */
     --background: var(--pure-white);
@@ -183,23 +181,23 @@
     }
 
     .title {
-        @apply font-semibold text-[2rem];
+        @apply text-[2rem] font-semibold;
     }
 
     .subtitle {
-        @apply font-medium text-2xl;
+        @apply text-2xl font-medium;
     }
 
     .labor-text {
-        @apply text-xl max-w-3xl;
+        @apply max-w-3xl text-xl;
     }
 
     .custom-btn {
-        @apply p-2 px-4 rounded bg-main-btn flex justify-center w-full max-w-md /*mx-2*/ text-white font-medium text-xl;
+        @apply /*mx-2*/ flex w-full max-w-md justify-center rounded bg-main-btn p-2 px-4 text-xl font-medium text-white;
     }
 
     .form {
-        @apply flex flex-col items-center gap-4 bg-secondary text-secondary-foreground rounded-xl px-3 mx-2 lg:mx-6 max-w-3xl;
+        @apply mx-2 flex max-w-3xl flex-col items-center gap-4 rounded-xl bg-secondary px-3 text-secondary-foreground lg:mx-6;
     }
 
     fieldset {
@@ -211,15 +209,15 @@
     }
 
     .label {
-        @apply text-xl pl-2 font-medium;
+        @apply pl-2 text-xl font-medium;
     }
 
     .input {
-        @apply text-xl p-1 px-2 border border-main-btn rounded-md;
+        @apply rounded-md border border-main-btn p-1 px-2 text-xl;
     }
 
     .textarea {
-        @apply min-h-32 max-h-64;
+        @apply max-h-64 min-h-32;
     }
 
     button {
@@ -227,11 +225,11 @@
     }
 
     .items-select {
-        @apply bg-secondary p-1 flex gap-2 rounded-lg w-fit;
+        @apply flex w-fit gap-2 rounded-lg bg-secondary p-1;
     }
 
     .items-select-item {
-        @apply cursor-pointer p-1 px-3 w-fit min-w-16 rounded font-medium text-2xl;
+        @apply w-fit min-w-16 cursor-pointer rounded p-1 px-3 text-2xl font-medium;
     }
 
     .items-selected {
@@ -240,44 +238,46 @@
 
     /* Clientside specific style */
     .navbar {
-        @apply min-h-16 flex justify-between bg-sidebar;
+        @apply flex min-h-16 justify-between bg-sidebar;
     }
 
     .navbar-item {
-        @apply flex items-center justify-center h-full text-xl font-medium underline lg:px-4 hover:bg-navbar-hover;
+        @apply flex h-full items-center justify-center text-xl font-medium underline hover:bg-navbar-hover lg:px-4;
     }
 
-    .navbar-item-active>span {
-        background: url("/resources/icons/active-navicon.svg") top left no-repeat;
+    .navbar-item-active > span {
+        background: url('/resources/icons/active-navicon.svg') top left
+            no-repeat;
         background-size: 24px 24px;
     }
 
     .general-section {
-        @apply flex flex-col p-6 gap-6 items-center justify-center max-w-[120rem] w-full;
+        @apply flex w-full max-w-[120rem] flex-col items-center justify-center gap-6 p-6;
     }
 
     .bg-decoration {
-        background: no-repeat url("/resources/svg/bg/background-1.svg") right bottom;
+        background: no-repeat url('/resources/svg/bg/background-1.svg') right
+            bottom;
         background-size: cover;
     }
 
     .bg-decoration:nth-child(4) {
-        background-image: url("/resources/svg/bg/background-2.svg");
+        background-image: url('/resources/svg/bg/background-2.svg');
         background-position: left top;
     }
 
     .bg-decoration:nth-child(5) {
-        background-image: url("/resources/svg/bg/background-3.svg");
+        background-image: url('/resources/svg/bg/background-3.svg');
     }
 
     .bg-decoration:nth-child(6) {
-        background-image: url("/resources/svg/bg/background-4.svg");
+        background-image: url('/resources/svg/bg/background-4.svg');
         background-position: left top;
     }
 
     /* TODO fix color */
     .bg-decoration:nth-child(7) {
-        background-image: url("/resources/svg/bg/background-5.svg");
+        background-image: url('/resources/svg/bg/background-5.svg');
     }
 
     /*.bg-decoration:before {
@@ -289,19 +289,18 @@
         clip-path: url("/resources/svg/bg/background-2.svg#main");
     }*/
 
-
     /* Shared style */
 
     .animal-card {
-        @apply flex flex-col rounded-lg overflow-hidden bg-background-1 shadow-sm transition hover:shadow-md hover:-translate-y-0.5;
+        @apply flex flex-col overflow-hidden rounded-lg bg-background-1 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md;
     }
 
     .animal-card-img {
-        @apply w-full aspect-4/3 object-cover;
+        @apply aspect-4/3 w-full object-cover;
     }
 
     .status-tag {
-        @apply text-sm font-medium px-2 py-1 rounded-full bg-background-3 text-foreground w-fit;
+        @apply w-fit rounded-full bg-background-3 px-2 py-1 text-sm font-medium text-foreground;
     }
 
     .animal-card .status-tag {
@@ -309,11 +308,11 @@
     }
 
     .status-banner {
-        @apply text-xl font-medium text-center py-3 px-6 bg-background-2;
+        @apply bg-background-2 px-6 py-3 text-center text-xl font-medium;
     }
 
     .dialog-close {
-        @apply text-4xl inline-block pb-1 px-3 ml-auto leading-none cursor-pointer hover:text-main-btn;
+        @apply ml-auto inline-block cursor-pointer px-3 pb-1 text-4xl leading-none hover:text-main-btn;
         &:before {
             content: '\00d7';
         }
@@ -325,7 +324,7 @@
     }
 
     .modal {
-        @apply m-auto w-full max-w-[calc(100%-2rem)] sm:max-w-lg bg-background rounded-lg border p-3 shadow-lg;
+        @apply m-auto w-full max-w-[calc(100%-2rem)] rounded-lg border bg-background p-3 shadow-lg sm:max-w-lg;
 
         &::backdrop {
             @apply bg-modal-behind;

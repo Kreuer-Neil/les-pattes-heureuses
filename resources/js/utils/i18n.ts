@@ -1,5 +1,5 @@
 import i18n from 'i18next';
-import {initReactI18next} from 'react-i18next';
+import { initReactI18next } from 'react-i18next';
 
 import Backend from 'i18next-http-backend';
 
@@ -12,29 +12,31 @@ i18n
     .use(initReactI18next)
     // init i18next
     // for all options read: https://www.i18next.com/overview/configuration-options
-    .init({
-        // ns: ['dashboard','projects','pagination','main-nav','projects-index','date'],
-        // detection: {
-        //     order: ["path", "htmlTag"],
-        // },
-        fallbackLng: "en",
-        lng: document.documentElement.lang,
-        ns: 'common',
-        interpolation: {
-            escapeValue: false,
-        },
-        // backend: {
-        //     backends: [
-        //         LocalStorageBackend,
-        //     ],
-        //     backendOptions: [{
-        //         // expirationTime: 7 * 24 * 60 * 60 * 1000
-        //     // }, {
-        //         loadPath: '../locales/{{lng}}/{{ns}}.json',
-        //     }]
-        // }
-    }, /*(err, t) => {
-    }*/);
+    .init(
+        {
+            // ns: ['dashboard','projects','pagination','main-nav','projects-index','date'],
+            // detection: {
+            //     order: ["path", "htmlTag"],
+            // },
+            fallbackLng: 'en',
+            lng: document.documentElement.lang,
+            ns: 'common',
+            interpolation: {
+                escapeValue: false,
+            },
+            // backend: {
+            //     backends: [
+            //         LocalStorageBackend,
+            //     ],
+            //     backendOptions: [{
+            //         // expirationTime: 7 * 24 * 60 * 60 * 1000
+            //     // }, {
+            //         loadPath: '../locales/{{lng}}/{{ns}}.json',
+            //     }]
+            // }
+        } /*(err, t) => {
+    }*/,
+    );
 
 // also import into "resources/js/app.tsx" and invoke into setup once
 // also import into "resources/js/ssr.tsx"

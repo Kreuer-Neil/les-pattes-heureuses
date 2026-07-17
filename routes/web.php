@@ -8,7 +8,7 @@ use Laravel\Fortify\Features;
 
 // Laravel recommends putting subdomain routes before root routes, to not let URIs get overwritten
 // Just in case.
-Route::domain('admin.'.'les-pattes-heureuses.test')->group(function () {
+Route::domain('admin.' . 'les-pattes-heureuses.test')->group(function () {
     Route::middleware(['guest'])->group(function () {
 //        Route::get('/login', function () {
 //            return Inertia::render('auth/login', [
@@ -18,7 +18,8 @@ Route::domain('admin.'.'les-pattes-heureuses.test')->group(function () {
     });
 
     Route::middleware(['auth', 'verified'])->group(function () {
-        require __DIR__.'/dashboard.php';
+        require __DIR__ . '/dashboard.php';
+        require __DIR__ . '/animals.php';
         // Put only admin-access auth routes here
     });
 });
@@ -38,4 +39,4 @@ Route::get('/adoption/{animal}', [AdoptionController::class, 'show'])
 Route::post('/adoption/{animal}/request', [AdoptionController::class, 'request'])
     ->name('client.adoption.request');
 
-require __DIR__.'/settings.php';
+require __DIR__ . '/settings.php';
