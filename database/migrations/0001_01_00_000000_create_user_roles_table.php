@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Roles;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,11 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vaccines', function (Blueprint $table) {
+        Schema::create('user_roles', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
-            // TODO Add intermediate table to link vaccines to species later?
+            $table->string('name')->unique()->default(Roles::Volunteer);
 
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vaccines');
+        Schema::dropIfExists('user_roles');
     }
 };

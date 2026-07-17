@@ -41,3 +41,68 @@ export interface User {
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
 }
+
+export type AnimalStatusName = 'unknown' | 'available' | 'pending' | 'adopted' | 'healing';
+
+export interface ISpecie {
+    id: number;
+    name: string;
+}
+export interface IBreed {
+    id: number;
+    name: string;
+}
+
+export interface IFurColor {
+    id: number;
+    name: string;
+    color: string;
+}
+
+export interface IAnimalStatus {
+    id: number;
+    name: AnimalStatusName;
+}
+
+export interface IFurPattern {
+    id: number;
+    name: string;
+}
+
+export interface IAnimalFilters {
+    species: ISpecie[];
+    breeds: IBreed[];
+    statuses: IAnimalStatus[];
+    furColors: IFurColor[];
+    furPatterns: IFurPattern[];
+}
+
+export interface IAnimalMiniature {
+    id: number;
+    name: string;
+    image: string | null;
+    gender: 'M' | 'F';
+    chip: string;
+    statusId: number;
+    specieId: number;
+    breedId: number | null;
+    furColorId: number | null;
+    secondaryFurColorId: number | null;
+    bornAt: {
+        toString: string;
+        value: string;
+    };
+    personality: string;
+}
+
+export interface IAnimal {
+    name: string;
+    image: string;
+    gender: 'M' | 'F';
+    chip: string;
+    status: AnimalStatusName;
+    specie: ISpecie;
+    breed?: IBreed;
+    furColor: IFurColor;
+    secondaryFurColor?: IFurColor;
+}

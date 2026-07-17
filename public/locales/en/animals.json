@@ -1,0 +1,80 @@
+{
+    "our_pets": "Our pets",
+    "empty": "No animals registered yet.",
+
+    "table": {
+        "name": "Name",
+        "specie": "Species",
+        "gender": "Gender",
+        "chip": "Chip",
+        "status": "Status",
+        "personality": "Personality"
+    },
+
+    "gender": {
+        "M": "Male",
+        "F": "Female"
+    },
+
+    "status": {
+        "unknown": "Unknown",
+        "available": "Available",
+        "pending": "Pending adoption",
+        "adopted": "Adopted",
+        "healing": "Healing"
+    },
+
+    "specie": {
+        "dog": "Dog",
+        "cat": "Cat",
+        "bird": "Bird",
+        "horse": "Horse",
+        "reptile": "Reptile"
+    },
+
+    "breed": {
+        "corgi": "Corgi",
+        "chihuahua": "Chihuahua",
+        "german shepherd": "German Shepherd",
+
+        "abyssinian": "Abyssinian",
+        "aegean": "Aegean",
+        "american bobtail": "American Bobtail",
+        "american curl": "American Curl",
+        "american shorthair": "American Shorthair",
+        "american wirehair": "American Wirehair",
+        "aphrodite giant": "Aphrodite Giant",
+        "asian": "Asian",
+        "asian semi-longhair": "Asian Semi-longhair",
+        "european shorthair": "European Shorthair",
+        "lion": "Lion",
+
+        "canary": "Canary",
+        "chicken": "Chicken",
+        "royal eagle": "Royal Eagle",
+
+        "horse": "Horse",
+        "pony": "Pony",
+        "donkey": "Donkey",
+
+        "darwin's iguana": "Darwin's Iguana",
+        "cat gecko": "Cat Gecko",
+        "persian spider gecko": "Persian Spider Gecko",
+        "sonoran collared lizard": "Sonoran Collared Lizard"
+    },
+
+    "furColor": {
+        "orange": "Orange",
+        "brown": "Brown",
+        "beige": "Beige",
+        "black": "Black",
+        "white": "White",
+        "grey": "Grey"
+    },
+
+    "furPattern": {
+        "striped": "Striped",
+        "dotted": "Dotted",
+        "tabby": "Tabby"
+    }
+}

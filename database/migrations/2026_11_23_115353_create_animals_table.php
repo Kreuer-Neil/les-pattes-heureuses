@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Animals\Gender;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,7 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('image')->nullable();
-            $table->string('gender');
+            $table->enum('gender', Gender::cases());
             $table->string('chip')->unique();
             $table->foreignId('animal_status_id')->constrained('animal_statuses');
 
@@ -34,7 +35,7 @@ return new class extends Migration
             // Same goes for the notes
 
             $table->index(['animal_status_id','specie_id']);
-            
+
             $table->timestamps();
         });
     }

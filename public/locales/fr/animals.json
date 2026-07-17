@@ -1,0 +1,80 @@
+{
+    "our_pets": "Nos animaux",
+    "empty": "Aucun animal enregistré pour le moment.",
+
+    "table": {
+        "name": "Nom",
+        "specie": "Espèce",
+        "gender": "Sexe",
+        "chip": "Puce",
+        "status": "Statut",
+        "personality": "Caractère"
+    },
+
+    "gender": {
+        "M": "Mâle",
+        "F": "Femelle"
+    },
+
+    "status": {
+        "unknown": "Inconnu",
+        "available": "Disponible",
+        "pending": "En attente d'adoption",
+        "adopted": "Adopté",
+        "healing": "En soins"
+    },
+
+    "specie": {
+        "dog": "Chien",
+        "cat": "Chat",
+        "bird": "Oiseau",
+        "horse": "Cheval",
+        "reptile": "Reptile"
+    },
+
+    "breed": {
+        "corgi": "Corgi",
+        "chihuahua": "Chihuahua",
+        "german shepherd": "Berger allemand",
+
+        "abyssinian": "Abyssin",
+        "aegean": "Égéen",
+        "american bobtail": "Bobtail américain",
+        "american curl": "American Curl",
+        "american shorthair": "Américain à poil court",
+        "american wirehair": "Américain à poil dur",
+        "aphrodite giant": "Géant d'Aphrodite",
+        "asian": "Asiatique",
+        "asian semi-longhair": "Asiatique à poil mi-long",
+        "european shorthair": "Européen à poil court",
+        "lion": "Lion",
+
+        "canary": "Canari",
+        "chicken": "Poule",
+        "royal eagle": "Aigle royal",
+
+        "horse": "Cheval",
+        "pony": "Poney",
+        "donkey": "Âne",
+
+        "darwin's iguana": "Iguane de Darwin",
+        "cat gecko": "Gecko chat",
+        "persian spider gecko": "Gecko-araignée persan",
+        "sonoran collared lizard": "Lézard à collier du Sonora"
+    },
+
+    "furColor": {
+        "orange": "Orange",
+        "brown": "Marron",
+        "beige": "Beige",
+        "black": "Noir",
+        "white": "Blanc",
+        "grey": "Gris"
+    },
+
+    "furPattern": {
+        "striped": "Rayé",
+        "dotted": "Tacheté",
+        "tabby": "Tigré"
+    }
+}
