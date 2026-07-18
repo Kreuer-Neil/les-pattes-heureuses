@@ -9,4 +9,5 @@ enum Status: string
     case Pending = 'pending';
     case Adopted = 'adopted';
     case Healing = 'healing';
+    case Deceased = 'deceased';
 }
