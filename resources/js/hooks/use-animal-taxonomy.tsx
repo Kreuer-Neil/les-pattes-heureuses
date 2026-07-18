@@ -63,7 +63,9 @@ export function AnimalTaxonomyProvider({
             })),
             breedOptionsBySpecie: (specieId) =>
                 breedOptions
-                    .filter((breed) => !specieId || breed.specieId === specieId)
+                    // !specieId is if filtering directly by breedOption instead of a first-step specie filtering.
+                    // A Claude suggestion that might be useful later.
+                    .filter((breed) => /*!specieId ||*/ breed.specieId === specieId)
                     .map(({ value, label }) => ({ value, label })),
         };
     }, [taxonomy, t]);

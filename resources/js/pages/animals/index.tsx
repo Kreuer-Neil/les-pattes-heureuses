@@ -83,7 +83,10 @@ export default function AnimalsIndex() {
                         <h1 className="text-xl font-semibold">
                             {t('our_pets')}
                         </h1>
-                        <Button className="ml-auto">
+                        <Button
+                            className="ml-auto"
+                            onClick={() => setShowCreateModal(true)}
+                        >
                             <Plus />
                             <span>{t('Create')}</span>
                         </Button>
