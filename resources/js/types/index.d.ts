@@ -1,3 +1,4 @@
+import { AnimalStatus, Specie as SpecieEnum } from '@/lib/animal-enums';
 import { InertiaLinkProps } from '@inertiajs/react';
 import { LucideIcon } from 'lucide-react';
 
@@ -42,16 +43,13 @@ export interface User {
     [key: string]: unknown; // This allows for additional properties...
 }
 
-export type AnimalStatusName =
-    | 'unknown'
-    | 'available'
-    | 'pending'
-    | 'adopted'
-    | 'healing';
+export type AnimalStatusName = (typeof AnimalStatus)[keyof typeof AnimalStatus];
+
+export type SpecieName = (typeof SpecieEnum)[keyof typeof SpecieEnum];
 
 export interface ISpecie {
     id: number;
-    name: string;
+    name: SpecieName;
 }
 export interface IBreed {
     id: number;

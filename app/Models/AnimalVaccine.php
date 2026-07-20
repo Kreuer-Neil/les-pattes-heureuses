@@ -10,5 +10,6 @@ class AnimalVaccine extends Model
     protected $fillable = [
         'vaccinated_at',
         'vaccine_id',
+        'animal_id',
     ];
 }

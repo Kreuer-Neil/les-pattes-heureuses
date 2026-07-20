@@ -50,7 +50,8 @@ class AnimalController extends Controller
 
     public function store(Request $request)
     {
-        Gate::authorize('add_animal');
+        abort_unless(Gate::any(['create', 'suggest'], Animal::class), 403);
+
         $validated = $request->validate([
             'name' => 'required|string|min:2|max:255',
             'image' => 'nullable|file|image|extensions:jpg,jpeg,png,webp,gif|max:5120',
@@ -70,13 +71,13 @@ class AnimalController extends Controller
             'vaccines.*.id' => 'required|exists:vaccines,id',
         ]);
 
-        $currentUser = $request->user();
+        // $currentUser = $request->user();
 
-        $animal = new Animal([
-            'name' => $validated['name'],
-        ]);
+        $animal = new Animal(collect($validated)->except(['image', 'vaccines'])->all());
+
+        // Adding vaccines
         $vaccines = [];
-        if ($validated['vaccines']) {
+        if (array_key_exists('vaccines', $validated)) {
             foreach ($validated['vaccines'] as $vaccine) {
                 $vaccines[] = new AnimalVaccine(
                     [
@@ -87,6 +88,7 @@ class AnimalController extends Controller
             }
         }
 
+        // Image handling
         if (array_key_exists('image', $validated)) {
 
 //            $oldImageName = $user->avatar;
@@ -103,10 +105,25 @@ class AnimalController extends Controller
             $animal->image = $imageName;
         }
 
-        if (Gate::check('create_animal')) {
+        if (Gate::allows('create', Animal::class)) {
             $this->createAnimal($animal, $vaccines);
         } else {
-            new PendingAnimalChanges(array_merge($animal->toArray(),
+            Gate::authorize('suggest', Animal::class);
+            new PendingAnimalChanges(array_merge(
+                [
+                    'name' => $animal->name,
+                    'image' => $animal->image,
+                    'gender' => $animal->gender,
+                    'chip' => $animal->chip,
+                    'animal_status_id' => $animal->animal_status_id,
+                    'specie_id' => $animal->specie_id,
+                    'breed_id' => $animal->breed_id,
+                    'fur_color_id' => $animal->fur_color_id,
+                    'secondary_fur_color_id' => $animal->secondary_fur_color_id,
+                    'fur_pattern_id' => $animal->fur_pattern_id,
+                    'personality' => $animal->personality,
+                    'born_at' => $animal->born_at,
+                ],
                 ['action' => PendingChanges::Store->value],
                 [
                     // Notes?
@@ -120,6 +137,19 @@ class AnimalController extends Controller
 
     private function createAnimal(Animal $animal, array $vaccines)
     {
-        $animal->create();
+        $animal->save();
+
+        // Vaccinations
+        if ($vaccines && $vaccines !== []) {
+            foreach ($vaccines as $vaccine) {
+                AnimalVaccine::create([
+                    'animal_id' => $animal->id,
+                    'vaccine_id' => $vaccine['vaccine_id'],
+                    'vaccinated_at' => $vaccine['vaccinated_at']
+                ]);
+            }
+        }
+
+        // Same for notes?
     }
 }

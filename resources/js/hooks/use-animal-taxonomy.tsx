@@ -6,6 +6,7 @@ export interface ITaxonomyOption {
     value: string;
     label: string;
     swatch?: string;
+    name?: string;
 }
 
 interface IAnimalTaxonomyOptions {
@@ -47,6 +48,7 @@ export function AnimalTaxonomyProvider({
             statusOptions: taxonomy.statuses.map((status) => ({
                 value: String(status.id),
                 label: t(`status.${status.name}`),
+                name: status.name,
             })),
             specieOptions: taxonomy.species.map((specie) => ({
                 value: String(specie.id),

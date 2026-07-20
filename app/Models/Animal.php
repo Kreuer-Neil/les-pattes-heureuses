@@ -15,7 +15,8 @@ class Animal extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'image', 'breed_id', 'fur_color_id', 'fur_pattern_id', 'secondary_fur_color_id', 'specie_id', 'animal_status_id',
+        'name', 'image', 'gender', 'chip', 'personality', 'born_at',
+        'breed_id', 'fur_color_id', 'fur_pattern_id', 'secondary_fur_color_id', 'specie_id', 'animal_status_id',
     ];
 
     protected $casts = [

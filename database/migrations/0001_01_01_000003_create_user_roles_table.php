@@ -15,9 +15,13 @@ return new class extends Migration
         Schema::create('user_roles', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name')->unique()->default(Roles::Volunteer);
+            $table->string('name')->unique();
 
             $table->timestamps();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('user_role_id')->constrained();
         });
     }
 
@@ -27,5 +31,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('user_roles');
+        Schema::dropColumns('users', 'user_role_id');
     }
 };

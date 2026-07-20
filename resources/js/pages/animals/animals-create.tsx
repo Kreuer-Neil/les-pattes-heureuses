@@ -11,6 +11,7 @@ import { Field, FieldError, FieldLabel, FieldSet } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useAnimalTaxonomy } from '@/hooks/use-animal-taxonomy';
+import { AnimalStatus } from '@/lib/animal-enums';
 import { Form } from '@inertiajs/react';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -30,6 +31,12 @@ export default function AnimalsCreate({
         furPatternOptions,
         breedOptionsBySpecie,
     } = useAnimalTaxonomy();
+
+    const creatableStatusOptions = statusOptions.filter(
+        (option) =>
+            option.name !== AnimalStatus.Adopted &&
+            option.name !== AnimalStatus.Deceased,
+    );
 
     const [statusId, setStatusId] = useState<string | null>(null);
     const [specieId, setSpecieId] = useState<string | null>(null);
@@ -302,7 +309,7 @@ export default function AnimalsCreate({
                                 <ItemCombobox
                                     id="animal_status_id"
                                     name="animal_status_id"
-                                    options={statusOptions}
+                                    options={creatableStatusOptions}
                                     value={statusId}
                                     onValueChange={setStatusId}
                                     placeholder={t('create.selectPlaceholder')}
