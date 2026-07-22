@@ -87,7 +87,6 @@ export default function AnimalsCreate({
         );
     }
 
-    // Why?
     function setVaccineEntryId(key: number, vaccineId: string | null) {
         setVaccineEntries((entries) =>
             entries.map((entry) =>
@@ -124,7 +123,7 @@ export default function AnimalsCreate({
                 {({ errors, processing }) => (
                     <>
                         {/* Pet base info */}
-                        <FieldSet className="field-group mt-6 grid grid-cols-2 gap-4 gap-y-6">
+                        <FieldSet className="field-group mt-6 grid gap-4 gap-y-6 sm:grid-cols-2">
                             <Field>
                                 <FieldLabel htmlFor="name">
                                     {t('create.name')}
@@ -194,7 +193,7 @@ export default function AnimalsCreate({
                         </FieldSet>
 
                         {/* Taxonomy */}
-                        <FieldSet className="field-group grid grid-cols-2 gap-4 gap-y-6">
+                        <FieldSet className="field-group grid gap-4 gap-y-6 sm:grid-cols-2">
                             <Field>
                                 <FieldLabel htmlFor="specie_id">
                                     {t('create.specie')}
@@ -375,74 +374,80 @@ export default function AnimalsCreate({
                             </FieldLegend>
 
                             {vaccineEntries.map((entry, index) => (
-                                <div
-                                    key={entry.key}
-                                    className="grid grid-cols-[1fr_1fr_auto] items-end gap-4"
-                                >
-                                    <Field>
-                                        <FieldLabel
-                                            htmlFor={`vaccine_id_${entry.key}`}
-                                        >
-                                            {t('create.vaccine')}
-                                        </FieldLabel>
-                                        <ItemCombobox
-                                            id={`vaccine_id_${entry.key}`}
-                                            name={`vaccines[${index}][id]`}
-                                            options={vaccineOptions}
-                                            value={entry.vaccineId}
-                                            onValueChange={(next) =>
-                                                setVaccineEntryId(
-                                                    entry.key,
-                                                    next,
-                                                )
-                                            }
-                                            placeholder={t(
-                                                'create.selectPlaceholder',
-                                            )}
-                                            emptyText={t('create.noResults')}
-                                            aria-invalid={
-                                                !!errors[`vaccines.${index}.id`]
-                                            }
-                                        />
-                                        <FieldError
-                                            errors={[
-                                                {
-                                                    message:
-                                                        errors[
-                                                            `vaccines.${index}.id`
-                                                        ],
-                                                },
-                                            ]}
-                                        />
-                                    </Field>
+                                <div className="flex gap-4">
+                                    <div
+                                        key={entry.key}
+                                        className="grid sm:grid-cols-2 w-full items-end gap-4"
+                                    >
+                                        <Field>
+                                            <FieldLabel
+                                                htmlFor={`vaccine_id_${entry.key}`}
+                                            >
+                                                {t('create.vaccine')}
+                                            </FieldLabel>
+                                            <ItemCombobox
+                                                id={`vaccine_id_${entry.key}`}
+                                                name={`vaccines[${index}][id]`}
+                                                options={vaccineOptions}
+                                                value={entry.vaccineId}
+                                                onValueChange={(next) =>
+                                                    setVaccineEntryId(
+                                                        entry.key,
+                                                        next,
+                                                    )
+                                                }
+                                                placeholder={t(
+                                                    'create.selectPlaceholder',
+                                                )}
+                                                emptyText={t(
+                                                    'create.noResults',
+                                                )}
+                                                aria-invalid={
+                                                    !!errors[
+                                                        `vaccines.${index}.id`
+                                                    ]
+                                                }
+                                            />
+                                            <FieldError
+                                                errors={[
+                                                    {
+                                                        message:
+                                                            errors[
+                                                                `vaccines.${index}.id`
+                                                            ],
+                                                    },
+                                                ]}
+                                            />
+                                        </Field>
 
-                                    <Field>
-                                        <FieldLabel
-                                            htmlFor={`vaccine_date_${entry.key}`}
-                                        >
-                                            {t('create.vaccineDate')}
-                                        </FieldLabel>
-                                        <Input
-                                            id={`vaccine_date_${entry.key}`}
-                                            name={`vaccines[${index}][date]`}
-                                            type="date"
-                                            aria-invalid={
-                                                !!errors[
-                                                    `vaccines.${index}.date`
-                                                ]
-                                            }
-                                        />
-                                        <FieldError
-                                            errors={[
-                                                {
-                                                    message:
-                                                        errors[
-                                                            `vaccines.${index}.date`
-                                                        ],
-                                                },
-                                            ]}
-                                        />
-                                    </Field>
+                                        <Field>
+                                            <FieldLabel
+                                                htmlFor={`vaccine_date_${entry.key}`}
+                                            >
+                                                {t('create.vaccineDate')}
+                                            </FieldLabel>
+                                            <Input
+                                                id={`vaccine_date_${entry.key}`}
+                                                name={`vaccines[${index}][date]`}
+                                                type="date"
+                                                aria-invalid={
+                                                    !!errors[
+                                                        `vaccines.${index}.date`
+                                                    ]
+                                                }
+                                            />
+                                            <FieldError
+                                                errors={[
+                                                    {
+                                                        message:
+                                                            errors[
+                                                                `vaccines.${index}.date`
+                                                            ],
+                                                    },
+                                                ]}
+                                            />
+                                        </Field>
+                                    </div>
 
                                     <Button
                                         type="button"
@@ -452,6 +457,7 @@ export default function AnimalsCreate({
                                             removeVaccineEntry(entry.key)
                                         }
                                         aria-label={t('create.removeVaccine')}
+                                        className="self-center"
                                     >
                                         <Minus />
                                     </Button>

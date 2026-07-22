@@ -19,7 +19,6 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
-use Inertia\Response;
 use Str;
 
 class AnimalController extends Controller

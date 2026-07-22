@@ -332,6 +332,6 @@
     }
 
     .field-group {
-        @apply grid grid-cols-2 gap-4 gap-y-6 mb-2;
+        @apply grid sm:grid-cols-2 gap-4 gap-y-6 mb-2;
     }
 }
