@@ -73,12 +73,18 @@ export interface IFurPattern {
     name: string;
 }
 
+export interface IVaccine {
+    id: number;
+    name: string;
+}
+
 export interface IAnimalTaxonomy {
     species: ISpecie[];
     breeds: IBreed[];
     statuses: IAnimalStatus[];
     furColors: IFurColor[];
     furPatterns: IFurPattern[];
+    vaccines: IVaccine[];
 }
 
 export interface IAnimalMiniature {

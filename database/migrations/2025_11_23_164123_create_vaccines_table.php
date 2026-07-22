@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
 
             $table->string('name');
-            // TODO Add intermediate table to link vaccines to species later?
 
             $table->timestamps();
         });

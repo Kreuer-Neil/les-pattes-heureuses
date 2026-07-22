@@ -14,6 +14,7 @@ use App\Models\FurColor;
 use App\Models\FurPattern;
 use App\Models\PendingAnimalChanges;
 use App\Models\Specie;
+use App\Models\Vaccine;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -45,6 +46,7 @@ class AnimalController extends Controller
             'statuses' => AnimalStatus::query()->select('id', 'name')->get(),
             'furColors' => FurColor::query()->select('id', 'name', 'color')->get(),
             'furPatterns' => FurPattern::query()->select('id', 'name')->get(),
+            'vaccines' => Vaccine::query()->select('id', 'name')->get(),
         ];
     }
 

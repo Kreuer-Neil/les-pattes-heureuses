@@ -78,6 +78,24 @@
         "tabby": "Tabby"
     },
 
+    "vaccine": {
+        "rabies": "Rabies",
+        "distemper": "Distemper",
+        "canine parvovirus": "Canine parvovirus",
+        "leptospirosis": "Leptospirosis",
+        "bordetella": "Bordetella (kennel cough)",
+        "feline viral rhinotracheitis": "Feline viral rhinotracheitis",
+        "feline calicivirus": "Feline calicivirus",
+        "feline panleukopenia": "Feline panleukopenia",
+        "feline leukemia": "Feline leukemia",
+        "avian polyomavirus": "Avian polyomavirus",
+        "pacheco disease": "Pacheco's disease",
+        "tetanus": "Tetanus",
+        "equine influenza": "Equine influenza",
+        "equine herpesvirus": "Equine herpesvirus",
+        "west nile virus": "West Nile virus"
+    },
+
     "create": {
         "title": "Add an animal",
         "description": "Register a new animal at the shelter.",
@@ -98,6 +116,11 @@
         "image": "Photo",
         "selectPlaceholder": "Select…",
         "noResults": "No results found.",
+        "vaccines": "Vaccinations",
+        "vaccine": "Vaccine",
+        "vaccineDate": "Date administered",
+        "addVaccine": "Add vaccine",
+        "removeVaccine": "Remove vaccine",
         "submit": "Add animal",
         "cancel": "Cancel"
     }

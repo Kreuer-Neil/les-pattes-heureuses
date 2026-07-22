@@ -78,6 +78,24 @@
         "tabby": "Tigré"
     },
 
+    "vaccine": {
+        "rabies": "Rage",
+        "distemper": "Maladie de Carré",
+        "canine parvovirus": "Parvovirose canine",
+        "leptospirosis": "Leptospirose",
+        "bordetella": "Bordetella (toux de chenil)",
+        "feline viral rhinotracheitis": "Rhinotrachéite virale féline",
+        "feline calicivirus": "Calicivirose féline",
+        "feline panleukopenia": "Panleucopénie féline",
+        "feline leukemia": "Leucose féline",
+        "avian polyomavirus": "Polyomavirus aviaire",
+        "pacheco disease": "Maladie de Pacheco",
+        "tetanus": "Tétanos",
+        "equine influenza": "Grippe équine",
+        "equine herpesvirus": "Herpèsvirus équin",
+        "west nile virus": "Virus du Nil occidental"
+    },
+
     "create": {
         "title": "Ajouter un animal",
         "description": "Enregistrer un nouvel animal au refuge.",
@@ -98,6 +116,11 @@
         "image": "Photo",
         "selectPlaceholder": "Sélectionner…",
         "noResults": "Aucun résultat.",
+        "vaccines": "Vaccinations",
+        "vaccine": "Vaccin",
+        "vaccineDate": "Date d'administration",
+        "addVaccine": "Ajouter un vaccin",
+        "removeVaccine": "Retirer le vaccin",
         "submit": "Ajouter l'animal",
         "cancel": "Annuler"
     }

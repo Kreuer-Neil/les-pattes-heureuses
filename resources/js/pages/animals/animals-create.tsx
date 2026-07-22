@@ -7,14 +7,26 @@ import CustomModal, {
     ModalTitle,
 } from '@/components/modals/custom-modal';
 import { Button } from '@/components/ui/button';
-import { Field, FieldError, FieldLabel, FieldSet } from '@/components/ui/field';
+import {
+    Field,
+    FieldError,
+    FieldLabel,
+    FieldLegend,
+    FieldSet,
+} from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useAnimalTaxonomy } from '@/hooks/use-animal-taxonomy';
 import { AnimalStatus } from '@/lib/animal-enums';
 import { Form } from '@inertiajs/react';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Minus, Plus } from 'lucide-react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
+interface IVaccineEntry {
+    key: number;
+    vaccineId: string | null;
+}
 
 export default function AnimalsCreate({
     showModal,
@@ -29,6 +41,7 @@ export default function AnimalsCreate({
         specieOptions,
         furColorOptions,
         furPatternOptions,
+        vaccineOptions,
         breedOptionsBySpecie,
     } = useAnimalTaxonomy();
 
@@ -47,6 +60,9 @@ export default function AnimalsCreate({
     >(null);
     const [furPatternId, setFurPatternId] = useState<string | null>(null);
 
+    const [vaccineEntries, setVaccineEntries] = useState<IVaccineEntry[]>([]);
+    const nextVaccineKey = useRef(0);
+
     function resetTaxonomySelections() {
         setStatusId(null);
         setSpecieId(null);
@@ -54,6 +70,30 @@ export default function AnimalsCreate({
         setFurColorId(null);
         setSecondaryFurColorId(null);
         setFurPatternId(null);
+        setVaccineEntries([]);
+    }
+
+    // Use array.push() ?
+    function addVaccineEntry() {
+        setVaccineEntries((entries) => [
+            ...entries,
+            { key: nextVaccineKey.current++, vaccineId: null },
+        ]);
+    }
+
+    function removeVaccineEntry(key: number) {
+        setVaccineEntries((entries) =>
+            entries.filter((entry) => entry.key !== key),
+        );
+    }
+
+    // Why?
+    function setVaccineEntryId(key: number, vaccineId: string | null) {
+        setVaccineEntries((entries) =>
+            entries.map((entry) =>
+                entry.key === key ? { ...entry, vaccineId } : entry,
+            ),
+        );
     }
 
     const breedOptions = breedOptionsBySpecie(specieId);
@@ -326,6 +366,107 @@ export default function AnimalsCreate({
                                     ]}
                                 />
                             </Field>
+                        </FieldSet>
+
+                        {/* Vaccines */}
+                        <FieldSet className="field-group gap-4">
+                            <FieldLegend variant="label">
+                                {t('create.vaccines')}
+                            </FieldLegend>
+
+                            {vaccineEntries.map((entry, index) => (
+                                <div
+                                    key={entry.key}
+                                    className="grid grid-cols-[1fr_1fr_auto] items-end gap-4"
+                                >
+                                    <Field>
+                                        <FieldLabel
+                                            htmlFor={`vaccine_id_${entry.key}`}
+                                        >
+                                            {t('create.vaccine')}
+                                        </FieldLabel>
+                                        <ItemCombobox
+                                            id={`vaccine_id_${entry.key}`}
+                                            name={`vaccines[${index}][id]`}
+                                            options={vaccineOptions}
+                                            value={entry.vaccineId}
+                                            onValueChange={(next) =>
+                                                setVaccineEntryId(
+                                                    entry.key,
+                                                    next,
+                                                )
+                                            }
+                                            placeholder={t(
+                                                'create.selectPlaceholder',
+                                            )}
+                                            emptyText={t('create.noResults')}
+                                            aria-invalid={
+                                                !!errors[`vaccines.${index}.id`]
+                                            }
+                                        />
+                                        <FieldError
+                                            errors={[
+                                                {
+                                                    message:
+                                                        errors[
+                                                            `vaccines.${index}.id`
+                                                        ],
+                                                },
+                                            ]}
+                                        />
+                                    </Field>
+
+                                    <Field>
+                                        <FieldLabel
+                                            htmlFor={`vaccine_date_${entry.key}`}
+                                        >
+                                            {t('create.vaccineDate')}
+                                        </FieldLabel>
+                                        <Input
+                                            id={`vaccine_date_${entry.key}`}
+                                            name={`vaccines[${index}][date]`}
+                                            type="date"
+                                            aria-invalid={
+                                                !!errors[
+                                                    `vaccines.${index}.date`
+                                                ]
+                                            }
+                                        />
+                                        <FieldError
+                                            errors={[
+                                                {
+                                                    message:
+                                                        errors[
+                                                            `vaccines.${index}.date`
+                                                        ],
+                                                },
+                                            ]}
+                                        />
+                                    </Field>
+
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="icon"
+                                        onClick={() =>
+                                            removeVaccineEntry(entry.key)
+                                        }
+                                        aria-label={t('create.removeVaccine')}
+                                    >
+                                        <Minus />
+                                    </Button>
+                                </div>
+                            ))}
+
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={addVaccineEntry}
+                                className="self-start"
+                            >
+                                <Plus />
+                                {t('create.addVaccine')}
+                            </Button>
                         </FieldSet>
 
                         <ModalFooter>

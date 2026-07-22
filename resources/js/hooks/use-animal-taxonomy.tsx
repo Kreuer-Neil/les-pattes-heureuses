@@ -14,6 +14,7 @@ interface IAnimalTaxonomyOptions {
     specieOptions: ITaxonomyOption[];
     furColorOptions: ITaxonomyOption[];
     furPatternOptions: ITaxonomyOption[];
+    vaccineOptions: ITaxonomyOption[];
     breedOptionsBySpecie: (specieId: string | null) => ITaxonomyOption[];
 }
 
@@ -63,11 +64,17 @@ export function AnimalTaxonomyProvider({
                 value: String(furPattern.id),
                 label: t(`furPattern.${furPattern.name}`),
             })),
+            vaccineOptions: taxonomy.vaccines.map((vaccine) => ({
+                value: String(vaccine.id),
+                label: t(`vaccine.${vaccine.name}`),
+            })),
             breedOptionsBySpecie: (specieId) =>
                 breedOptions
                     // !specieId is if filtering directly by breedOption instead of a first-step specie filtering.
                     // A Claude suggestion that might be useful later.
-                    .filter((breed) => /*!specieId ||*/ breed.specieId === specieId)
+                    .filter(
+                        (breed) => /*!specieId ||*/ breed.specieId === specieId,
+                    )
                     .map(({ value, label }) => ({ value, label })),
         };
     }, [taxonomy, t]);
