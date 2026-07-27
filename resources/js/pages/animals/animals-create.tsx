@@ -51,7 +51,12 @@ export default function AnimalsCreate({
             option.name !== AnimalStatus.Deceased,
     );
 
-    const [statusId, setStatusId] = useState<string | null>(null);
+    const defaultStatusId =
+        creatableStatusOptions.find(
+            (option) => option.name === AnimalStatus.Available,
+        )?.value ?? null;
+
+    const [statusId, setStatusId] = useState<string | null>(defaultStatusId);
     const [specieId, setSpecieId] = useState<string | null>(null);
     const [breedId, setBreedId] = useState<string | null>(null);
     const [furColorId, setFurColorId] = useState<string | null>(null);
@@ -64,7 +69,7 @@ export default function AnimalsCreate({
     const nextVaccineKey = useRef(0);
 
     function resetTaxonomySelections() {
-        setStatusId(null);
+        setStatusId(defaultStatusId);
         setSpecieId(null);
         setBreedId(null);
         setFurColorId(null);
