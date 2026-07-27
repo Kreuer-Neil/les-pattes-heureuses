@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\Animals\Gender;
 use App\Enums\PendingChanges;
 use App\Http\Resources\AnimalMiniatureResource;
+use App\Http\Resources\AnimalResource;
 use App\Jobs\HandleAnimalsImageUploads;
 use App\Models\Animal;
 use App\Models\AnimalStatus;
@@ -25,16 +26,36 @@ class AnimalController extends Controller
 {
     public function index(Request $request)
     {
+        return Inertia::render('animals/index', $this->indexProps($request));
+    }
+
+    public function show(Request $request, Animal $animal)
+    {
+        $animalData = (new AnimalResource($animal))->toArray($request);
+
+        if ($request->wantsJson()) {
+            // return $animalData;
+            return response()->json($animalData);
+        }
+
+        return Inertia::render('animals/index', array_merge(
+            $this->indexProps($request),
+            ['selectedAnimal' => $animalData],
+        ));
+    }
+
+    private function indexProps(Request $request): array
+    {
         $hasAccess = (auth()->check()); // TODO Gate checking?
 
         // TODO add filtering later
         $animals = Animal::all();
 
-        return Inertia::render('animals/index', [
+        return [
             'hasAccess' => $hasAccess,
             'animals' => AnimalMiniatureResource::collection($animals)->toArray($request),
             'taxonomy' => $this->taxonomy(),
-        ]);
+        ];
     }
 
     private function taxonomy(): array
@@ -83,7 +104,7 @@ class AnimalController extends Controller
                 $vaccines[] = new AnimalVaccine(
                     [
                         'vaccinated_at' => $vaccine['date'],
-                        'vaccine_id' => $vaccine['id']
+                        'vaccine_id' => $vaccine['id'],
                     ]
                 );
             }
@@ -92,7 +113,7 @@ class AnimalController extends Controller
         // Image handling
         if (array_key_exists('image', $validated)) {
 
-//            $oldImageName = $user->avatar;
+            // $oldImageName = $user->avatar;
 
             $imagePath = $validated['image']
                 ->store('images/animals', 'public');
@@ -100,7 +121,7 @@ class AnimalController extends Controller
             // TODO refactor
             $imageName = Str::beforeLast(Str::afterLast($imagePath, '/'), '.');
 
-            $directory = 'users';
+            $directory = 'animals';
             HandleAnimalsImageUploads::dispatch($imageName, null, $imagePath, $directory);
 
             $animal->image = $imageName;
@@ -128,13 +149,13 @@ class AnimalController extends Controller
                 ['action' => PendingChanges::Store->value],
                 [
                     // Notes?
-                    'vaccines' => $vaccines
+                    'vaccines' => $vaccines,
                 ]
             ));
         }
+
         return redirect()->back();
     }
-
 
     private function createAnimal(Animal $animal, array $vaccines)
     {
@@ -146,11 +167,13 @@ class AnimalController extends Controller
                 AnimalVaccine::create([
                     'animal_id' => $animal->id,
                     'vaccine_id' => $vaccine['vaccine_id'],
-                    'vaccinated_at' => $vaccine['vaccinated_at']
+                    'vaccinated_at' => $vaccine['vaccinated_at'],
                 ]);
             }
         }
 
         // Same for notes?
     }
+
+    public function update() {}
 }

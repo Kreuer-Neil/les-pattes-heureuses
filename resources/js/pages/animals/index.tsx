@@ -1,28 +1,28 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
+import AnimalController from '@/actions/App/Http/Controllers/AnimalController';
 import { Button } from '@/components/ui/button';
 import { AnimalTaxonomyProvider } from '@/hooks/use-animal-taxonomy';
+import { seedAnimalCache } from '@/hooks/use-animal';
 import AppLayout from '@/layouts/app-layout';
 import AnimalsCreate from '@/pages/animals/animals-create';
-import { IAnimalMiniature, IAnimalTaxonomy } from '@/types';
+import AnimalRow from '@/components/animals/animals-row';
+import AnimalsShow from '@/components/animals/animals-show';
+import { IAnimal, IAnimalMiniature, IAnimalTaxonomy } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
 import { Plus } from 'lucide-react';
-import { ReactNode, useMemo, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type PageProps = {
     animals: Array<IAnimalMiniature>;
     taxonomy: IAnimalTaxonomy;
     hasAccess: boolean;
+    selectedAnimal?: IAnimal;
 };
 
-const statusVariant: Record<string, 'default' | 'secondary' | 'outline'> = {
-    available: 'default',
-    pending: 'secondary',
-    healing: 'secondary',
-    adopted: 'outline',
-    unknown: 'outline',
-};
+function parseAnimalIdFromPath(pathname: string): number | null {
+    const match = pathname.match(/\/animals\/(\d+)/);
+    return match ? Number(match[1]) : null;
+}
 
 function AnimalsTable({ children }: { children: ReactNode }) {
     const { t } = useTranslation('animals');
@@ -49,22 +49,41 @@ function AnimalsTable({ children }: { children: ReactNode }) {
 }
 
 export default function AnimalsIndex() {
-    const { animals, taxonomy, hasAccess } = usePage<PageProps>().props;
+    const { animals, taxonomy, hasAccess, selectedAnimal } =
+        usePage<PageProps>().props;
     const { t } = useTranslation(['animals', 'common']);
 
-    // Binds speciesId's to species, since filters requires both and loading them with the Animals model would be redundant.
-    const speciesById = useMemo(
-        () => new Map(taxonomy.species.map((specie) => [specie.id, specie])),
-        [taxonomy.species],
+    const [selectedAnimalId, setSelectedAnimalId] = useState<number | null>(
+        () =>
+            selectedAnimal?.id ??
+            parseAnimalIdFromPath(window.location.pathname),
     );
-    const breedsById = useMemo(
-        () => new Map(taxonomy.breeds.map((breed) => [breed.id, breed])),
-        [taxonomy.breeds],
-    );
-    const statusesById = useMemo(
-        () => new Map(taxonomy.statuses.map((status) => [status.id, status])),
-        [taxonomy.statuses],
-    );
+
+    useEffect(() => {
+        if (selectedAnimal) {
+            seedAnimalCache(selectedAnimal);
+        }
+    }, [selectedAnimal]);
+
+    useEffect(() => {
+        function handlePopState() {
+            setSelectedAnimalId(
+                parseAnimalIdFromPath(window.location.pathname),
+            );
+        }
+        window.addEventListener('popstate', handlePopState);
+        return () => window.removeEventListener('popstate', handlePopState);
+    }, []);
+
+    function openAnimal(id: number) {
+        window.history.pushState(null, '', AnimalController.show(id).url);
+        setSelectedAnimalId(id);
+    }
+
+    function closeAnimal() {
+        window.history.pushState(null, '', AnimalController.index().url);
+        setSelectedAnimalId(null);
+    }
 
     const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
 
@@ -95,77 +114,13 @@ export default function AnimalsIndex() {
                     {hasAccess &&
                         (animals.length > 0 ? (
                             <AnimalsTable>
-                                {animals.map((animal) => {
-                                    const specie = speciesById.get(
-                                        animal.specieId,
-                                    );
-                                    const breed = animal.breedId
-                                        ? breedsById.get(animal.breedId)
-                                        : undefined;
-                                    const status = statusesById.get(
-                                        animal.statusId,
-                                    );
-
-                                    return (
-                                        <tr key={animal.id}>
-                                            <td className="flex items-center gap-3 p-3">
-                                                <Avatar>
-                                                    {animal.image && (
-                                                        <AvatarImage
-                                                            src={animal.image}
-                                                            alt={animal.name}
-                                                        />
-                                                    )}
-                                                    <AvatarFallback>
-                                                        {animal.name
-                                                            .slice(0, 2)
-                                                            .toUpperCase()}
-                                                    </AvatarFallback>
-                                                </Avatar>
-                                                <span className="font-medium">
-                                                    {animal.name}
-                                                </span>
-                                            </td>
-                                            <td className="p-3">
-                                                {specie &&
-                                                    t(`specie.${specie.name}`)}
-                                                {breed && (
-                                                    <span className="text-muted-foreground">
-                                                        {' '}
-                                                        ·{' '}
-                                                        {t(
-                                                            `breed.${breed.name}`,
-                                                        )}
-                                                    </span>
-                                                )}
-                                            </td>
-                                            <td className="p-3">
-                                                {t(`gender.${animal.gender}`)}
-                                            </td>
-                                            <td className="p-3 font-mono text-xs">
-                                                {animal.chip}
-                                            </td>
-                                            <td className="p-3">
-                                                {status && (
-                                                    <Badge
-                                                        variant={
-                                                            statusVariant[
-                                                                status.name
-                                                            ] ?? 'outline'
-                                                        }
-                                                    >
-                                                        {t(
-                                                            `status.${status.name}`,
-                                                        )}
-                                                    </Badge>
-                                                )}
-                                            </td>
-                                            <td className="max-w-xs truncate p-3 text-muted-foreground">
-                                                {animal.personality}
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
+                                {animals.map((animal) => (
+                                    <AnimalRow
+                                        key={animal.id}
+                                        animal={animal}
+                                        onClick={() => openAnimal(animal.id)}
+                                    />
+                                ))}
                             </AnimalsTable>
                         ) : (
                             <p className="text-muted-foreground">
@@ -176,6 +131,10 @@ export default function AnimalsIndex() {
                 <AnimalsCreate
                     showModal={showCreateModal}
                     setShowModal={setShowCreateModal}
+                />
+                <AnimalsShow
+                    animalId={selectedAnimalId}
+                    onClose={closeAnimal}
                 />
             </AnimalTaxonomyProvider>
         </AppLayout>

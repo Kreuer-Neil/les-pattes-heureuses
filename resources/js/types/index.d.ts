@@ -43,6 +43,15 @@ export interface User {
     [key: string]: unknown; // This allows for additional properties...
 }
 
+// Custom things
+export interface IImageData {
+    xs: string;
+    sm: string;
+    lg: string;
+}
+
+// Custom types
+
 export type AnimalStatusName = (typeof AnimalStatus)[keyof typeof AnimalStatus];
 
 export type SpecieName = (typeof SpecieEnum)[keyof typeof SpecieEnum];
@@ -98,21 +107,22 @@ export interface IAnimalMiniature {
     breedId: number | null;
     furColorId: number | null;
     secondaryFurColorId: number | null;
+    personality: string;
+}
+
+export interface IAnimalVaccine {
+    id: number;
+    vaccineType: {
+        id: number;
+        name: string;
+    };
+    vaccinatedAt: string;
+}
+
+export interface IAnimal extends IAnimalMiniature {
     bornAt: {
         toString: string;
         value: string;
     };
-    personality: string;
-}
-
-export interface IAnimal {
-    name: string;
-    image: string;
-    gender: 'M' | 'F';
-    chip: string;
-    status: AnimalStatusName;
-    specie: ISpecie;
-    breed?: IBreed;
-    furColor: IFurColor;
-    secondaryFurColor?: IFurColor;
+    vaccines: IAnimalVaccine[];
 }

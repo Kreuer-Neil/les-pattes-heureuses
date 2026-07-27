@@ -123,5 +123,17 @@
         "removeVaccine": "Retirer le vaccin",
         "submit": "Ajouter l'animal",
         "cancel": "Annuler"
+    },
+
+    "show": {
+        "loading": "Chargement…",
+        "error": "Une erreur est survenue lors du chargement de cet animal.",
+        "gender": "Sexe",
+        "bornAt": "Date de naissance",
+        "specie": "Espèce",
+        "furColor": "Couleur du pelage",
+        "personality": "Caractère",
+        "vaccines": "Vaccinations",
+        "noVaccines": "Aucune vaccination enregistrée."
     }
 }

@@ -19,6 +19,11 @@ class Animal extends Model
         'breed_id', 'fur_color_id', 'fur_pattern_id', 'secondary_fur_color_id', 'specie_id', 'animal_status_id',
     ];
 
+    // Non-admins can change animals :
+    // - status (other than adopted/deceased)
+    // - Image
+    // - Add notes
+
     protected $casts = [
         'born_at' => 'date',
     ];
@@ -61,7 +66,7 @@ class Animal extends Model
 
     public function vaccines(): BelongsToMany
     {
-        return $this->belongsToMany(Vaccine::class, AnimalVaccine::class)->withPivotValue('vaccinated_at');
+        return $this->belongsToMany(Vaccine::class, AnimalVaccine::class)->withPivot('id', 'vaccinated_at');
     }
 
     public function scopeAvailable(Builder $query): Builder

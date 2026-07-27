@@ -15,12 +15,12 @@ class AnimalVaccineResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->resource->id,
+            'id' => $this->resource->pivot->id,
             'vaccineType' => [
-                'id' => $this->resource->vaccine->id,
-                'name' => $this->resource->vaccine->name,
+                'id' => $this->resource->id,
+                'name' => $this->resource->name,
             ],
-            'vaccinatedAt' => $this->resource->vaccinated_at
+            'vaccinatedAt' => $this->resource->pivot->vaccinated_at,
         ];
     }
 }

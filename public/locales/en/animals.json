@@ -123,5 +123,17 @@
         "removeVaccine": "Remove vaccine",
         "submit": "Add animal",
         "cancel": "Cancel"
+    },
+
+    "show": {
+        "loading": "Loading…",
+        "error": "Something went wrong while loading this animal.",
+        "gender": "Gender",
+        "bornAt": "Date of birth",
+        "specie": "Species",
+        "furColor": "Fur color",
+        "personality": "Personality",
+        "vaccines": "Vaccinations",
+        "noVaccines": "No vaccinations recorded."
     }
 }
