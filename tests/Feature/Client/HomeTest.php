@@ -18,7 +18,7 @@ test('anyone can visit the homepage', function () {
 });
 
 test('the number of found animals is right', function () {
-    $request = $this->get(route('home'));
+    $request = $this->get(route('homepage'));
 
     $adoptedAnimals = Animal::all()->count();
 
