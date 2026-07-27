@@ -2,8 +2,8 @@
 
 <a href="{{ route('client.animal.show', $animal) }}" class="animal-card">
     <div class="relative">
-        <img src="{{ $animal->image ? asset('storage/' . $animal->image) : asset('images/cat_dog.jpg') }}"
-             alt="{{ $animal->name }}" class="animal-card-img">
+        <x-client.animal-image :animal="$animal" class="animal-card-img"
+            sizes="(min-width: 1280px) 22vw, (min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw" />
         @if($animal->status)
             <span class="status-tag">{{ __('client.animal.statuses.' . $animal->status->name) }}</span>
         @endif

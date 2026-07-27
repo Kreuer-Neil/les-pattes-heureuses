@@ -88,6 +88,13 @@ return [
         'request_text' => 'Laissez-nous vos coordonnées et nous vous recontacterons pour organiser une rencontre avec :name.',
         'send_request' => 'Envoyer la demande',
         'back_to_list' => 'Retour à la liste',
+        'share' => [
+            'button' => 'Partager',
+            'title' => 'Partager cette fiche',
+            'text' => 'Copiez ce lien pour le partager par email ou par SMS.',
+            'copy' => 'Copier le lien',
+            'copied' => 'Lien copié !',
+        ],
     ],
 
     'dialog' => [
