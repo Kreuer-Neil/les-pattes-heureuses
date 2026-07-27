@@ -134,6 +134,14 @@
         "furColor": "Fur color",
         "personality": "Personality",
         "vaccines": "Vaccinations",
-        "noVaccines": "No vaccinations recorded."
+        "noVaccines": "No vaccinations recorded.",
+        "edit": "Edit"
+    },
+
+    "edit": {
+        "title": "Edit animal",
+        "description": "Update this animal's information.",
+        "submit": "Save changes",
+        "cancel": "Cancel"
     }
 }

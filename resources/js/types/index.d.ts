@@ -107,6 +107,7 @@ export interface IAnimalMiniature {
     breedId: number | null;
     furColorId: number | null;
     secondaryFurColorId: number | null;
+    furPatternId: number | null;
     personality: string;
 }
 

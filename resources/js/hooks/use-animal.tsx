@@ -9,6 +9,16 @@ export function seedAnimalCache(animal: IAnimal) {
     animalCache.set(animal.id, animal);
 }
 
+async function fetchAnimal(id: number): Promise<IAnimal> {
+    const response = await fetch(show(id).url, {
+        headers: { Accept: 'application/json' },
+    });
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
+    return await response.json();
+}
+
 export function useAnimal(id: number | null) {
     const [trackedId, setTrackedId] = useState(id);
     const [animal, setAnimal] = useState<IAnimal | null>(() =>
@@ -24,28 +34,25 @@ export function useAnimal(id: number | null) {
         setError(null);
     }
 
+    function loadAnimal(animalId: number, isCancelled: () => boolean = () => false) {
+        fetchAnimal(animalId)
+            .then((data) => {
+                if (isCancelled()) return;
+                animalCache.set(animalId, data);
+                setAnimal(data);
+            })
+            .catch((err: Error) => {
+                if (!isCancelled()) setError(err.message);
+            });
+    }
+
     useEffect(() => {
         if (id === null || animalCache.has(id)) {
             return;
         }
 
         let cancelled = false;
-
-        fetch(show(id).url, { headers: { Accept: 'application/json' } })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(response.statusText);
-                }
-                return response.json();
-            })
-            .then((data: IAnimal) => {
-                if (cancelled) return;
-                animalCache.set(id, data);
-                setAnimal(data);
-            })
-            .catch((err: Error) => {
-                if (!cancelled) setError(err.message);
-            });
+        loadAnimal(id, () => cancelled);
 
         return () => {
             cancelled = true;
@@ -54,5 +61,14 @@ export function useAnimal(id: number | null) {
 
     const loading = id !== null && animal === null && error === null;
 
-    return { animal, loading, error };
+    // Called imperatively (e.g. after a successful edit), so it just
+    // refetches directly rather than nudging the effect above to re-run.
+    function refresh() {
+        if (id === null) return;
+
+        animalCache.delete(id);
+        loadAnimal(id);
+    }
+
+    return { animal, loading, error, refresh };
 }

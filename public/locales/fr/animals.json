@@ -134,6 +134,14 @@
         "furColor": "Couleur du pelage",
         "personality": "Caractère",
         "vaccines": "Vaccinations",
-        "noVaccines": "Aucune vaccination enregistrée."
+        "noVaccines": "Aucune vaccination enregistrée.",
+        "edit": "Modifier"
+    },
+
+    "edit": {
+        "title": "Modifier l'animal",
+        "description": "Mettre à jour les informations de cet animal.",
+        "submit": "Enregistrer",
+        "cancel": "Annuler"
     }
 }

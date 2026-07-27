@@ -1,12 +1,21 @@
+import AnimalController from '@/actions/App/Http/Controllers/AnimalController';
+import AnimalFields, {
+    IAnimalFieldsDefaultValues,
+} from '@/components/animals/animal-fields';
 import CustomModal, {
     ModalDescription,
+    ModalFooter,
     ModalHeader,
     ModalTitle,
 } from '@/components/modals/custom-modal';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { useAnimal } from '@/hooks/use-animal';
 import { useAnimalLabels } from '@/hooks/use-animal-labels';
 import { useImage } from '@/hooks/use-image-asset';
+import { IAnimal } from '@/types';
+import { Form } from '@inertiajs/react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const statusVariant: Record<string, 'default' | 'secondary' | 'outline'> = {
@@ -17,6 +26,31 @@ const statusVariant: Record<string, 'default' | 'secondary' | 'outline'> = {
     unknown: 'outline',
 };
 
+function editDefaultValues(animal: IAnimal): IAnimalFieldsDefaultValues {
+    return {
+        name: animal.name,
+        chip: animal.chip,
+        gender: animal.gender,
+        bornAt: animal.bornAt.value.slice(0, 10),
+        statusId: String(animal.statusId),
+        specieId: String(animal.specieId),
+        breedId: animal.breedId != null ? String(animal.breedId) : null,
+        furColorId:
+            animal.furColorId != null ? String(animal.furColorId) : null,
+        secondaryFurColorId:
+            animal.secondaryFurColorId != null
+                ? String(animal.secondaryFurColorId)
+                : null,
+        furPatternId:
+            animal.furPatternId != null ? String(animal.furPatternId) : null,
+        personality: animal.personality,
+        vaccines: animal.vaccines.map((vaccine) => ({
+            vaccineId: String(vaccine.vaccineType.id),
+            date: vaccine.vaccinatedAt,
+        })),
+    };
+}
+
 export default function AnimalsShow({
     animalId,
     onClose,
@@ -25,7 +59,7 @@ export default function AnimalsShow({
     onClose: () => void;
 }) {
     const { t } = useTranslation('animals');
-    const { animal, loading, error } = useAnimal(animalId);
+    const { animal, loading, error, refresh } = useAnimal(animalId);
     const {
         status,
         specieLabel,
@@ -36,6 +70,16 @@ export default function AnimalsShow({
 
     const image = useImage(animal?.image, 'full');
 
+    const [trackedAnimalId, setTrackedAnimalId] = useState(animalId);
+    const [isEditing, setIsEditing] = useState(false);
+
+    // Reset synchronously during render when the id changes, so switching
+    // to a different animal never leaves the previous edit session open.
+    if (animalId !== trackedAnimalId) {
+        setTrackedAnimalId(animalId);
+        setIsEditing(false);
+    }
+
     return (
         <CustomModal
             showModal={animalId !== null}
@@ -45,10 +89,8 @@ export default function AnimalsShow({
             {loading && (
                 <p className="text-muted-foreground">{t('show.loading')}</p>
             )}
-
             {error && <p className="text-destructive">{t('show.error')}</p>}
-
-            {animal && (
+            {animal && !isEditing && (
                 <div className="flex flex-col gap-6 sm:flex-row">
                     {image && (
                         <img
@@ -151,8 +193,60 @@ export default function AnimalsShow({
                                 </dd>
                             </div>
                         </dl>
+
+                        <ModalFooter className="sm:justify-end">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={() => setIsEditing(true)}
+                            >
+                                {t('show.edit')}
+                            </Button>
+                        </ModalFooter>
                     </div>
                 </div>
+            )}
+            {animal && isEditing && (
+                <>
+                    <ModalHeader>
+                        <ModalTitle>{t('edit.title')}</ModalTitle>
+                        <ModalDescription>
+                            {t('edit.description')}
+                        </ModalDescription>
+                    </ModalHeader>
+
+                    <Form
+                        {...AnimalController.update.form(animal.id)}
+                        onSuccess={() => {
+                            refresh();
+                            setIsEditing(false);
+                        }}
+                        className="flex flex-col gap-6"
+                    >
+                        {({ errors, processing }) => (
+                            <>
+                                <AnimalFields
+                                    errors={errors}
+                                    defaultValues={editDefaultValues(animal)}
+                                />
+
+                                <ModalFooter>
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        onClick={() => setIsEditing(false)}
+                                        disabled={processing}
+                                    >
+                                        {t('edit.cancel')}
+                                    </Button>
+                                    <Button type="submit" disabled={processing}>
+                                        {t('edit.submit')}
+                                    </Button>
+                                </ModalFooter>
+                            </>
+                        )}
+                    </Form>
+                </>
             )}
         </CustomModal>
     );

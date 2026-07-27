@@ -10,3 +10,6 @@ Route::post('animals', [AnimalController::class, 'store'])
 
 Route::get('animals/{animal}', [AnimalController::class, 'show'])
     ->name('animals.show');
+
+Route::put('animals/{animal}', [AnimalController::class, 'update'])
+    ->name('animals.update');

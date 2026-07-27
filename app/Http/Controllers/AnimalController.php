@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\Animals\Gender;
 use App\Enums\PendingChanges;
+use App\Enums\PendingChangeStatus;
 use App\Http\Resources\AnimalMiniatureResource;
 use App\Http\Resources\AnimalResource;
 use App\Jobs\HandleAnimalsImageUploads;
@@ -113,12 +114,9 @@ class AnimalController extends Controller
         // Image handling
         if (array_key_exists('image', $validated)) {
 
-            // $oldImageName = $user->avatar;
-
             $imagePath = $validated['image']
                 ->store('images/animals', 'public');
 
-            // TODO refactor
             $imageName = Str::beforeLast(Str::afterLast($imagePath, '/'), '.');
 
             $directory = 'animals';
@@ -131,8 +129,11 @@ class AnimalController extends Controller
             $this->createAnimal($animal, $vaccines);
         } else {
             Gate::authorize('suggest', Animal::class);
-            new PendingAnimalChanges(array_merge(
-                [
+            PendingAnimalChanges::create([
+                'action' => PendingChanges::Store,
+                'status' => PendingChangeStatus::Pending,
+                'user_id' => $request->user()->id,
+                'payload' => [
                     'name' => $animal->name,
                     'image' => $animal->image,
                     'gender' => $animal->gender,
@@ -145,13 +146,90 @@ class AnimalController extends Controller
                     'fur_pattern_id' => $animal->fur_pattern_id,
                     'personality' => $animal->personality,
                     'born_at' => $animal->born_at,
-                ],
-                ['action' => PendingChanges::Store->value],
-                [
                     // Notes?
                     'vaccines' => $vaccines,
-                ]
-            ));
+                ],
+            ]);
+        }
+
+        return redirect()->back();
+    }
+
+    public function update(Request $request, Animal $animal)
+    {
+        abort_unless(Gate::any(['update', 'suggest'], $animal), 403);
+
+        $validated = $request->validate([
+            'name' => 'required|string|min:2|max:255',
+            'image' => 'nullable|file|image|extensions:jpg,jpeg,png,webp,gif|max:5120',
+            'gender' => ['required', Rule::enum(Gender::class)],
+            'chip' => ['required', 'string', Rule::unique('animals', 'chip')->ignore($animal->id)],
+            'animal_status_id' => 'required|exists:animal_statuses,id',
+            'specie_id' => 'nullable|exists:species,id',
+            'breed_id' => 'nullable|exists:breeds,id',
+            'fur_color_id' => 'nullable|exists:fur_colors,id',
+            'secondary_fur_color_id' => 'nullable|exists:fur_colors,id',
+            'fur_pattern_id' => 'nullable|exists:fur_patterns,id',
+            'personality' => 'required|string|min:2',
+            'born_at' => 'date|before_or_equal:today',
+            // Vaccines
+            'vaccines' => 'nullable|array', // null = "unknown"
+            'vaccines.*.date' => 'required|date',
+            'vaccines.*.id' => 'required|exists:vaccines,id',
+        ]);
+
+        $attributes = collect($validated)->except(['image', 'vaccines'])->all();
+
+        // Vaccines
+        $vaccines = [];
+        if (array_key_exists('vaccines', $validated)) {
+            foreach ($validated['vaccines'] as $vaccine) {
+                $vaccines[] = [
+                    'vaccinated_at' => $vaccine['date'],
+                    'vaccine_id' => $vaccine['id'],
+                ];
+            }
+        }
+
+        // Image handling
+        if (array_key_exists('image', $validated)) {
+            $imagePath = $validated['image']
+                ->store('images/animals', 'public');
+
+            $imageName = Str::beforeLast(Str::afterLast($imagePath, '/'), '.');
+
+            $directory = 'animals';
+            HandleAnimalsImageUploads::dispatch($imageName, null, $imagePath, $directory);
+
+            $attributes['image'] = $imageName;
+        }
+
+        if (Gate::allows('update', $animal)) {
+            $animal->update($attributes);
+
+            if (array_key_exists('vaccines', $validated)) {
+                $animal->vaccines()->detach();
+
+                foreach ($vaccines as $vaccine) {
+                    AnimalVaccine::create([
+                        'animal_id' => $animal->id,
+                        'vaccine_id' => $vaccine['vaccine_id'],
+                        'vaccinated_at' => $vaccine['vaccinated_at'],
+                    ]);
+                }
+            }
+        } else {
+            Gate::authorize('suggest', $animal);
+            PendingAnimalChanges::create([
+                'action' => PendingChanges::Update,
+                'status' => PendingChangeStatus::Pending,
+                'animal_id' => $animal->id,
+                'user_id' => $request->user()->id,
+                'payload' => array_merge($attributes, [
+                    // Notes?
+                    'vaccines' => $vaccines,
+                ]),
+            ]);
         }
 
         return redirect()->back();
@@ -174,6 +252,4 @@ class AnimalController extends Controller
 
         // Same for notes?
     }
-
-    public function update() {}
 }

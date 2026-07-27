@@ -17,9 +17,9 @@ class AnimalMiniatureResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
-            'name'=> $this->resource->name,
-            'image'=> $this->resource->image,
-            'gender'=> $this->resource->gender,
+            'name' => $this->resource->name,
+            'image' => $this->resource->image,
+            'gender' => $this->resource->gender,
             'chip' => $this->resource->chip,
 
             'statusId' => $this->resource->animal_status_id,
@@ -27,8 +27,9 @@ class AnimalMiniatureResource extends JsonResource
             'breedId' => $this->resource->breed_id,
             'furColorId' => $this->resource->fur_color_id,
             'secondaryFurColorId' => $this->resource->secondary_fur_color_id,
+            'furPatternId' => $this->resource->fur_pattern_id,
 
-            'personality' => Str::limit(value: $this->resource->personality, preserveWords: true)
+            'personality' => Str::limit(value: $this->resource->personality, preserveWords: true),
         ];
     }
 }
