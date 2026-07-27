@@ -5,7 +5,7 @@ import CustomModal, {
 } from '@/components/modals/custom-modal';
 import { Badge } from '@/components/ui/badge';
 import { useAnimal } from '@/hooks/use-animal';
-import { useAnimalTaxonomy } from '@/hooks/use-animal-taxonomy';
+import { useAnimalLabels } from '@/hooks/use-animal-labels';
 import { useImage } from '@/hooks/use-image-asset';
 import { useTranslation } from 'react-i18next';
 
@@ -27,35 +27,12 @@ export default function AnimalsShow({
     const { t } = useTranslation('animals');
     const { animal, loading, error } = useAnimal(animalId);
     const {
-        statusOptions,
-        specieOptions,
-        furColorOptions,
-        breedOptionsBySpecie,
-    } = useAnimalTaxonomy();
-
-    const status = animal
-        ? statusOptions.find((o) => o.value === String(animal.statusId))
-        : undefined;
-    const specieLabel = animal
-        ? specieOptions.find((o) => o.value === String(animal.specieId))?.label
-        : undefined;
-    const breedLabel =
-        animal?.breedId != null
-            ? breedOptionsBySpecie(String(animal.specieId)).find(
-                  (o) => o.value === String(animal.breedId),
-              )?.label
-            : undefined;
-    const furColorLabel =
-        animal?.furColorId != null
-            ? furColorOptions.find((o) => o.value === String(animal.furColorId))
-                  ?.label
-            : undefined;
-    const secondaryFurColorLabel =
-        animal?.secondaryFurColorId != null
-            ? furColorOptions.find(
-                  (o) => o.value === String(animal.secondaryFurColorId),
-              )?.label
-            : undefined;
+        status,
+        specieLabel,
+        breedLabel,
+        furColorLabel,
+        secondaryFurColorLabel,
+    } = useAnimalLabels(animal);
 
     const image = useImage(animal?.image, 'full');
 
