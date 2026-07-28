@@ -220,6 +220,10 @@
         @apply max-h-64 min-h-32;
     }
 
+    .form-error {
+        @apply pl-2 text-sm font-medium text-red-600;
+    }
+
     button {
         @apply cursor-pointer;
     }

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Animals\Gender;
+use App\Enums\PendingApprobationStatus;
 use App\Enums\PendingChanges;
-use App\Enums\PendingChangeStatus;
 use App\Http\Resources\AnimalMiniatureResource;
 use App\Http\Resources\AnimalResource;
 use App\Jobs\HandleAnimalsImageUploads;
@@ -131,7 +131,7 @@ class AnimalController extends Controller
             Gate::authorize('suggest', Animal::class);
             PendingAnimalChanges::create([
                 'action' => PendingChanges::Store,
-                'status' => PendingChangeStatus::Pending,
+                'status' => PendingApprobationStatus::Pending,
                 'user_id' => $request->user()->id,
                 'payload' => [
                     'name' => $animal->name,
@@ -222,7 +222,7 @@ class AnimalController extends Controller
             Gate::authorize('suggest', $animal);
             PendingAnimalChanges::create([
                 'action' => PendingChanges::Update,
-                'status' => PendingChangeStatus::Pending,
+                'status' => PendingApprobationStatus::Pending,
                 'animal_id' => $animal->id,
                 'user_id' => $request->user()->id,
                 'payload' => array_merge($attributes, [

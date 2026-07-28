@@ -59,5 +59,5 @@
         </section>
     </main>
 
-    <x-client.volunteer-dialog />
+    <x-dialogs.volunteer-dialog />
 </x-layout.app>

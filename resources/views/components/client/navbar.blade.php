@@ -36,4 +36,4 @@
     </ul>
 </nav>
 
-<x-client.contact-dialog />
+<x-dialogs.contact-dialog />

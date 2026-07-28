@@ -69,6 +69,11 @@ class Animal extends Model
         return $this->belongsToMany(Vaccine::class, AnimalVaccine::class)->withPivot('id', 'vaccinated_at');
     }
 
+    public function adoptionRequests(): HasMany
+    {
+        return $this->hasMany(AdoptionRequest::class);
+    }
+
     public function scopeAvailable(Builder $query): Builder
     {
         return $query->whereHas('status', fn (Builder $status) => $status->where('name', Status::Available->value));

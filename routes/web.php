@@ -1,25 +1,25 @@
 <?php
 
-use App\Http\Controllers\Client\AdoptionController;
-use App\Http\Controllers\Client\HomeController;
+use App\Http\Controllers\AdoptionController;
+use App\Http\Controllers\AdoptionRequestController;
+use App\Http\Controllers\ContactMessageController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-use Laravel\Fortify\Features;
 
 // Laravel recommends putting subdomain routes before root routes, to not let URIs get overwritten
 // Just in case.
-Route::domain('admin.' . 'les-pattes-heureuses.test')->group(function () {
+Route::domain('admin.'.'les-pattes-heureuses.test')->group(function () {
     Route::middleware(['guest'])->group(function () {
-//        Route::get('/login', function () {
-//            return Inertia::render('auth/login', [
-//                'canRegister' => Features::enabled(Features::registration()),
-//            ]);
-//        })->name('login');
+        //        Route::get('/login', function () {
+        //            return Inertia::render('auth/login', [
+        //                'canRegister' => Features::enabled(Features::registration()),
+        //            ]);
+        //        })->name('login');
     });
 
     Route::middleware(['auth', 'verified'])->group(function () {
-        require __DIR__ . '/dashboard.php';
-        require __DIR__ . '/animals.php';
+        require __DIR__.'/dashboard.php';
+        require __DIR__.'/animals.php';
         // Put only admin-access auth routes here
     });
 });
@@ -27,7 +27,7 @@ Route::domain('admin.' . 'les-pattes-heureuses.test')->group(function () {
 Route::get('/', [HomeController::class, 'index'])
     ->name('homepage');
 
-Route::post('/contact', [HomeController::class, 'contact'])
+Route::post('/contact', [ContactMessageController::class, 'store'])
     ->name('client.contact');
 
 Route::get('/adoption', [AdoptionController::class, 'index'])
@@ -36,7 +36,7 @@ Route::get('/adoption', [AdoptionController::class, 'index'])
 Route::get('/adoption/{animal}', [AdoptionController::class, 'show'])
     ->name('client.animal.show');
 
-Route::post('/adoption/{animal}/request', [AdoptionController::class, 'request'])
+Route::post('/adoption/{animal}/request', [AdoptionRequestController::class, 'store'])
     ->name('client.adoption.request');
 
-require __DIR__ . '/settings.php';
+require __DIR__.'/settings.php';

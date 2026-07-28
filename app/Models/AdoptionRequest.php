@@ -3,20 +3,17 @@
 namespace App\Models;
 
 use App\Enums\PendingApprobationStatus;
-use App\Enums\PendingChanges;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class PendingAnimalChanges extends Model
+class AdoptionRequest extends Model
 {
     protected $fillable = [
-        'action', 'status', 'animal_id', 'user_id', 'payload',
+        'animal_id', 'adopter_profile_id', 'content', 'status',
     ];
 
     protected $casts = [
-        'action' => PendingChanges::class,
         'status' => PendingApprobationStatus::class,
-        'payload' => 'array',
     ];
 
     public function animal(): BelongsTo
@@ -24,8 +21,8 @@ class PendingAnimalChanges extends Model
         return $this->belongsTo(Animal::class);
     }
 
-    public function user(): BelongsTo
+    public function adopterProfile(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(AdopterProfile::class);
     }
 }

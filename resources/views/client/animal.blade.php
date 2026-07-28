@@ -45,7 +45,7 @@
     </main>
 
     @if($isAvailable)
-        <x-client.dialog id="adoption-request-dialog" :title="__('client.animal.request_visit')">
+        <x-dialogs.dialog id="adoption-request-dialog" :title="__('client.animal.request_visit')">
             <form class="form" method="POST" action="{{ route('client.adoption.request', $animal) }}">
                 @csrf
                 <p class="labor-text">{{ __('client.animal.request_text', ['name' => $animal->name]) }}</p>
@@ -59,10 +59,10 @@
                 </fieldset>
                 <button type="submit" class="custom-btn">{{ __('client.animal.send_request') }}</button>
             </form>
-        </x-client.dialog>
+        </x-dialogs.dialog>
     @endif
 
-    <x-client.dialog id="share-dialog" :title="__('client.animal.share.title')">
+    <x-dialogs.dialog id="share-dialog" :title="__('client.animal.share.title')">
         <div class="form">
             <p class="labor-text">{{ __('client.animal.share.text') }}</p>
             <div class="w-full flex gap-2">
@@ -73,7 +73,7 @@
             </div>
             <p id="share-copy-feedback" class="labor-text" role="status" hidden>{{ __('client.animal.share.copied') }}</p>
         </div>
-    </x-client.dialog>
+    </x-dialogs.dialog>
 
     <script>
         (function () {

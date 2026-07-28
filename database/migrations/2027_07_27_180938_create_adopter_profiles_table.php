@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\ContactMessageType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contact_messages', function (Blueprint $table) {
+        Schema::create('adopter_profiles', function (Blueprint $table) {
             $table->id();
 
+            $table->string('email')->unique()->index();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('email');
-
-            $table->enum('type', ContactMessageType::cases());
-
-            $table->text('content');
+            $table->text('details')->nullable();
 
             $table->timestamps();
         });
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contact_messages');
+        Schema::dropIfExists('adopter_profiles');
     }
 };
