@@ -20,6 +20,8 @@ Route::domain('admin.'.'les-pattes-heureuses.test')->group(function () {
     Route::middleware(['auth', 'verified'])->group(function () {
         require __DIR__.'/dashboard.php';
         require __DIR__.'/animals.php';
+        require __DIR__.'/adoption-requests.php';
+        require __DIR__.'/notifications.php';
         // Put only admin-access auth routes here
     });
 });

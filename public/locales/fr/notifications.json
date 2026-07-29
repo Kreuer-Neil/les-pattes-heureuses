@@ -1,0 +1,23 @@
+{
+    "title": "Notifications",
+    "empty": "Rien ne nécessite votre attention pour l'instant.",
+    "unreadMessages_one": "Vous avez {{count}} message non lu.",
+    "unreadMessages_other": "Vous avez {{count}} messages non lus.",
+
+    "types": {
+        "adoption_request": "Demande d'adoption pour {{animal}} de la part de {{adopter}}",
+        "animal_change": "{{proposer}} a proposé {{action}} pour {{animal}}"
+    },
+
+    "changeActions": {
+        "store": "un nouvel animal",
+        "update": "une mise à jour",
+        "delete": "une suppression"
+    },
+
+    "widget": {
+        "title": "Nécessite votre attention",
+        "empty": "Rien ne nécessite votre attention pour l'instant.",
+        "viewAll": "Voir toutes les notifications"
+    }
+}

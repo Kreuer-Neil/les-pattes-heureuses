@@ -12,12 +12,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useAnimalTaxonomy } from '@/hooks/use-animal-taxonomy';
 import { AnimalStatus } from '@/lib/animal-enums';
 import { Minus, Plus } from 'lucide-react';
-import {
-    forwardRef,
-    useImperativeHandle,
-    useRef,
-    useState,
-} from 'react';
+import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface IVaccineEntry {
@@ -307,18 +302,14 @@ const AnimalFields = forwardRef<
                         emptyText={t('create.noResults')}
                         aria-invalid={!!errors.fur_pattern_id}
                     />
-                    <FieldError
-                        errors={[{ message: errors.fur_pattern_id }]}
-                    />
+                    <FieldError errors={[{ message: errors.fur_pattern_id }]} />
                 </Field>
             </FieldSet>
 
             {/* img + personnality + status */}
             <FieldSet>
                 <Field>
-                    <FieldLabel htmlFor="image">
-                        {t('create.image')}
-                    </FieldLabel>
+                    <FieldLabel htmlFor="image">{t('create.image')}</FieldLabel>
                     {/* TODO: preview thumbnail + drag & drop once the basic flow is confirmed working */}
                     <Input
                         id="image"
@@ -397,9 +388,7 @@ const AnimalFields = forwardRef<
                                     errors={[
                                         {
                                             message:
-                                                errors[
-                                                    `vaccines.${index}.id`
-                                                ],
+                                                errors[`vaccines.${index}.id`],
                                         },
                                     ]}
                                 />

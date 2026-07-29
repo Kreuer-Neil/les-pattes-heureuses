@@ -3,11 +3,8 @@
 use App\Enums\Animals\Status;
 use App\Models\Animal;
 use App\Models\AnimalStatus;
-use Database\Seeders\AnimalOptionsSeeder;
 
 beforeEach(function () {
-    $this->seed(AnimalOptionsSeeder::class);
-
     $this->animal = Animal::factory()->create([
         'animal_status_id' => AnimalStatus::where('name', Status::Available->value)->value('id'),
     ]);

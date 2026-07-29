@@ -11,10 +11,17 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
+import adoptionRequests from '@/routes/adoption-requests';
 import animals from '@/routes/animals';
+import notifications from '@/routes/notifications';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { /*BookOpen, Folder,*/ LayoutGrid, PawPrint } from 'lucide-react';
+import {
+    /*BookOpen, Folder,*/ Bell,
+    HeartHandshake,
+    LayoutGrid,
+    PawPrint,
+} from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -27,6 +34,16 @@ const mainNavItems: NavItem[] = [
         title: 'Animals',
         href: animals.index(),
         icon: PawPrint,
+    },
+    {
+        title: 'Adoption requests',
+        href: adoptionRequests.index(),
+        icon: HeartHandshake,
+    },
+    {
+        title: 'Notifications',
+        href: notifications.index(),
+        icon: Bell,
     },
 ];
 

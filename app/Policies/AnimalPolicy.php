@@ -41,12 +41,17 @@ class AnimalPolicy
         return $this->isAdmin($user);
     }
 
+    public function review(User $user): bool
+    {
+        return $this->isAdmin($user);
+    }
+
     private function isAdmin(User $user): bool
     {
         return $user->role() === Roles::Admin->value;
     }
 
-    private function isVolunteer(User $user):bool
+    private function isVolunteer(User $user): bool
     {
         return in_array($user->role(), [Roles::Admin->value, Roles::Volunteer->value]);
     }

@@ -129,7 +129,7 @@ class AnimalController extends Controller
             $this->createAnimal($animal, $vaccines);
         } else {
             Gate::authorize('suggest', Animal::class);
-            PendingAnimalChanges::create([
+            $pendingAnimalChange = PendingAnimalChanges::create([
                 'action' => PendingChanges::Store,
                 'status' => PendingApprobationStatus::Pending,
                 'user_id' => $request->user()->id,
@@ -150,6 +150,9 @@ class AnimalController extends Controller
                     'vaccines' => $vaccines,
                 ],
             ]);
+
+            // TODO email the admins directly (README: "Notifications par email (admin et adoptant)") —
+            // no Mail infrastructure exists yet, deferred separately from the in-app attention feed.
         }
 
         return redirect()->back();
@@ -208,19 +211,11 @@ class AnimalController extends Controller
             $animal->update($attributes);
 
             if (array_key_exists('vaccines', $validated)) {
-                $animal->vaccines()->detach();
-
-                foreach ($vaccines as $vaccine) {
-                    AnimalVaccine::create([
-                        'animal_id' => $animal->id,
-                        'vaccine_id' => $vaccine['vaccine_id'],
-                        'vaccinated_at' => $vaccine['vaccinated_at'],
-                    ]);
-                }
+                $this->syncVaccines($animal, $vaccines);
             }
         } else {
             Gate::authorize('suggest', $animal);
-            PendingAnimalChanges::create([
+            $pendingAnimalChange = PendingAnimalChanges::create([
                 'action' => PendingChanges::Update,
                 'status' => PendingApprobationStatus::Pending,
                 'animal_id' => $animal->id,
@@ -230,9 +225,64 @@ class AnimalController extends Controller
                     'vaccines' => $vaccines,
                 ]),
             ]);
+
+            // TODO email the admins directly (README: "Notifications par email (admin et adoptant)") —
+            // no Mail infrastructure exists yet, deferred separately from the in-app attention feed.
         }
 
         return redirect()->back();
+    }
+
+    public function acceptChange(PendingAnimalChanges $pendingAnimalChange)
+    {
+        Gate::authorize('review', Animal::class);
+
+        $payload = collect($pendingAnimalChange->payload);
+        $vaccines = collect($payload->get('vaccines', []))
+            ->map(fn ($vaccine) => [
+                'vaccine_id' => $vaccine['vaccine_id'],
+                'vaccinated_at' => $vaccine['vaccinated_at'],
+            ])
+            ->all();
+        $attributes = $payload->except('vaccines')->all();
+
+        match ($pendingAnimalChange->action) {
+            PendingChanges::Store => $this->createAnimal(new Animal($attributes), $vaccines),
+            PendingChanges::Update => $this->applyAnimalUpdate($pendingAnimalChange->animal, $attributes, $vaccines),
+            PendingChanges::Delete => $pendingAnimalChange->animal?->delete(),
+        };
+
+        $pendingAnimalChange->update(['status' => PendingApprobationStatus::Approved]);
+
+        return redirect()->back();
+    }
+
+    public function denyChange(PendingAnimalChanges $pendingAnimalChange)
+    {
+        Gate::authorize('review', Animal::class);
+
+        $pendingAnimalChange->update(['status' => PendingApprobationStatus::Rejected]);
+
+        return redirect()->back();
+    }
+
+    private function applyAnimalUpdate(Animal $animal, array $attributes, array $vaccines): void
+    {
+        $animal->update($attributes);
+        $this->syncVaccines($animal, $vaccines);
+    }
+
+    private function syncVaccines(Animal $animal, array $vaccines): void
+    {
+        $animal->vaccines()->detach();
+
+        foreach ($vaccines as $vaccine) {
+            AnimalVaccine::create([
+                'animal_id' => $animal->id,
+                'vaccine_id' => $vaccine['vaccine_id'],
+                'vaccinated_at' => $vaccine['vaccinated_at'],
+            ]);
+        }
     }
 
     private function createAnimal(Animal $animal, array $vaccines)
@@ -241,13 +291,7 @@ class AnimalController extends Controller
 
         // Vaccinations
         if ($vaccines && $vaccines !== []) {
-            foreach ($vaccines as $vaccine) {
-                AnimalVaccine::create([
-                    'animal_id' => $animal->id,
-                    'vaccine_id' => $vaccine['vaccine_id'],
-                    'vaccinated_at' => $vaccine['vaccinated_at'],
-                ]);
-            }
+            $this->syncVaccines($animal, $vaccines);
         }
 
         // Same for notes?

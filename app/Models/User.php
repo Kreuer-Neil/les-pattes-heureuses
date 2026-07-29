@@ -3,16 +3,18 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\Roles;
+use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, TwoFactorAuthenticatable;
 
     /**
@@ -58,8 +60,14 @@ class User extends Authenticatable
         return $this->belongsTo(UserRole::class);
     }
 
-    public function role():string
+    public function role(): string
     {
         return $this->userRole->name;
+    }
+
+    // Basically a "::where(role -> admin)"
+    public function scopeAdmins(Builder $query): Builder
+    {
+        return $query->whereHas('userRole', fn (Builder $role) => $role->where('name', Roles::Admin->value));
     }
 }

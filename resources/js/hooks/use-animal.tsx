@@ -34,7 +34,10 @@ export function useAnimal(id: number | null) {
         setError(null);
     }
 
-    function loadAnimal(animalId: number, isCancelled: () => boolean = () => false) {
+    function loadAnimal(
+        animalId: number,
+        isCancelled: () => boolean = () => false,
+    ) {
         fetchAnimal(animalId)
             .then((data) => {
                 if (isCancelled()) return;

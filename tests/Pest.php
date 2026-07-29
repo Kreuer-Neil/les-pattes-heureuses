@@ -1,5 +1,10 @@
 <?php
 
+use Database\Seeders\AnimalOptionsSeeder;
+use Database\Seeders\UserRolesSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -11,8 +16,12 @@
 |
 */
 
-pest()->extend(Tests\TestCase::class)
-    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+pest()->extend(TestCase::class)
+    ->use(RefreshDatabase::class)
+    ->beforeEach(function () {
+        $this->seed(AnimalOptionsSeeder::class);
+        $this->seed(UserRolesSeeder::class);
+    })
     ->in('Feature');
 
 /*

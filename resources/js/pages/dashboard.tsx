@@ -1,8 +1,11 @@
+import { Badge } from '@/components/ui/badge';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
-import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import notifications from '@/routes/notifications';
+import { IAttentionItem, type BreadcrumbItem } from '@/types';
+import { Head, Link, usePage } from '@inertiajs/react';
+import { useTranslation } from 'react-i18next';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -11,11 +14,99 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
+type PageProps = {
+    needsAttention: IAttentionItem[];
+    unreadMessageCount: number;
+};
+
+function AttentionItemLabel({ item }: { item: IAttentionItem }) {
+    const { t } = useTranslation('notifications');
+
+    if (item.type === 'adoption_request') {
+        return (
+            <>
+                {t('types.adoption_request', {
+                    animal: item.animal.name,
+                    adopter: `${item.adopterProfile.firstName} ${item.adopterProfile.lastName}`,
+                })}
+            </>
+        );
+    }
+
+    return (
+        <>
+            {t('types.animal_change', {
+                proposer: item.proposerName ?? '—',
+                action: t(`changeActions.${item.action}`),
+                animal: item.animalName ?? '—',
+            })}
+        </>
+    );
+}
+
+function NeedsAttentionWidget({
+    needsAttention,
+    unreadMessageCount,
+}: PageProps) {
+    const { t } = useTranslation('notifications');
+
+    return (
+        <div className="flex flex-col gap-3 rounded-xl border border-sidebar-border/70 p-4 dark:border-sidebar-border">
+            <div className="flex items-center justify-between">
+                <h2 className="font-medium">{t('widget.title')}</h2>
+                <Link
+                    href={notifications.index().url}
+                    className="text-sm text-muted-foreground hover:underline"
+                >
+                    {t('widget.viewAll')}
+                </Link>
+            </div>
+
+            {unreadMessageCount > 0 && (
+                <div className="flex items-center gap-2 text-sm">
+                    <Badge variant="secondary">{unreadMessageCount}</Badge>
+                    <span className="text-muted-foreground">
+                        {t('unreadMessages', { count: unreadMessageCount })}
+                    </span>
+                </div>
+            )}
+
+            {needsAttention.length > 0 ? (
+                <ul className="flex flex-col gap-2">
+                    {needsAttention.map((item) => (
+                        <li
+                            key={`${item.type}-${item.id}`}
+                            className="flex items-center gap-2 text-sm"
+                        >
+                            <Badge variant="destructive">!</Badge>
+                            <span>
+                                <AttentionItemLabel item={item} />
+                            </span>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                unreadMessageCount === 0 && (
+                    <p className="text-sm text-muted-foreground">
+                        {t('widget.empty')}
+                    </p>
+                )
+            )}
+        </div>
+    );
+}
+
 export default function Dashboard() {
+    const { needsAttention, unreadMessageCount } = usePage<PageProps>().props;
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
+                <NeedsAttentionWidget
+                    needsAttention={needsAttention}
+                    unreadMessageCount={unreadMessageCount}
+                />
                 <div className="grid auto-rows-min gap-4 md:grid-cols-3">
                     <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
                         <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />

@@ -1,0 +1,23 @@
+{
+    "title": "Notifications",
+    "empty": "Nothing needs your attention right now.",
+    "unreadMessages_one": "You have {{count}} unread message.",
+    "unreadMessages_other": "You have {{count}} unread messages.",
+
+    "types": {
+        "adoption_request": "Adoption request for {{animal}} from {{adopter}}",
+        "animal_change": "{{proposer}} proposed {{action}} for {{animal}}"
+    },
+
+    "changeActions": {
+        "store": "a new animal",
+        "update": "an update",
+        "delete": "a deletion"
+    },
+
+    "widget": {
+        "title": "Needs attention",
+        "empty": "Nothing needs attention right now.",
+        "viewAll": "View all notifications"
+    }
+}

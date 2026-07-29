@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\AdoptionRequest;
 use App\Models\Animal;
+use App\Policies\AdoptionRequestPolicy;
 use App\Policies\AnimalPolicy;
 use Gate;
 use Illuminate\Support\ServiceProvider;
@@ -23,5 +25,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::policy(Animal::class, AnimalPolicy::class);
+        Gate::policy(AdoptionRequest::class, AdoptionRequestPolicy::class);
     }
 }

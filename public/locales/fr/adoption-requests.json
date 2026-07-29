@@ -1,0 +1,26 @@
+{
+    "title": "Demandes d'adoption",
+    "empty": "Aucune demande d'adoption pour l'instant.",
+
+    "table": {
+        "animal": "Animal",
+        "adopter": "Adoptant",
+        "message": "Message",
+        "status": "Statut",
+        "date": "Date",
+        "actions": "Actions"
+    },
+
+    "status": {
+        "unattended": "Nouvelle",
+        "pending": "Contactée",
+        "approved": "Acceptée",
+        "rejected": "Refusée"
+    },
+
+    "actions": {
+        "markContacted": "Marquer comme contactée",
+        "accept": "Accepter",
+        "reject": "Refuser"
+    }
+}

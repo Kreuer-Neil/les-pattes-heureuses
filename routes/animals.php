@@ -13,3 +13,9 @@ Route::get('animals/{animal}', [AnimalController::class, 'show'])
 
 Route::put('animals/{animal}', [AnimalController::class, 'update'])
     ->name('animals.update');
+
+Route::patch('animal-changes/{pendingAnimalChange}/accept', [AnimalController::class, 'acceptChange'])
+    ->name('animal-changes.accept');
+
+Route::patch('animal-changes/{pendingAnimalChange}/deny', [AnimalController::class, 'denyChange'])
+    ->name('animal-changes.deny');

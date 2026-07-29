@@ -1,0 +1,26 @@
+{
+    "title": "Adoption requests",
+    "empty": "No adoption requests yet.",
+
+    "table": {
+        "animal": "Animal",
+        "adopter": "Adopter",
+        "message": "Message",
+        "status": "Status",
+        "date": "Date",
+        "actions": "Actions"
+    },
+
+    "status": {
+        "unattended": "New",
+        "pending": "Contacted",
+        "approved": "Accepted",
+        "rejected": "Rejected"
+    },
+
+    "actions": {
+        "markContacted": "Mark contacted",
+        "accept": "Accept",
+        "reject": "Reject"
+    }
+}

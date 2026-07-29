@@ -127,3 +127,44 @@ export interface IAnimal extends IAnimalMiniature {
     };
     vaccines: IAnimalVaccine[];
 }
+
+export type AdoptionRequestStatus =
+    | 'unattended'
+    | 'pending'
+    | 'approved'
+    | 'rejected';
+
+export interface IAdopterProfile {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+}
+
+export interface IAdoptionRequest {
+    id: number;
+    status: AdoptionRequestStatus;
+    content: string;
+    createdAt: string;
+    animal: IAnimalMiniature;
+    adopterProfile: IAdopterProfile;
+}
+
+export type AnimalChangeAction = 'store' | 'update' | 'delete';
+
+export interface IAdoptionRequestAttentionItem extends IAdoptionRequest {
+    type: 'adoption_request';
+}
+
+export interface IAnimalChangeAttentionItem {
+    type: 'animal_change';
+    id: number;
+    action: AnimalChangeAction;
+    animalName: string | null;
+    proposerName: string | null;
+    createdAt: string;
+}
+
+export type IAttentionItem =
+    | IAdoptionRequestAttentionItem
+    | IAnimalChangeAttentionItem;

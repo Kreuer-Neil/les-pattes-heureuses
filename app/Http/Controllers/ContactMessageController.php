@@ -27,6 +27,9 @@ class ContactMessageController extends Controller
             'content' => $validated['message'],
         ]);
 
+        // TODO email the admins directly (README: "Notifications par email (admin et adoptant)") —
+        // no Mail infrastructure exists yet, deferred separately from the in-app attention feed.
+
         return redirect()
             ->back()
             ->with('status', 'message-sent');

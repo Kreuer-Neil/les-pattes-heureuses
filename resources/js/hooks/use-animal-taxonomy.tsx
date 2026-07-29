@@ -21,7 +21,9 @@ interface IAnimalTaxonomyOptions {
 // Lets any form field under the provider (specie/breed/status/fur pickers, ...)
 // pull ready-to-render, translated options without re-deriving them itself or
 // threading the raw taxonomy prop through every level.
-const AnimalTaxonomyContext = createContext<IAnimalTaxonomyOptions | null>(null);
+const AnimalTaxonomyContext = createContext<IAnimalTaxonomyOptions | null>(
+    null,
+);
 
 export function AnimalTaxonomyProvider({
     taxonomy,
