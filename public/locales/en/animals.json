@@ -1,6 +1,7 @@
 {
     "our_pets": "Our pets",
     "empty": "No animals registered yet.",
+    "create_button": "Add an animal",
 
     "table": {
         "name": "Name",
@@ -21,7 +22,8 @@
         "available": "Available",
         "pending": "Pending adoption",
         "adopted": "Adopted",
-        "healing": "Healing"
+        "healing": "Healing",
+        "deceased": "Deceased"
     },
 
     "specie": {

@@ -107,7 +107,7 @@ export default function AnimalsIndex() {
                             onClick={() => setShowCreateModal(true)}
                         >
                             <Plus />
-                            <span>{t('Create')}</span>
+                            <span>{t('create_button')}</span>
                         </Button>
                     </div>
 

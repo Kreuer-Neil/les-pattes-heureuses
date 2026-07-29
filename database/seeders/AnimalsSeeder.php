@@ -16,7 +16,6 @@ use App\Models\Breed;
 use App\Models\FurColor;
 use App\Models\FurPattern;
 use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Str;
 
@@ -27,18 +26,20 @@ class AnimalsSeeder extends Seeder
      */
     public function run(): void
     {
+        // TODO add all pets + put images and seed with images (add them to Git too)
+        // TODO add pet with adoptionRequest
         $pets = [
             [
                 'name' => 'Tommy',
                 'image' => '',
                 'gender' => Gender::Male->value,
                 'chip' => 'vghftf6t7',
-                'animal_status' => Status::Pending->value,
+                'animal_status' => Status::Available->value,
                 'specie' => Specie::Cat->value, // Cat
                 'breed' => CatBreed::Lion->value, // Lion
                 'fur_color' => Str::lower(Color::Beige->name),
-                'secondary_fur_color' => NULL,
-                'fur_pattern' => NULL,
+                'secondary_fur_color' => null,
+                'fur_pattern' => null,
                 'personality' => 'Likes cuddles and eating. Very shy.',
                 'born_at' => '20/08/2003',
             ],
@@ -65,8 +66,8 @@ class AnimalsSeeder extends Seeder
                 'specie' => Specie::Dog->value,
                 'breed' => DogBreed::GermanShepherd->value,
                 'fur_color' => Str::lower(Color::Black->name),
-                'secondary_fur_color' => NULL,
-                'fur_pattern' => NULL,
+                'secondary_fur_color' => null,
+                'fur_pattern' => null,
                 'personality' => 'Doesn\'t eat much, very calm, stoic.',
                 'born_at' => '05/04/1918',
             ],
@@ -75,18 +76,16 @@ class AnimalsSeeder extends Seeder
                 'image' => '',
                 'gender' => Gender::Female->value,
                 'chip' => 'ha9v3945',
-                'animal_status' => Status::Pending->value,
+                'animal_status' => Status::Available->value,
                 'specie' => Specie::Bird->value,
                 'breed' => BirdBreed::RoyalEagle->value,
                 'fur_color' => Str::lower(Color::Black->name),
                 'secondary_fur_color' => Str::lower(Color::Beige->name),
-                'fur_pattern' => NULL,
+                'fur_pattern' => null,
                 'personality' => 'Solid, caring, likes hunting rodents.',
                 'born_at' => '12/12/2021',
             ],
         ];
-
-
 
         foreach ($pets as $pet) {
             Animal::factory([
@@ -96,11 +95,11 @@ class AnimalsSeeder extends Seeder
                 'animal_status_id' => AnimalStatus::where('name', $pet['animal_status'])->first()->id,
                 'specie_id' => \App\Models\Specie::where('name', $pet['specie'])->first()->id,
                 'breed_id' => Breed::where('name', $pet['breed'])->first()->id,
-                'fur_color_id' => ($pet['fur_color'] ? FurColor::where('name', $pet['fur_color'])->first()->id : NULL),
-                'secondary_fur_color_id' => ($pet['secondary_fur_color'] ? FurColor::where('name', $pet['secondary_fur_color'])->first()->id : NULL),
-                'fur_pattern_id' => ($pet['fur_pattern'] ? FurPattern::where('name', $pet['fur_pattern'])->first()->id : NULL),
+                'fur_color_id' => ($pet['fur_color'] ? FurColor::where('name', $pet['fur_color'])->first()->id : null),
+                'secondary_fur_color_id' => ($pet['secondary_fur_color'] ? FurColor::where('name', $pet['secondary_fur_color'])->first()->id : null),
+                'fur_pattern_id' => ($pet['fur_pattern'] ? FurPattern::where('name', $pet['fur_pattern'])->first()->id : null),
                 'personality' => $pet['personality'],
-                'born_at' => Carbon::createFromFormat('d/m/Y',$pet['born_at'])->format('Y-m-d'),
+                'born_at' => Carbon::createFromFormat('d/m/Y', $pet['born_at'])->format('Y-m-d'),
             ])
                 ->create();
         }

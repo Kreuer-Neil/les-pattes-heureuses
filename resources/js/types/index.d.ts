@@ -139,6 +139,7 @@ export interface IAdopterProfile {
     firstName: string;
     lastName: string;
     email: string;
+    details: string;
 }
 
 export interface IAdoptionRequest {

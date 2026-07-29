@@ -6,9 +6,13 @@
         "animal": "Animal",
         "adopter": "Adopter",
         "message": "Message",
+        "adopter_message": "Adopter's message",
         "status": "Status",
         "date": "Date",
-        "actions": "Actions"
+        "actions": "Actions",
+        "adopter_details": "Notes",
+        "adopter_details_placeholder": "Add notes about this adopter",
+        "adopter_update_success": "Notes saved"
     },
 
     "status": {

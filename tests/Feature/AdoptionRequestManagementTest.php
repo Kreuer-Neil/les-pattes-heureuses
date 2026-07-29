@@ -97,6 +97,26 @@ test('volunteer cannot transition an adoption request status', function () {
     expect($this->adoptionRequest->fresh()->status)->toBe(PendingApprobationStatus::Unattended);
 });
 
+test('admin can update an adopter profile\'s details', function () {
+    $this->actingAs($this->admin)
+        ->patch(route('adopter-profile.update', $this->adopterProfile), [
+            'details' => 'Has a large fenced garden.',
+        ])
+        ->assertRedirect();
+
+    expect($this->adopterProfile->fresh()->details)->toBe('Has a large fenced garden.');
+});
+
+test('volunteer cannot update an adopter profile\'s details', function () {
+    $this->actingAs($this->volunteer)
+        ->patch(route('adopter-profile.update', $this->adopterProfile), [
+            'details' => 'Has a large fenced garden.',
+        ])
+        ->assertForbidden();
+
+    expect($this->adopterProfile->fresh()->details)->toBeNull();
+});
+
 test('a submitted adoption request appears in the admin attention feed', function () {
     $this->post(route('client.adoption.request', $this->animal), [
         'first_name' => 'Jean',

@@ -19,6 +19,7 @@ class AdopterProfileResource extends JsonResource
             'firstName' => $this->resource->first_name,
             'lastName' => $this->resource->last_name,
             'email' => $this->resource->email,
+            'details' => $this->resource->details,
         ];
     }
 }
