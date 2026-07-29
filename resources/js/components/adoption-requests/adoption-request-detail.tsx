@@ -50,7 +50,7 @@ export default function AdoptionRequestDetail({
                         <ModalTitle>{request.animal.name}</ModalTitle>
                     </ModalHeader>
 
-                    <dl className="mb-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
+                    <dl className="my-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
                         <dt className="text-muted-foreground">
                             {t('table.adopter')}
                         </dt>
@@ -112,7 +112,7 @@ export default function AdoptionRequestDetail({
                     </dl>
 
                     <article>
-                        <h2>{t('table.adopter_message')}</h2>
+                        <h2 className="font-semibold">{t('table.adopter_message')}</h2>
                         <p className="text-sm whitespace-pre-wrap">
                             {request.content}
                         </p>
