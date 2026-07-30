@@ -2,18 +2,21 @@
 
 namespace App\Models;
 
+use App\Enums\Animals\MovementType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class AnimalRecovery extends Model
+class AnimalMovement extends Model
 {
     protected $fillable = [
         'animal_id',
-        'recovered_at',
+        'type',
+        'occurred_at',
     ];
 
     protected $casts = [
-        'recovered_at' => 'date',
+        'type' => MovementType::class,
+        'occurred_at' => 'date',
     ];
 
     public function animal(): BelongsTo

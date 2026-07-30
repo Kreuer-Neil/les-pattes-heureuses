@@ -1,4 +1,4 @@
-import AnimalController from '@/actions/App/Http/Controllers/AnimalController';
+import AnimalChangeController from '@/actions/App/Http/Controllers/AnimalChangeController';
 import AdoptionRequestDetail from '@/components/adoption-requests/adoption-request-detail';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -45,10 +45,10 @@ function AnimalChangeActions({ id }: { id: number }) {
 
     return (
         <div className="flex flex-wrap items-center gap-2">
-            <Button size="sm" onClick={() => router.patch(AnimalController.acceptChange(id).url)}>
+            <Button size="sm" onClick={() => router.patch(AnimalChangeController.acceptChange(id).url)}>
                 {t('actions.accept')}
             </Button>
-            <Button size="sm" variant="destructive" onClick={() => router.patch(AnimalController.denyChange(id).url)}>
+            <Button size="sm" variant="destructive" onClick={() => router.patch(AnimalChangeController.denyChange(id).url)}>
                 {t('actions.reject')}
             </Button>
         </div>

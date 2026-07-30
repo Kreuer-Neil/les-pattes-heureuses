@@ -74,9 +74,9 @@ class Animal extends Model
         return $this->hasMany(AdoptionRequest::class);
     }
 
-    public function recoveries(): HasMany
+    public function movements(): HasMany
     {
-        return $this->hasMany(AnimalRecovery::class);
+        return $this->hasMany(AnimalMovement::class);
     }
 
     public function scopeAvailable(Builder $query): Builder
@@ -91,5 +91,14 @@ class Animal extends Model
             Status::Healing->value,
             // Status::Pending->value,
         ]));
+    }
+
+    // Deceased animals play the role a soft-delete would elsewhere: the row and its
+    // history stay, but it shouldn't clutter general admin listings by default. This
+    // is opt-in (not a global scope) so relations like AdoptionRequest::animal() never
+    // silently resolve to null once the animal they point to is marked deceased.
+    public function scopeExcludingDeceased(Builder $query): Builder
+    {
+        return $query->whereHas('status', fn (Builder $status) => $status->where('name', '!=', Status::Deceased->value));
     }
 }

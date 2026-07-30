@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Animals\MovementType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,11 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('animal_recoveries', function (Blueprint $table) {
+        Schema::create('animal_movements', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('animal_id')->constrained();
-            $table->date('recovered_at');
+            $table->foreignId('animal_id')->constrained()->cascadeOnDelete();
+            $table->enum('type', MovementType::cases());
+            $table->date('occurred_at');
 
             $table->index('animal_id');
 
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('animal_recoveries');
+        Schema::dropIfExists('animal_movements');
     }
 };

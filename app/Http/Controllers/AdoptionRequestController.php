@@ -9,6 +9,7 @@ use App\Models\AdopterProfile;
 use App\Models\AdoptionRequest;
 use App\Models\Animal;
 use App\Models\AnimalStatus;
+use App\Services\AnimalWriter;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
@@ -54,6 +55,11 @@ class AdoptionRequestController extends Controller
             ]);
         } elseif ($newStatus === PendingApprobationStatus::Approved) {
             $adoptionRequest->update(['accepted_at' => Carbon::now()]);
+
+            // "Approved" here means the paperwork is done IRL — the animal has left the shelter.
+            AnimalWriter::update($adoptionRequest->animal, [
+                'animal_status_id' => AnimalStatus::where('name', Status::Adopted->value)->value('id'),
+            ], null);
         }
 
         return redirect()->back();

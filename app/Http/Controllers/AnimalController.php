@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Animals\Gender;
+use App\Enums\Animals\Status;
 use App\Enums\PendingApprobationStatus;
 use App\Enums\PendingChanges;
 use App\Http\Resources\AnimalMiniatureResource;
 use App\Http\Resources\AnimalResource;
 use App\Jobs\HandleAnimalsImageUploads;
 use App\Models\Animal;
-use App\Models\AnimalRecovery;
 use App\Models\AnimalStatus;
 use App\Models\AnimalVaccine;
 use App\Models\Breed;
@@ -18,6 +18,7 @@ use App\Models\FurPattern;
 use App\Models\PendingAnimalChanges;
 use App\Models\Specie;
 use App\Models\Vaccine;
+use App\Services\AnimalWriter;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -51,7 +52,7 @@ class AnimalController extends Controller
         $hasAccess = (auth()->check()); // TODO Gate checking?
 
         // TODO add filtering later
-        $animals = Animal::all();
+        $animals = Animal::excludingDeceased()->get();
 
         return [
             'hasAccess' => $hasAccess,
@@ -128,7 +129,7 @@ class AnimalController extends Controller
         }
 
         if (Gate::allows('create', Animal::class)) {
-            $this->createAnimal($animal, $vaccines, $validated['recovered_at']);
+            AnimalWriter::create($animal, $vaccines, $validated['recovered_at']);
         } else {
             Gate::authorize('suggest', Animal::class);
             $pendingAnimalChange = PendingAnimalChanges::create([
@@ -211,11 +212,11 @@ class AnimalController extends Controller
         }
 
         if (Gate::allows('update', $animal)) {
-            $animal->update($attributes);
-
-            if (array_key_exists('vaccines', $validated)) {
-                $this->syncVaccines($animal, $vaccines);
-            }
+            AnimalWriter::update(
+                $animal,
+                $attributes,
+                array_key_exists('vaccines', $validated) ? $vaccines : null,
+            );
         } else {
             Gate::authorize('suggest', $animal);
             $pendingAnimalChange = PendingAnimalChanges::create([
@@ -236,75 +237,15 @@ class AnimalController extends Controller
         return redirect()->back();
     }
 
-    public function acceptChange(PendingAnimalChanges $pendingAnimalChange)
+    public function markDeceased(Animal $animal)
     {
-        Gate::authorize('review', Animal::class);
+        Gate::authorize('setAnimalDeceased', Animal::class);
 
-        $payload = collect($pendingAnimalChange->payload);
-        $vaccines = collect($payload->get('vaccines', []))
-            ->map(fn ($vaccine) => [
-                'vaccine_id' => $vaccine['vaccine_id'],
-                'vaccinated_at' => $vaccine['vaccinated_at'],
-            ])
-            ->all();
-        $recoveredAt = $payload->get('recovered_at');
-        $attributes = $payload->except(['vaccines', 'recovered_at'])->all();
-
-        match ($pendingAnimalChange->action) {
-            PendingChanges::Store => $this->createAnimal(new Animal($attributes), $vaccines, $recoveredAt),
-            PendingChanges::Update => $this->applyAnimalUpdate($pendingAnimalChange->animal, $attributes, $vaccines),
-            PendingChanges::Delete => $pendingAnimalChange->animal?->delete(),
-        };
-
-        $pendingAnimalChange->update(['status' => PendingApprobationStatus::Approved]);
+        AnimalWriter::update($animal, [
+            'animal_status_id' => AnimalStatus::where('name', Status::Deceased->value)->value('id'),
+        ], null);
 
         return redirect()->back();
-    }
-
-    public function denyChange(PendingAnimalChanges $pendingAnimalChange)
-    {
-        Gate::authorize('review', Animal::class);
-
-        $pendingAnimalChange->update(['status' => PendingApprobationStatus::Rejected]);
-
-        return redirect()->back();
-    }
-
-    private function applyAnimalUpdate(Animal $animal, array $attributes, array $vaccines): void
-    {
-        $animal->update($attributes);
-        $this->syncVaccines($animal, $vaccines);
-    }
-
-    private function syncVaccines(Animal $animal, array $vaccines): void
-    {
-        $animal->vaccines()->detach();
-
-        foreach ($vaccines as $vaccine) {
-            AnimalVaccine::create([
-                'animal_id' => $animal->id,
-                'vaccine_id' => $vaccine['vaccine_id'],
-                'vaccinated_at' => $vaccine['vaccinated_at'],
-            ]);
-        }
-    }
-
-    private function createAnimal(Animal $animal, array $vaccines, ?string $recoveredAt = null)
-    {
-        $animal->save();
-
-        AnimalRecovery::create([
-            'animal_id' => $animal->id,
-            // Change for the pendingChanges's created_at if using the pendingChange payload
-            'recovered_at' => $recoveredAt ?? now(),
-        ]);
-
-        // Vaccinations
-        if ($vaccines && $vaccines !== []) {
-            $this->syncVaccines($animal, $vaccines);
-        }
-
-        // Same for notes?
     }
 
     public function recover()

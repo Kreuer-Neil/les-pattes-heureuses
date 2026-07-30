@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Animals\MovementType;
 use App\Enums\Animals\Status;
 use App\Enums\PendingApprobationStatus;
 use App\Enums\Roles;
@@ -72,8 +73,21 @@ test('marking a request as contacted (pending) also puts the animal on hold', fu
     expect($this->animal->fresh()->status->name)->toBe(Status::Pending->value);
 });
 
-// Accepting (validating after contacting back and doing paper stuff IRL) should set status to adopted, refusing should check if another adoptionRequest on this animal is pending and set animal status to available if none is.
-test('accepting or rejecting a request does not touch the animal status', function () {
+test('accepting a request sets the animal status to adopted and records a departure movement', function () {
+    $this->actingAs($this->admin)
+        ->patch(route('adoption-requests.update-status', $this->adoptionRequest), [
+            'status' => PendingApprobationStatus::Approved->value,
+        ])
+        ->assertRedirect();
+
+    $animal = $this->animal->fresh();
+
+    expect($animal->status->name)->toBe(Status::Adopted->value)
+        ->and($animal->movements()->where('type', MovementType::AdoptedDeparture->value)->count())->toBe(1);
+});
+
+// Refusing should check if another adoptionRequest on this animal is pending and set animal status to available if none is.
+test('rejecting a request does not touch the animal status', function () {
     $this->animal->update([
         'animal_status_id' => AnimalStatus::where('name', Status::Pending->value)->value('id'),
     ]);
