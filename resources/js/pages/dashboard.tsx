@@ -1,3 +1,7 @@
+import {
+    StatisticsSection,
+    type StatisticsData,
+} from '@/components/statistics-section';
 import { Badge } from '@/components/ui/badge';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
@@ -15,6 +19,12 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 type PageProps = {
+    needsAttention: IAttentionItem[];
+    unreadMessageCount: number;
+    statistics: StatisticsData | null;
+};
+
+type NeedsAttentionProps = {
     needsAttention: IAttentionItem[];
     unreadMessageCount: number;
 };
@@ -47,7 +57,7 @@ function AttentionItemLabel({ item }: { item: IAttentionItem }) {
 function NeedsAttentionWidget({
     needsAttention,
     unreadMessageCount,
-}: PageProps) {
+}: NeedsAttentionProps) {
     const { t } = useTranslation('notifications');
 
     return (
@@ -97,7 +107,8 @@ function NeedsAttentionWidget({
 }
 
 export default function Dashboard() {
-    const { needsAttention, unreadMessageCount } = usePage<PageProps>().props;
+    const { needsAttention, unreadMessageCount, statistics } =
+        usePage<PageProps>().props;
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -107,17 +118,7 @@ export default function Dashboard() {
                     needsAttention={needsAttention}
                     unreadMessageCount={unreadMessageCount}
                 />
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                </div>
+                {statistics && <StatisticsSection statistics={statistics} />}
                 <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
                     <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
                 </div>

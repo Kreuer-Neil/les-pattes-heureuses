@@ -2,22 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ShelterStatistics;
+
 class HomeController extends Controller
 {
-    public array $statItems;
-
-    public function __construct()
-    {
-        $this->statItems = [
-            'saved' => 152,
-            'searching' => 31,
-            'adopted' => 117,
-        ];
-    }
-
     public function index()
     {
-        $statItems = $this->statItems;
+        $statItems = ShelterStatistics::allTime();
 
         return view('client/home', compact('statItems'));
     }

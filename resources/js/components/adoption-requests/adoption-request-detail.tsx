@@ -112,7 +112,9 @@ export default function AdoptionRequestDetail({
                     </dl>
 
                     <article>
-                        <h2 className="font-semibold">{t('table.adopter_message')}</h2>
+                        <h2 className="font-semibold">
+                            {t('table.adopter_message')}
+                        </h2>
                         <p className="text-sm whitespace-pre-wrap">
                             {request.content}
                         </p>

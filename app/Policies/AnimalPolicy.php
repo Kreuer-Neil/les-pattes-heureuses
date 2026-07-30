@@ -46,6 +46,11 @@ class AnimalPolicy
         return $this->isAdmin($user);
     }
 
+    public function viewStatistics(User $user): bool
+    {
+        return $this->isAdmin($user);
+    }
+
     private function isAdmin(User $user): bool
     {
         return $user->role() === Roles::Admin->value;

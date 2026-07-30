@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             VaccinesSeeder::class,
             AnimalOptionsSeeder::class,
             UsersSeeder::class,
+            VolunteersSeeder::class,
             AnimalsSeeder::class,
         ]);
     }

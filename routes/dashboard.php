@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\DashboardController;
-use Inertia\Inertia;
+use App\Http\Controllers\ShelterReportController;
 
-Route::redirect('/','dashboard');
+Route::redirect('/', 'dashboard');
 
 Route::get('dashboard', [DashboardController::class, 'render'])
     ->name('dashboard');
+
+Route::get('dashboard/report', [ShelterReportController::class, 'export'])
+    ->name('reports.export');
