@@ -113,6 +113,7 @@
         "secondaryFurColor": "Secondary fur color",
         "furPattern": "Fur pattern",
         "bornAt": "Date of birth",
+        "recoveredAt": "Recovery date",
         "personality": "Personality",
         "personalityPlaceholder": "Temperament, habits, likes and dislikes…",
         "image": "Photo",

@@ -113,6 +113,7 @@
         "secondaryFurColor": "Couleur secondaire du pelage",
         "furPattern": "Motif du pelage",
         "bornAt": "Date de naissance",
+        "recoveredAt": "Date de recueil",
         "personality": "Caractère",
         "personalityPlaceholder": "Tempérament, habitudes, préférences…",
         "image": "Photo",

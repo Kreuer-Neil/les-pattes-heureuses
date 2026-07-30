@@ -74,6 +74,11 @@ class Animal extends Model
         return $this->hasMany(AdoptionRequest::class);
     }
 
+    public function recoveries(): HasMany
+    {
+        return $this->hasMany(AnimalRecovery::class);
+    }
+
     public function scopeAvailable(Builder $query): Builder
     {
         return $query->whereHas('status', fn (Builder $status) => $status->where('name', Status::Available->value));

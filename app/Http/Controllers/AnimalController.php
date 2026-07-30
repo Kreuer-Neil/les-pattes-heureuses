@@ -9,6 +9,7 @@ use App\Http\Resources\AnimalMiniatureResource;
 use App\Http\Resources\AnimalResource;
 use App\Jobs\HandleAnimalsImageUploads;
 use App\Models\Animal;
+use App\Models\AnimalRecovery;
 use App\Models\AnimalStatus;
 use App\Models\AnimalVaccine;
 use App\Models\Breed;
@@ -88,6 +89,7 @@ class AnimalController extends Controller
             'fur_pattern_id' => 'nullable|exists:fur_patterns,id',
             'personality' => 'required|string|min:2',
             'born_at' => 'date|before_or_equal:today',
+            'recovered_at' => 'required|date|before_or_equal:today',
             // Vaccines
             'vaccines' => 'nullable|array', // null = "unknown"
             'vaccines.*.date' => 'required|date',
@@ -96,7 +98,7 @@ class AnimalController extends Controller
 
         // $currentUser = $request->user();
 
-        $animal = new Animal(collect($validated)->except(['image', 'vaccines'])->all());
+        $animal = new Animal(collect($validated)->except(['image', 'vaccines', 'recovered_at'])->all());
 
         // Adding vaccines
         $vaccines = [];
@@ -126,7 +128,7 @@ class AnimalController extends Controller
         }
 
         if (Gate::allows('create', Animal::class)) {
-            $this->createAnimal($animal, $vaccines);
+            $this->createAnimal($animal, $vaccines, $validated['recovered_at']);
         } else {
             Gate::authorize('suggest', Animal::class);
             $pendingAnimalChange = PendingAnimalChanges::create([
@@ -146,6 +148,7 @@ class AnimalController extends Controller
                     'fur_pattern_id' => $animal->fur_pattern_id,
                     'personality' => $animal->personality,
                     'born_at' => $animal->born_at,
+                    'recovered_at' => $validated['recovered_at'],
                     // Notes?
                     'vaccines' => $vaccines,
                 ],
@@ -244,10 +247,11 @@ class AnimalController extends Controller
                 'vaccinated_at' => $vaccine['vaccinated_at'],
             ])
             ->all();
-        $attributes = $payload->except('vaccines')->all();
+        $recoveredAt = $payload->get('recovered_at');
+        $attributes = $payload->except(['vaccines', 'recovered_at'])->all();
 
         match ($pendingAnimalChange->action) {
-            PendingChanges::Store => $this->createAnimal(new Animal($attributes), $vaccines),
+            PendingChanges::Store => $this->createAnimal(new Animal($attributes), $vaccines, $recoveredAt),
             PendingChanges::Update => $this->applyAnimalUpdate($pendingAnimalChange->animal, $attributes, $vaccines),
             PendingChanges::Delete => $pendingAnimalChange->animal?->delete(),
         };
@@ -285,9 +289,15 @@ class AnimalController extends Controller
         }
     }
 
-    private function createAnimal(Animal $animal, array $vaccines)
+    private function createAnimal(Animal $animal, array $vaccines, ?string $recoveredAt = null)
     {
         $animal->save();
+
+        AnimalRecovery::create([
+            'animal_id' => $animal->id,
+            // Change for the pendingChanges's created_at if using the pendingChange payload
+            'recovered_at' => $recoveredAt ?? now(),
+        ]);
 
         // Vaccinations
         if ($vaccines && $vaccines !== []) {
@@ -295,5 +305,10 @@ class AnimalController extends Controller
         }
 
         // Same for notes?
+    }
+
+    public function recover()
+    {
+        // Add a RecoveredAnimal row
     }
 }

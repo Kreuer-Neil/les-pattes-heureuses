@@ -9,6 +9,7 @@ use App\Models\AdopterProfile;
 use App\Models\AdoptionRequest;
 use App\Models\Animal;
 use App\Models\AnimalStatus;
+use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -51,6 +52,8 @@ class AdoptionRequestController extends Controller
             $adoptionRequest->animal->update([
                 'animal_status_id' => AnimalStatus::where('name', Status::Pending->value)->value('id'),
             ]);
+        } elseif ($newStatus === PendingApprobationStatus::Approved) {
+            $adoptionRequest->update(['accepted_at' => Carbon::now()]);
         }
 
         return redirect()->back();

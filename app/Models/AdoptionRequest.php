@@ -10,10 +10,12 @@ class AdoptionRequest extends Model
 {
     protected $fillable = [
         'animal_id', 'adopter_profile_id', 'content', 'status',
+        'accepted_at',
     ];
 
     protected $casts = [
         'status' => PendingApprobationStatus::class,
+        'accepted_at' => 'date',
     ];
 
     public function animal(): BelongsTo

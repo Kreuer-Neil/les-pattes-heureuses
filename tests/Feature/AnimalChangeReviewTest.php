@@ -146,6 +146,7 @@ test('a proposed animal change appears in the admin attention feed', function ()
             'animal_status_id' => $this->availableStatusId,
             'personality' => 'Shy',
             'born_at' => '2021-01-01',
+            'recovered_at' => '2026-07-01',
         ])
         ->assertRedirect();
 
