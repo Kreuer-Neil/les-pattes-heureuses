@@ -65,10 +65,33 @@ return [
         'reptile' => 'Reptile',
     ],
 
+    'colors' => [
+        'orange' => 'Orange',
+        'brown' => 'Marron',
+        'beige' => 'Beige',
+        'black' => 'Noir',
+        'white' => 'Blanc',
+        'grey' => 'Gris',
+    ],
+
     'animals' => [
         'title' => 'Nos animaux à l’adoption',
         'intro' => 'Découvrez les compagnons qui attendent une famille.',
         'empty' => 'Aucun animal n’est disponible à l’adoption pour le moment.',
+        'search' => [
+            'q' => 'Nom de l’animal',
+            'q_placeholder' => 'Rechercher un animal par son nom…',
+            'specie' => 'Espèce',
+            'breed' => 'Race',
+            'color' => 'Couleur du pelage',
+            'gender' => 'Sexe',
+            'age' => 'Âge (années)',
+            'submit' => 'Rechercher',
+            'reset' => 'Réinitialiser',
+            'close_matches_title' => 'Résultats approchants',
+            'close_matches_hint' => 'Ces animaux ne correspondent pas à tous vos critères, mais pourraient tout de même vous plaire.',
+            'no_results' => 'Aucun animal ne correspond à votre recherche.',
+        ],
     ],
 
     'animal' => [
