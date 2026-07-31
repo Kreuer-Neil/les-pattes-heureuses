@@ -1,5 +1,6 @@
 import AnimalChangeController from '@/actions/App/Http/Controllers/AnimalChangeController';
 import AdoptionRequestDetail from '@/components/adoption-requests/adoption-request-detail';
+import { AttentionItemLabel } from '@/components/attention-item-label';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
@@ -18,32 +19,6 @@ type PageProps = {
     items: IAttentionItem[];
     unreadMessageCount: number;
 };
-
-function NotificationLabel({ item }: { item: IAttentionItem }) {
-    // TODO extract for dashboard
-    const { t } = useTranslation('notifications');
-
-    if (item.type === 'adoption_request') {
-        return (
-            <>
-                {t('types.adoption_request', {
-                    animal: item.animal.name,
-                    adopter: `${item.adopterProfile.firstName} ${item.adopterProfile.lastName}`,
-                })}
-            </>
-        );
-    }
-
-    return (
-        <>
-            {t('types.animal_change', {
-                proposer: item.proposerName ?? '—',
-                action: t(`changeActions.${item.action}`),
-                animal: item.animalName ?? '—',
-            })}
-        </>
-    );
-}
 
 function AnimalChangeActions({ id }: { id: number }) {
     const { t } = useTranslation('adoption-requests');
@@ -116,7 +91,7 @@ export default function NotificationsIndex() {
                                 <div className="flex items-center gap-3">
                                     <Badge variant="destructive">!</Badge>
                                     <span>
-                                        <NotificationLabel item={item} />
+                                        <AttentionItemLabel item={item} />
                                     </span>
                                 </div>
                                 {item.type === 'animal_change' && (
