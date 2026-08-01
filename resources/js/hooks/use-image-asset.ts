@@ -1,4 +1,4 @@
-type ImageType = 'animals';
+type ImageType = 'animals' | 'users';
 type ImageSize = 'icon' | 'full';
 
 export interface IImageSource {

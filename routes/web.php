@@ -4,6 +4,7 @@ use App\Http\Controllers\AdoptionController;
 use App\Http\Controllers\AdoptionRequestController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\HomeController;
+use App\Http\Middleware\EnsurePasswordHasBeenChanged;
 use Illuminate\Support\Facades\Route;
 
 // Laravel recommends putting subdomain routes before root routes, to not let URIs get overwritten
@@ -17,11 +18,12 @@ Route::domain('admin.'.'les-pattes-heureuses.test')->group(function () {
         //        })->name('login');
     });
 
-    Route::middleware(['auth', 'verified'])->group(function () {
+    Route::middleware(['auth', EnsurePasswordHasBeenChanged::class])->group(function () {
         require __DIR__.'/dashboard.php';
         require __DIR__.'/animals.php';
         require __DIR__.'/adoption-requests.php';
         require __DIR__.'/notifications.php';
+        require __DIR__.'/users.php';
         // Put only admin-access auth routes here
     });
 });

@@ -14,9 +14,11 @@ class PasswordController extends Controller
     /**
      * Show the user's password settings page.
      */
-    public function edit(): Response
+    public function edit(Request $request): Response
     {
-        return Inertia::render('settings/password');
+        return Inertia::render('settings/password', [
+            'mustChangePassword' => $request->user()->must_change_password,
+        ]);
     }
 
     /**
@@ -31,6 +33,7 @@ class PasswordController extends Controller
 
         $request->user()->update([
             'password' => $validated['password'],
+            'must_change_password' => false,
         ]);
 
         return back();

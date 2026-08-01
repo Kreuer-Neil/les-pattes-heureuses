@@ -36,6 +36,8 @@ export interface User {
     name: string;
     email: string;
     avatar?: string;
+    role: string;
+    // MustChangePassword will only be passed trough the change password view. Better to pass the prop on that view only.
     email_verified_at: string | null;
     two_factor_enabled?: boolean;
     created_at: string;
@@ -169,3 +171,14 @@ export interface IAnimalChangeAttentionItem {
 export type IAttentionItem =
     | IAdoptionRequestAttentionItem
     | IAnimalChangeAttentionItem;
+
+export interface IUserAccount {
+    id: number;
+    name: string;
+    email: string;
+    avatar?: string;
+    role: string;
+    userRoleId: number;
+    mustChangePassword: boolean;
+    createdAt: string;
+}

@@ -14,38 +14,17 @@ import { dashboard } from '@/routes';
 import adoptionRequests from '@/routes/adoption-requests';
 import animals from '@/routes/animals';
 import notifications from '@/routes/notifications';
-import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
+import users from '@/routes/users';
+import { type NavItem, type SharedData } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
 import {
     /*BookOpen, Folder,*/ Bell,
     HeartHandshake,
     LayoutGrid,
     PawPrint,
+    Users,
 } from 'lucide-react';
 import AppLogo from './app-logo';
-
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-    {
-        title: 'Animals',
-        href: animals.index(),
-        icon: PawPrint,
-    },
-    {
-        title: 'Adoption requests',
-        href: adoptionRequests.index(),
-        icon: HeartHandshake,
-    },
-    {
-        title: 'Notifications',
-        href: notifications.index(),
-        icon: Bell,
-    },
-];
 
 /*const footerNavItems: NavItem[] = [
     {
@@ -61,6 +40,40 @@ const mainNavItems: NavItem[] = [
 ];*/
 
 export function AppSidebar() {
+    const { auth } = usePage<SharedData>().props;
+
+    const mainNavItems: NavItem[] = [
+        {
+            title: 'Dashboard',
+            href: dashboard(),
+            icon: LayoutGrid,
+        },
+        {
+            title: 'Animals',
+            href: animals.index(),
+            icon: PawPrint,
+        },
+        {
+            title: 'Adoption requests',
+            href: adoptionRequests.index(),
+            icon: HeartHandshake,
+        },
+        {
+            title: 'Notifications',
+            href: notifications.index(),
+            icon: Bell,
+        },
+        ...(auth.user.role === 'admin'
+            ? [
+                  {
+                      title: 'Volunteers',
+                      href: users.index(),
+                      icon: Users,
+                  },
+              ]
+            : []),
+    ];
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>

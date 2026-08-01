@@ -10,7 +10,7 @@ use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\Format;
 use Intervention\Image\ImageManager;
 
-class HandleAnimalsImageUploads implements ShouldQueue
+class HandleImagesUploads implements ShouldQueue
 {
     use Queueable, SerializesModels;
 

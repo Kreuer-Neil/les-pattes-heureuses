@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Jobs\HandleImagesUploads;
+use App\Services\UserWriter;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
+use Str;
 
 class ProfileController extends Controller
 {
@@ -19,7 +21,6 @@ class ProfileController extends Controller
     public function edit(Request $request): Response
     {
         return Inertia::render('settings/profile', [
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => $request->session()->get('status'),
         ]);
     }
@@ -29,13 +30,22 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $validated = $request->validated();
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // For avatar changes
+        if (array_key_exists('avatar', $validated)) {
+            $oldAvatar = $user->avatar !== 'default' ? $user->avatar : null;
+
+            $imagePath = $validated['avatar']->store('images/users', 'public');
+            $imageName = Str::beforeLast(Str::afterLast($imagePath, '/'), '.');
+
+            HandleImagesUploads::dispatch($imageName, $oldAvatar, $imagePath, 'users');
+
+            $validated['avatar'] = $imageName;
         }
 
-        $request->user()->save();
+        UserWriter::update($user, $validated);
 
         return to_route('profile.edit');
     }

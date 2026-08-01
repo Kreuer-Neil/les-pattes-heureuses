@@ -103,7 +103,7 @@ export default function AnimalsShow({
                     )}
 
                     <div className="flex min-w-0 flex-1 flex-col gap-4">
-                        <ModalHeader className="flex-row items-start gap-4 pe-10">
+                        <ModalHeader className="flex-row items-start gap-4">
                             <div className="min-w-0">
                                 <ModalTitle>{animal.name}</ModalTitle>
                                 <ModalDescription>
@@ -112,7 +112,7 @@ export default function AnimalsShow({
                             </div>
                             {status && (
                                 <Badge
-                                    className="ml-auto shrink-0"
+                                    className="ml-auto shrink-0 self-center"
                                     variant={
                                         statusVariant[status.name ?? ''] ??
                                         'outline'

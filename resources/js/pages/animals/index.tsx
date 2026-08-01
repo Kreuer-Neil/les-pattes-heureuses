@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { seedAnimalCache } from '@/hooks/use-animal';
 import { AnimalTaxonomyProvider } from '@/hooks/use-animal-taxonomy';
 import AppLayout from '@/layouts/app-layout';
-import AnimalsCreate from '@/pages/animals/animals-create';
+import AnimalsCreate from '@/components/animals/animals-create';
 import { IAnimal, IAnimalMiniature, IAnimalTaxonomy } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
 import { Plus } from 'lucide-react';

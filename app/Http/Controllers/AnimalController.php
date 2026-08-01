@@ -8,7 +8,7 @@ use App\Enums\PendingApprobationStatus;
 use App\Enums\PendingChanges;
 use App\Http\Resources\AnimalMiniatureResource;
 use App\Http\Resources\AnimalResource;
-use App\Jobs\HandleAnimalsImageUploads;
+use App\Jobs\HandleImagesUploads;
 use App\Models\Animal;
 use App\Models\AnimalStatus;
 use App\Models\AnimalVaccine;
@@ -123,7 +123,7 @@ class AnimalController extends Controller
             $imageName = Str::beforeLast(Str::afterLast($imagePath, '/'), '.');
 
             $directory = 'animals';
-            HandleAnimalsImageUploads::dispatch($imageName, null, $imagePath, $directory);
+            HandleImagesUploads::dispatch($imageName, null, $imagePath, $directory);
 
             $animal->image = $imageName;
         }
@@ -206,7 +206,7 @@ class AnimalController extends Controller
             $imageName = Str::beforeLast(Str::afterLast($imagePath, '/'), '.');
 
             $directory = 'animals';
-            HandleAnimalsImageUploads::dispatch($imageName, null, $imagePath, $directory);
+            HandleImagesUploads::dispatch($imageName, null, $imagePath, $directory);
 
             $attributes['image'] = $imageName;
         }

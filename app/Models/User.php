@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\Roles;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -24,9 +23,20 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'avatar',
         'email',
         'password',
-        'role_id',
+        'user_role_id',
+        'must_change_password',
+    ];
+
+    /**
+     * The accessors to append to the model's array/JSON form.
+     *
+     * @var list<string>
+     */
+    protected $appends = [
+        'role',
     ];
 
     /**
@@ -52,6 +62,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
+            'must_change_password' => 'boolean',
         ];
     }
 
@@ -63,6 +74,16 @@ class User extends Authenticatable
     public function role(): string
     {
         return $this->userRole->name;
+    }
+
+    public function getRoleAttribute(): string
+    {
+        return $this->role();
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role() === Roles::Admin->value;
     }
 
     // Basically a "::where(role -> admin)"

@@ -1,0 +1,50 @@
+{
+    "title": "Bénévoles",
+    "empty": "Aucun compte pour le moment.",
+    "new": "Nouveau bénévole",
+
+    "table": {
+        "name": "Nom",
+        "email": "Email",
+        "role": "Rôle",
+        "created": "Créé le",
+        "pendingFirstLogin": "Première connexion en attente",
+        "actions": "Actions"
+    },
+
+    "roles": {
+        "admin": "Administrateur",
+        "volunteer": "Bénévole"
+    },
+
+    "create": {
+        "title": "Nouveau bénévole",
+        "description": "Un email contenant des identifiants temporaires sera envoyé à cette adresse."
+    },
+
+    "edit": {
+        "title": "Modifier le compte",
+        "description": "Modifier l'adresse email génère un nouveau mot de passe temporaire et l'envoie au compte."
+    },
+
+    "fields": {
+        "name": "Nom",
+        "namePlaceholder": "Nom complet",
+        "email": "Email",
+        "emailPlaceholder": "Adresse email",
+        "role": "Rôle",
+        "rolePlaceholder": "Sélectionner un rôle"
+    },
+
+    "actions": {
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "save": "Enregistrer",
+        "create": "Créer le compte"
+    },
+
+    "delete": {
+        "title": "Supprimer ce compte ?",
+        "description": "Ceci supprime définitivement le compte de {{name}}. Cette action est irréversible."
+    }
+}

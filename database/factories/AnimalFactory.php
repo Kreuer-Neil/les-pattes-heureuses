@@ -17,8 +17,8 @@ class AnimalFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'image' => '',
-            'gender' => Gender::cases()[random_int(0,1)],
-            'chip' => $this->faker->word(),
+            'gender' => Gender::cases()[random_int(0, 1)],
+            'chip' => $this->faker->unique()->word(),
             'animal_status_id' => AnimalStatus::inRandomOrder()->value('id'),
             /*'specie_id' => $this->faker->randomNumber(),
             'breed_id' => $this->faker->randomNumber(),

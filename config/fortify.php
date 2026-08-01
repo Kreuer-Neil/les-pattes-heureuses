@@ -144,9 +144,10 @@ return [
     */
 
     'features' => [
-//        Features::registration(),
+        // Features::registration(),
         Features::resetPasswords(),
-        Features::emailVerification(),
+        // Not needed for the current app infrastructure
+        // Features::emailVerification(),
         Features::twoFactorAuthentication([
             'confirm' => true,
             'confirmPassword' => true,
