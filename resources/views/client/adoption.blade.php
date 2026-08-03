@@ -14,7 +14,7 @@
                         placeholder="{{ __('client.animals.search.q_placeholder') }}" class="input">
                 </div>
 
-                <div class="flex flex-wrap gap-4">
+                <div class="flex flex-wrap gap-4 items-end">
                     <div class="form-item grow basis-40">
                         <label class="label" for="search-specie">{{ __('client.animals.search.specie') }}</label>
                         <input type="text" id="search-specie" name="specie" value="{{ request('specie') }}"
