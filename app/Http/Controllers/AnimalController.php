@@ -154,9 +154,6 @@ class AnimalController extends Controller
                     'vaccines' => $vaccines,
                 ],
             ]);
-
-            // TODO email the admins directly (README: "Notifications par email (admin et adoptant)") —
-            // no Mail infrastructure exists yet, deferred separately from the in-app attention feed.
         }
 
         return redirect()->back();
@@ -229,9 +226,6 @@ class AnimalController extends Controller
                     'vaccines' => $vaccines,
                 ]),
             ]);
-
-            // TODO email the admins directly (README: "Notifications par email (admin et adoptant)") —
-            // no Mail infrastructure exists yet, deferred separately from the in-app attention feed.
         }
 
         return redirect()->back();

@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use App\Enums\Animals\Status;
 use App\Enums\PendingApprobationStatus;
 use App\Http\Resources\AdoptionRequestResource;
+use App\Mail\NewAdoptionRequestMail;
 use App\Models\AdopterProfile;
 use App\Models\AdoptionRequest;
 use App\Models\Animal;
 use App\Models\AnimalStatus;
+use App\Models\User;
 use App\Services\AnimalWriter;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
@@ -86,8 +89,8 @@ class AdoptionRequestController extends Controller
             'status' => PendingApprobationStatus::Unattended,
         ]);
 
-        // TODO email the admins directly (README: "Notifications par email (admin et adoptant)") —
-        // no Mail infrastructure exists yet, deferred separately from the in-app attention feed.
+        // Safe to queue (unlike VolunteerPasswordMail) to avoid problems with the hosting (since it's the admin subdomain)
+        Mail::to(User::admins()->get())->queue(new NewAdoptionRequestMail($adoptionRequest));
 
         return redirect()
             ->route('client.animal.show', $animal)

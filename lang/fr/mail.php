@@ -14,4 +14,34 @@ return [
         'login_button' => 'Se connecter',
         'footer' => 'Si vous ne vous attendiez pas à recevoir cet email, veuillez contacter un administrateur.',
     ],
+
+    'new_adoption_request' => [
+        'subject' => 'Nouvelle demande d\'adoption pour :animal',
+        'intro' => 'Une nouvelle demande d\'adoption a été soumise pour :animal.',
+        'from_label' => 'De la part de',
+        'message_label' => 'Message',
+        'button' => 'Consulter la demande',
+    ],
+
+    'new_contact_message' => [
+        'subject' => 'Nouveau message reçu',
+        'intro' => 'Un nouveau message a été soumis via le formulaire de contact.',
+        'from_label' => 'De la part de',
+        'type_label' => 'Type',
+        'message_label' => 'Message',
+        'button' => 'Ouvrir le tableau de bord',
+        'types' => [
+            'contact' => 'Contact',
+            'volunteer_request' => 'Demande de bénévolat',
+            'report' => 'Signalement',
+        ],
+    ],
+
+    'new_pending_animal_change' => [
+        'subject_create' => 'Nouvel animal suggéré : :animal',
+        'subject_update' => 'Modification suggérée pour :animal',
+        'intro_create' => ':user a suggéré l\'ajout d\'un nouvel animal, :animal, dans les registres du refuge.',
+        'intro_update' => ':user a suggéré une modification de la fiche de :animal.',
+        'button' => 'Consulter la suggestion',
+    ],
 ];

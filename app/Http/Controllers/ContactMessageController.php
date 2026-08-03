@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ContactMessageType;
+use App\Mail\NewContactMessageMail;
 use App\Models\ContactMessage;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 
 class ContactMessageController extends Controller
@@ -19,7 +22,7 @@ class ContactMessageController extends Controller
             'message' => 'required|string',
         ]);
 
-        ContactMessage::create([
+        $contactMessage = ContactMessage::create([
             'first_name' => $validated['first_name'],
             'last_name' => $validated['last_name'],
             'email' => $validated['email'],
@@ -27,8 +30,8 @@ class ContactMessageController extends Controller
             'content' => $validated['message'],
         ]);
 
-        // TODO email the admins directly (README: "Notifications par email (admin et adoptant)") —
-        // no Mail infrastructure exists yet, deferred separately from the in-app attention feed.
+        // Safe to queue (unlike VolunteerPasswordMail) to avoid problems with the hosting (since it's the admin subdomain)
+        Mail::to(User::admins()->get())->queue(new NewContactMessageMail($contactMessage));
 
         return redirect()
             ->back()
