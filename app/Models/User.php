@@ -86,6 +86,18 @@ class User extends Authenticatable
         return $this->role() === Roles::Admin->value;
     }
 
+    /**
+     * Default signature for the admin-composed reply feature.
+     */
+    public function defaultSignature(): string
+    {
+        $title = $this->isAdmin()
+            ? __('mail.signature.admin_title')
+            : __('mail.signature.volunteer_title');
+
+        return __('mail.signature.template', ['name' => $this->name, 'role' => $title]);
+    }
+
     // Basically a "::where(role -> admin)"
     public function scopeAdmins(Builder $query): Builder
     {

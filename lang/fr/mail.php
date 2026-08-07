@@ -37,11 +37,22 @@ return [
         ],
     ],
 
-    'new_pending_animal_change' => [
-        'subject_create' => 'Nouvel animal suggéré : :animal',
-        'subject_update' => 'Modification suggérée pour :animal',
-        'intro_create' => ':user a suggéré l\'ajout d\'un nouvel animal, :animal, dans les registres du refuge.',
-        'intro_update' => ':user a suggéré une modification de la fiche de :animal.',
-        'button' => 'Consulter la suggestion',
+    'reply_to_adoption_request' => [
+        'subject' => 'Réponse à votre demande d\'adoption pour :animal',
+        'greeting' => 'Bonjour :name,',
+        'original_message_intro' => 'Pour rappel, voici votre message d\'origine concernant :animal :',
+    ],
+
+    'reply_to_contact_message' => [
+        'subject' => 'Réponse à votre message',
+        'greeting' => 'Bonjour :name,',
+        'original_message_intro' => 'Pour rappel, voici votre message d\'origine :',
+    ],
+
+    'signature' => [
+        // En dur plutôt que dérivé d'un champ de genre — seule Élise est admin pour l'instant.
+        'admin_title' => 'Administratrice',
+        'volunteer_title' => 'Bénévole',
+        'template' => ":name,\n:role de Les Pattes Heureuses",
     ],
 ];

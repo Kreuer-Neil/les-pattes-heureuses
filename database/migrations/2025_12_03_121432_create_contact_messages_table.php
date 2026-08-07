@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ContactMessageStatus;
 use App\Enums\ContactMessageType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -22,6 +23,8 @@ return new class extends Migration
             $table->enum('type', ContactMessageType::cases());
 
             $table->text('content');
+
+            $table->enum('status', ContactMessageStatus::cases())->nullable();
 
             $table->timestamp('read_at')->nullable();
 

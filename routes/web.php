@@ -22,6 +22,7 @@ Route::domain('admin.'.'les-pattes-heureuses.test')->group(function () {
         require __DIR__.'/dashboard.php';
         require __DIR__.'/animals.php';
         require __DIR__.'/adoption-requests.php';
+        require __DIR__.'/contact-messages.php';
         require __DIR__.'/notifications.php';
         require __DIR__.'/users.php';
         // Put only admin-access auth routes here

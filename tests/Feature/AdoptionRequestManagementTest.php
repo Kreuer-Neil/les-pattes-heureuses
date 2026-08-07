@@ -4,12 +4,14 @@ use App\Enums\Animals\MovementType;
 use App\Enums\Animals\Status;
 use App\Enums\PendingApprobationStatus;
 use App\Enums\Roles;
+use App\Mail\AdoptionRequestReplyMail;
 use App\Models\AdopterProfile;
 use App\Models\AdoptionRequest;
 use App\Models\Animal;
 use App\Models\AnimalStatus;
 use App\Models\User;
 use App\Models\UserRole;
+use Illuminate\Support\Facades\Mail;
 
 beforeEach(function () {
     $this->animal = Animal::factory()->create([
@@ -129,6 +131,124 @@ test('volunteer cannot update an adopter profile\'s details', function () {
         ->assertForbidden();
 
     expect($this->adopterProfile->fresh()->details)->toBeNull();
+});
+
+test('admin can manually log an adoption request with only an email', function () {
+    $this->actingAs($this->admin)
+        ->post(route('adoption-requests.store'), [
+            'animal_id' => $this->animal->id,
+            'first_name' => 'Marc',
+            'last_name' => 'Petit',
+            'email' => 'marc@example.com',
+            'content' => 'Called about Moka.',
+        ])
+        ->assertRedirect();
+
+    expect(AdoptionRequest::whereHas('adopterProfile', fn ($q) => $q->where('email', 'marc@example.com'))->exists())->toBeTrue();
+});
+
+test('admin can manually log an adoption request with only another contact method', function () {
+    $this->actingAs($this->admin)
+        ->post(route('adoption-requests.store'), [
+            'animal_id' => $this->animal->id,
+            'first_name' => 'Marc',
+            'last_name' => 'Petit',
+            'other_contact' => '06 12 34 56 78',
+            'content' => 'Called about Moka.',
+        ])
+        ->assertRedirect();
+
+    expect(AdopterProfile::where('other_contact', '06 12 34 56 78')->exists())->toBeTrue();
+});
+
+test('manually logging an adoption request fails without an email or another contact method', function () {
+    $this->actingAs($this->admin)
+        ->post(route('adoption-requests.store'), [
+            'animal_id' => $this->animal->id,
+            'first_name' => 'Marc',
+            'last_name' => 'Petit',
+            'content' => 'Called about Moka.',
+        ])
+        ->assertSessionHasErrors(['email', 'other_contact']);
+});
+
+test('volunteer cannot manually log an adoption request', function () {
+    $this->actingAs($this->volunteer)
+        ->post(route('adoption-requests.store'), [
+            'animal_id' => $this->animal->id,
+            'first_name' => 'Marc',
+            'last_name' => 'Petit',
+            'email' => 'marc@example.com',
+            'content' => 'Called about Moka.',
+        ])
+        ->assertForbidden();
+});
+
+test('a positive reply queues the reply mail and puts the animal on hold', function () {
+    Mail::fake();
+
+    $this->actingAs($this->admin)
+        ->patch(route('adoption-requests.reply', $this->adoptionRequest), [
+            'message' => 'We would love to meet you!',
+            'signature' => 'Élise, administratrice',
+            'outcome' => 'positive',
+        ])
+        ->assertRedirect();
+
+    expect($this->adoptionRequest->fresh()->status)->toBe(PendingApprobationStatus::Pending)
+        ->and($this->animal->fresh()->status->name)->toBe(Status::Pending->value);
+
+    Mail::assertQueued(
+        AdoptionRequestReplyMail::class,
+        fn ($mail) => $mail->hasTo('sarah@example.com') && $mail->message === 'We would love to meet you!',
+    );
+});
+
+test('a negative reply rejects the request without touching the animal status', function () {
+    Mail::fake();
+
+    $this->actingAs($this->admin)
+        ->patch(route('adoption-requests.reply', $this->adoptionRequest), [
+            'message' => 'Unfortunately Moka has already been adopted.',
+            'signature' => 'Élise, administratrice',
+            'outcome' => 'negative',
+        ])
+        ->assertRedirect();
+
+    expect($this->adoptionRequest->fresh()->status)->toBe(PendingApprobationStatus::Rejected)
+        ->and($this->animal->fresh()->status->name)->toBe(Status::Available->value);
+});
+
+test('replying requires an explicit outcome with no default', function () {
+    $this->actingAs($this->admin)
+        ->patch(route('adoption-requests.reply', $this->adoptionRequest), [
+            'message' => 'Hello!',
+            'signature' => 'Élise, administratrice',
+        ])
+        ->assertSessionHasErrors('outcome');
+});
+
+test('cannot reply to a request whose adopter has no email on file', function () {
+    $phoneOnlyProfile = AdopterProfile::create([
+        'first_name' => 'Marc',
+        'last_name' => 'Petit',
+        'other_contact' => '06 12 34 56 78',
+    ]);
+
+    $request = AdoptionRequest::create([
+        'animal_id' => $this->animal->id,
+        'adopter_profile_id' => $phoneOnlyProfile->id,
+        'content' => 'Called about Moka.',
+        'status' => PendingApprobationStatus::Unattended,
+    ]);
+
+    $this->actingAs($this->admin)
+        ->patch(route('adoption-requests.reply', $request), [
+            'message' => 'Hello!',
+            'signature' => 'Élise, administratrice',
+            'outcome' => 'positive',
+        ])
+        ->assertSessionHasErrors('message');
 });
 
 test('a submitted adoption request appears in the admin attention feed', function () {

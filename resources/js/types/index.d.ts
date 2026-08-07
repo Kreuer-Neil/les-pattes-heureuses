@@ -140,7 +140,8 @@ export interface IAdopterProfile {
     id: number;
     firstName: string;
     lastName: string;
-    email: string;
+    email: string | null;
+    otherContact: string | null;
     details: string;
 }
 
@@ -171,6 +172,25 @@ export interface IAnimalChangeAttentionItem {
 export type IAttentionItem =
     | IAdoptionRequestAttentionItem
     | IAnimalChangeAttentionItem;
+
+export type ContactMessageTypeValue =
+    | 'contact'
+    | 'volunteer_request'
+    | 'report';
+
+export type ContactMessageStatus = 'answered' | 'ignored' | null;
+
+export interface IContactMessage {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    type: ContactMessageTypeValue;
+    content: string;
+    status: ContactMessageStatus;
+    readAt: string | null;
+    createdAt: string;
+}
 
 export interface IUserAccount {
     id: number;

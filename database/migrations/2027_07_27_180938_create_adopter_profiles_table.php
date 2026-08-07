@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('adopter_profiles', function (Blueprint $table) {
             $table->id();
 
-            $table->string('email')->unique()->index();
+            $table->string('email')->nullable()->unique()->index();
+            $table->string('other_contact')->nullable();
             $table->string('first_name');
             $table->string('last_name');
             $table->text('details')->nullable();

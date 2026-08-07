@@ -40,7 +40,7 @@ function ModalHeader({ className, ...props }: React.ComponentProps<'div'>) {
     return (
         <div
             className={cn(
-                'flex flex-col gap-2 text-center sm:text-left mb-3 pe-10',
+                'mb-3 flex flex-col gap-2 pe-10 text-center sm:text-left',
                 className,
             )}
             {...props}

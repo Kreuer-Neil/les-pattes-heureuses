@@ -1,0 +1,30 @@
+{
+    "title": "Contact messages",
+    "empty": "No messages yet.",
+
+    "table": {
+        "from": "From",
+        "type": "Type",
+        "message": "Message",
+        "status": "Status",
+        "date": "Date",
+        "actions": "Actions"
+    },
+
+    "type": {
+        "contact": "Contact",
+        "volunteer_request": "Volunteer request",
+        "report": "Report"
+    },
+
+    "status": {
+        "unanswered": "Not yet handled",
+        "answered": "Answered",
+        "ignored": "Ignored"
+    },
+
+    "actions": {
+        "reply": "Reply",
+        "ignore": "Ignore"
+    }
+}

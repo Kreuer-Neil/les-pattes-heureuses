@@ -37,11 +37,22 @@ return [
         ],
     ],
 
-    'new_pending_animal_change' => [
-        'subject_create' => 'New animal suggested: :animal',
-        'subject_update' => 'Change suggested for :animal',
-        'intro_create' => ':user suggested adding a new animal, :animal, to the shelter records.',
-        'intro_update' => ':user suggested a change to :animal\'s record.',
-        'button' => 'Review the suggestion',
+    'reply_to_adoption_request' => [
+        'subject' => 'Reply to your adoption request for :animal',
+        'greeting' => 'Hello :name,',
+        'original_message_intro' => 'For reference, here is your original message about :animal:',
+    ],
+
+    'reply_to_contact_message' => [
+        'subject' => 'Reply to your message',
+        'greeting' => 'Hello :name,',
+        'original_message_intro' => 'For reference, here is your original message:',
+    ],
+
+    'signature' => [
+        // Hardcoded rather than derived from any gender field — only Élise is admin for now.
+        'admin_title' => 'Administrator',
+        'volunteer_title' => 'Volunteer',
+        'template' => ":name,\n:role of Les Pattes Heureuses",
     ],
 ];

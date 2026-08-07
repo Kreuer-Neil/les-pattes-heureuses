@@ -9,5 +9,14 @@ Route::get('adoption-requests', [AdoptionRequestController::class, 'index'])
 Route::patch('adoption-requests/{adoptionRequest}', [AdoptionRequestController::class, 'updateStatus'])
     ->name('adoption-requests.update-status');
 
+Route::post('adoption-requests', [AdoptionRequestController::class, 'storeManual'])
+    ->name('adoption-requests.store');
+
+Route::patch('adoption-requests/{adoptionRequest}/content', [AdoptionRequestController::class, 'update'])
+    ->name('adoption-requests.update');
+
+Route::patch('adoption-requests/{adoptionRequest}/reply', [AdoptionRequestController::class, 'reply'])
+    ->name('adoption-requests.reply');
+
 Route::patch('adopter-profile/{adopterProfile}/update', [AdopterProfileController::class, 'update'])
     ->name('adopter-profile.update');

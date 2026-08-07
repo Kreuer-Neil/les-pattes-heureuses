@@ -18,6 +18,7 @@ class NotificationsController extends Controller
         return Inertia::render('notifications/index', [
             'items' => (new AdminAttentionCollection(AdminAttentionFeed::items()))->toArray($request),
             'unreadMessageCount' => AdminAttentionFeed::unreadMessageCount(),
+            'defaultSignature' => $request->user()->defaultSignature(),
         ]);
     }
 }

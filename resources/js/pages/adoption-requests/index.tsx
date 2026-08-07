@@ -1,6 +1,8 @@
 import AdoptionRequestDetail from '@/components/adoption-requests/adoption-request-detail';
+import AdoptionRequestFormDialog from '@/components/adoption-requests/adoption-request-form-dialog';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { useImage } from '@/hooks/use-image-asset';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
@@ -16,6 +18,7 @@ import { useTranslation } from 'react-i18next';
 
 type PageProps = {
     adoptionRequests: IAdoptionRequest[];
+    animals: { id: number; name: string }[];
 };
 
 const statusVariant: Record<
@@ -64,7 +67,8 @@ function AdoptionRequestRow({
                     {request.adopterProfile.lastName}
                 </div>
                 <div className="text-sm text-muted-foreground">
-                    {request.adopterProfile.email}
+                    {request.adopterProfile.email ??
+                        request.adopterProfile.otherContact}
                 </div>
             </td>
             <td className="max-w-xs truncate p-3 text-muted-foreground">
@@ -83,9 +87,10 @@ function AdoptionRequestRow({
 }
 
 export default function AdoptionRequestsIndex() {
-    const { adoptionRequests: requests } = usePage<PageProps>().props;
+    const { adoptionRequests: requests, animals } = usePage<PageProps>().props;
     const { t } = useTranslation('adoption-requests');
     const [selectedId, setSelectedId] = useState<number | null>(null);
+    const [showCreate, setShowCreate] = useState<boolean>(false);
     const selectedRequest =
         requests.find((request) => request.id === selectedId) ?? null;
 
@@ -99,7 +104,12 @@ export default function AdoptionRequestsIndex() {
             <Head title={t('title')} />
 
             <div className="flex flex-col gap-4 p-4">
-                <h1 className="text-xl font-semibold">{t('title')}</h1>
+                <div className="flex items-center justify-between">
+                    <h1 className="text-xl font-semibold">{t('title')}</h1>
+                    <Button onClick={() => setShowCreate(true)}>
+                        {t('actions.add')}
+                    </Button>
+                </div>
 
                 {requests.length > 0 ? (
                     <div className="overflow-x-auto rounded-md border">
@@ -144,6 +154,12 @@ export default function AdoptionRequestsIndex() {
             <AdoptionRequestDetail
                 request={selectedRequest}
                 onClose={() => setSelectedId(null)}
+            />
+
+            <AdoptionRequestFormDialog
+                open={showCreate}
+                onClose={() => setShowCreate(false)}
+                animals={animals}
             />
         </AppLayout>
     );

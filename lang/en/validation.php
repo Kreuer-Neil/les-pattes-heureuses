@@ -181,6 +181,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'adoption_request' => [
+            'no_email_on_file' => 'This adopter has no email on file — there is nothing to reply to.',
+        ],
     ],
 
     /*

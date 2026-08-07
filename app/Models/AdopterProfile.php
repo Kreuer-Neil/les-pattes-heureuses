@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class AdopterProfile extends Model
 {
     protected $fillable = [
-        'email', 'first_name', 'last_name', 'details',
+        'email', 'other_contact', 'first_name', 'last_name', 'details',
     ];
 
     public function adoptionRequests(): HasMany

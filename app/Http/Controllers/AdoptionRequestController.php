@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\Animals\Status;
 use App\Enums\PendingApprobationStatus;
 use App\Http\Resources\AdoptionRequestResource;
+use App\Mail\AdoptionRequestReplyMail;
 use App\Mail\NewAdoptionRequestMail;
 use App\Models\AdopterProfile;
 use App\Models\AdoptionRequest;
@@ -17,6 +18,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class AdoptionRequestController extends Controller
@@ -25,16 +27,14 @@ class AdoptionRequestController extends Controller
     {
         Gate::authorize('viewAny', AdoptionRequest::class);
 
-        // Merge with general admin notifications view? Using notification type filter to easily validate requests
-        // (For animal create/edits, add the user's profile picture and name, then a resume of the changes maybe?
-        // Knowing who suggested the changes already makes it worth automatically validating.
-
         $adoptionRequests = AdoptionRequest::with(['animal', 'adopterProfile'])
             ->latest()
             ->get();
 
         return Inertia::render('adoption-requests/index', [
             'adoptionRequests' => AdoptionRequestResource::collection($adoptionRequests)->toArray($request),
+            'animals' => Animal::excludingDeceased()->select('id', 'name')->orderBy('name')->get(),
+            'defaultSignature' => $request->user()->defaultSignature(),
         ]);
     }
 
@@ -53,9 +53,7 @@ class AdoptionRequestController extends Controller
         // Contacting the adopter also puts the animal on hold — it's no longer just
         // "available", someone is actively being considered for it.
         if ($newStatus === PendingApprobationStatus::Pending) {
-            $adoptionRequest->animal->update([
-                'animal_status_id' => AnimalStatus::where('name', Status::Pending->value)->value('id'),
-            ]);
+            $this->putAnimalOnHold($adoptionRequest);
         } elseif ($newStatus === PendingApprobationStatus::Approved) {
             $adoptionRequest->update(['accepted_at' => Carbon::now()]);
 
@@ -95,5 +93,100 @@ class AdoptionRequestController extends Controller
         return redirect()
             ->route('client.animal.show', $animal)
             ->with('status', 'adoption-request-sent');
+    }
+
+    /**
+     * Manual entry for an AdopterProfile.
+     * Only in case an adopter contacts trough another way than the website.
+     */
+    public function storeManual(Request $request)
+    {
+        Gate::authorize('create', AdoptionRequest::class);
+
+        $validated = $request->validate([
+            'animal_id' => 'required|exists:animals,id',
+            'first_name' => 'required|string|min:2|max:255',
+            'last_name' => 'required|string|min:2|max:255',
+            'email' => 'nullable|email|unique:adopter_profiles,email|required_without:other_contact',
+            'other_contact' => 'nullable|string|required_without:email',
+            'content' => 'required|string',
+        ]);
+
+        $adopterProfile = isset($validated['email'])
+            ? AdopterProfile::firstOrCreate(
+                ['email' => $validated['email']],
+                [
+                    'first_name' => $validated['first_name'],
+                    'last_name' => $validated['last_name'],
+                    'other_contact' => $validated['other_contact'] ?? null,
+                ]
+            )
+            : AdopterProfile::create([
+                'first_name' => $validated['first_name'],
+                'last_name' => $validated['last_name'],
+                'other_contact' => $validated['other_contact'],
+            ]);
+
+        AdoptionRequest::create([
+            'animal_id' => $validated['animal_id'],
+            'adopter_profile_id' => $adopterProfile->id,
+            'content' => $validated['content'],
+            'status' => PendingApprobationStatus::Unattended,
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function update(Request $request, AdoptionRequest $adoptionRequest)
+    {
+        Gate::authorize('update', AdoptionRequest::class);
+
+        $validated = $request->validate([
+            'content' => 'required|string',
+        ]);
+
+        $adoptionRequest->update($validated);
+
+        return redirect()->back();
+    }
+
+    public function reply(Request $request, AdoptionRequest $adoptionRequest)
+    {
+        Gate::authorize('reply', AdoptionRequest::class);
+
+        $validated = $request->validate([
+            'message' => 'required|string',
+            'signature' => 'required|string',
+            'outcome' => ['required', Rule::in(['positive', 'negative'])],
+        ]);
+
+        // In the rare case the adopter has no email
+        if ($adoptionRequest->adopterProfile->email === null) {
+            throw ValidationException::withMessages([
+                'message' => [__('validation.custom.adoption_request.no_email_on_file')],
+            ]);
+        }
+
+        Mail::to($adoptionRequest->adopterProfile->email)->queue(
+            new AdoptionRequestReplyMail($adoptionRequest, $validated['message'], $validated['signature'])
+        );
+
+        // Only a positive reply implies the animal is being actively considered.
+        // A negative reply automatically rejects the request.
+        if ($validated['outcome'] === 'positive') {
+            $adoptionRequest->update(['status' => PendingApprobationStatus::Pending]);
+            $this->putAnimalOnHold($adoptionRequest);
+        } else {
+            $adoptionRequest->update(['status' => PendingApprobationStatus::Rejected]);
+        }
+
+        return redirect()->back();
+    }
+
+    private function putAnimalOnHold(AdoptionRequest $adoptionRequest): void
+    {
+        $adoptionRequest->animal->update([
+            'animal_status_id' => AnimalStatus::where('name', Status::Pending->value)->value('id'),
+        ]);
     }
 }

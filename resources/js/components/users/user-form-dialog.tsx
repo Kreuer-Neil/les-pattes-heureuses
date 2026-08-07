@@ -78,7 +78,6 @@ export default function UserFormDialog({
                                     errors={[{ message: errors.email }]}
                                 />
                             </Field>
-
                         </FieldSet>
 
                         <ModalFooter>

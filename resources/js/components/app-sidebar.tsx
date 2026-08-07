@@ -13,6 +13,7 @@ import {
 import { dashboard } from '@/routes';
 import adoptionRequests from '@/routes/adoption-requests';
 import animals from '@/routes/animals';
+import contactMessages from '@/routes/contact-messages';
 import notifications from '@/routes/notifications';
 import users from '@/routes/users';
 import { type NavItem, type SharedData } from '@/types';
@@ -21,6 +22,7 @@ import {
     /*BookOpen, Folder,*/ Bell,
     HeartHandshake,
     LayoutGrid,
+    Mail,
     PawPrint,
     Users,
 } from 'lucide-react';
@@ -57,6 +59,11 @@ export function AppSidebar() {
             title: 'Adoption requests',
             href: adoptionRequests.index(),
             icon: HeartHandshake,
+        },
+        {
+            title: 'Contact messages',
+            href: contactMessages.index(),
+            icon: Mail,
         },
         {
             title: 'Notifications',

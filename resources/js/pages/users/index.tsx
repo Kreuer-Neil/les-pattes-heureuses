@@ -1,8 +1,8 @@
-import UserDeleteDialog from '@/components/users/user-delete-dialog';
-import UserFormDialog from '@/components/users/user-form-dialog';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import UserDeleteDialog from '@/components/users/user-delete-dialog';
+import UserFormDialog from '@/components/users/user-form-dialog';
 import { useImage } from '@/hooks/use-image-asset';
 import { useInitials } from '@/hooks/use-initials';
 import AppLayout from '@/layouts/app-layout';
@@ -45,9 +45,7 @@ export default function UsersIndex() {
 
     const [showCreate, setShowCreate] = useState(false);
     const [editTarget, setEditTarget] = useState<IUserAccount | null>(null);
-    const [deleteTarget, setDeleteTarget] = useState<IUserAccount | null>(
-        null,
-    );
+    const [deleteTarget, setDeleteTarget] = useState<IUserAccount | null>(null);
 
     const breadcrumbs: BreadcrumbItem[] = [
         { title: 'Dashboard', href: dashboard().url },
@@ -140,9 +138,7 @@ export default function UsersIndex() {
                                                     variant="destructive"
                                                     size="sm"
                                                     onClick={() =>
-                                                        setDeleteTarget(
-                                                            account,
-                                                        )
+                                                        setDeleteTarget(account)
                                                     }
                                                 >
                                                     {t('actions.delete')}

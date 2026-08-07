@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AdopterProfileResource extends JsonResource
+class ContactMessageResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,8 +19,11 @@ class AdopterProfileResource extends JsonResource
             'firstName' => $this->resource->first_name,
             'lastName' => $this->resource->last_name,
             'email' => $this->resource->email,
-            'otherContact' => $this->resource->other_contact,
-            'details' => $this->resource->details,
+            'type' => $this->resource->type,
+            'content' => $this->resource->content,
+            'status' => $this->resource->status,
+            'readAt' => $this->resource->read_at,
+            'createdAt' => $this->resource->created_at,
         ];
     }
 }
