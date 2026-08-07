@@ -113,6 +113,14 @@ export interface IAnimalMiniature {
     personality: string;
 }
 
+export interface IAnimalFilters {
+    status: 'active' | 'gone' | AnimalStatusName;
+    specie: number | null;
+    breed: number | null;
+    gender: 'M' | 'F' | null;
+    q: string;
+}
+
 export interface IAnimalVaccine {
     id: number;
     vaccineType: {

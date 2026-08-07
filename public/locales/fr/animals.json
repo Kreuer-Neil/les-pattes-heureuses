@@ -3,6 +3,24 @@
     "empty": "Aucun animal enregistré pour le moment.",
     "create_button": "Ajouter un animal",
 
+    "filters": {
+        "search": "Nom",
+        "searchPlaceholder": "Rechercher par nom…",
+        "status": {
+            "label": "Statut",
+            "active": "Actifs (disponible, en soins, en attente)",
+            "gone": "Partis (adopté, décédé, inconnu)"
+        },
+        "specie": "Espèce",
+        "allSpecies": "Toutes les espèces",
+        "breed": "Race",
+        "allBreeds": "Toutes les races",
+        "gender": "Sexe",
+        "allGenders": "Tous",
+        "clear": "Réinitialiser les filtres",
+        "noResults": "Aucun animal ne correspond à ces filtres."
+    },
+
     "table": {
         "name": "Nom",
         "specie": "Espèce",

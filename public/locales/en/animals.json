@@ -3,6 +3,24 @@
     "empty": "No animals registered yet.",
     "create_button": "Add an animal",
 
+    "filters": {
+        "search": "Name",
+        "searchPlaceholder": "Search by name…",
+        "status": {
+            "label": "Status",
+            "active": "Active (available, healing, pending)",
+            "gone": "Gone (adopted, deceased, unknown)"
+        },
+        "specie": "Species",
+        "allSpecies": "All species",
+        "breed": "Breed",
+        "allBreeds": "All breeds",
+        "gender": "Gender",
+        "allGenders": "All",
+        "clear": "Clear filters",
+        "noResults": "No animals match these filters."
+    },
+
     "table": {
         "name": "Name",
         "specie": "Species",

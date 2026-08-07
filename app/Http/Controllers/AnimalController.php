@@ -51,14 +51,61 @@ class AnimalController extends Controller
     {
         $hasAccess = (auth()->check()); // TODO Gate checking?
 
-        // TODO add filtering later
-        $animals = Animal::excludingDeceased()->get();
+        // Gets an array of Status's values
+        $validStatuses = array_column(Status::cases(), 'value');
+
+        $validated = $request->validate([
+            'status_filter' => ['sometimes', 'string', Rule::in(array_merge(['active', 'gone'], $validStatuses))],
+        ]);
+        $statusFilter = $validated['status_filter'] ?? 'active';
+        $statuses = $this->resolveStatusFilter($statusFilter);
+
+        $specieId = $request->integer('specie') ?: null;
+        $breedId = $request->integer('breed') ?: null;
+        $gender = in_array($request->query('gender'), ['M', 'F'], true) ? $request->query('gender') : null;
+        $search = trim((string) $request->query('q', ''));
+
+        $query = Animal::query()->whereHas('status', fn ($q) => $q->whereIn('name', $statuses));
+
+        if ($specieId) {
+            $query->where('specie_id', $specieId);
+        }
+
+        if ($breedId) {
+            $query->where('breed_id', $breedId);
+        }
+
+        if ($gender) {
+            $query->where('gender', $gender);
+        }
+
+        if ($search !== '') {
+            $query->where('name', 'like', '%'.str_replace(['%', '_'], ['\%', '\_'], $search).'%');
+        }
+
+        $animals = $query->get();
 
         return [
             'hasAccess' => $hasAccess,
             'animals' => AnimalMiniatureResource::collection($animals)->toArray($request),
             'taxonomy' => $this->taxonomy(),
+            'filters' => [
+                'status' => $statusFilter,
+                'specie' => $specieId,
+                'breed' => $breedId,
+                'gender' => $gender,
+                'q' => $search,
+            ],
         ];
+    }
+
+    private function resolveStatusFilter(string $statusFilter): array
+    {
+        return match ($statusFilter) {
+            'active' => [Status::Available->value, Status::Healing->value, Status::Pending->value],
+            'gone' => [Status::Adopted->value, Status::Deceased->value, Status::Unknown->value],
+            default => [$statusFilter],
+        };
     }
 
     private function taxonomy(): array
