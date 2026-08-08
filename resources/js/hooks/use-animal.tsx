@@ -50,7 +50,15 @@ export function useAnimal(id: number | null) {
     }
 
     useEffect(() => {
-        if (id === null || animalCache.has(id)) {
+        if (id === null) return;
+
+        // Syncing from cache rather than just no-op'ing when it's already present.
+        // Fix for the on-page-load animal loading.
+        const cached = animalCache.get(id);
+        if (cached) {
+            // "Intentional": This action is controlled, the control structure can attest for it.
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setAnimal(cached);
             return;
         }
 
