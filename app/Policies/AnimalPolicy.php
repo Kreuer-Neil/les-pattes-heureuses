@@ -30,9 +30,7 @@ class AnimalPolicy
 
     public function changeStatus(User $user, Animal $animal): bool
     {
-        return $user->exists()
-            && $animal->status->name !== Status::Deceased->value
-            && $animal->status->name !== Status::Adopted->value;
+        return $user->exists() && $animal->status->name === Status::Adopted->value;
     }
 
     public function setAnimalDeceased(User $user): bool

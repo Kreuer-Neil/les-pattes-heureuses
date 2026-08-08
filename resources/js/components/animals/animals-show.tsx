@@ -2,6 +2,7 @@ import AnimalController from '@/actions/App/Http/Controllers/AnimalController';
 import AnimalFields, {
     IAnimalFieldsDefaultValues,
 } from '@/components/animals/animal-fields';
+import AnimalsChangeStatus from '@/components/animals/animals-change-status';
 import CustomModal, {
     ModalDescription,
     ModalFooter,
@@ -13,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { useAnimal } from '@/hooks/use-animal';
 import { useAnimalLabels } from '@/hooks/use-animal-labels';
 import { useImage } from '@/hooks/use-image-asset';
+import { AnimalStatus } from '@/lib/animal-enums';
 import { IAnimal } from '@/types';
 import { Form } from '@inertiajs/react';
 import { useState } from 'react';
@@ -72,12 +74,14 @@ export default function AnimalsShow({
 
     const [trackedAnimalId, setTrackedAnimalId] = useState(animalId);
     const [isEditing, setIsEditing] = useState(false);
+    const [isChangingStatus, setIsChangingStatus] = useState(false);
 
     // Reset synchronously during render when the id changes, so switching
     // to a different animal never leaves the previous edit session open.
     if (animalId !== trackedAnimalId) {
         setTrackedAnimalId(animalId);
         setIsEditing(false);
+        setIsChangingStatus(false);
     }
 
     return (
@@ -195,6 +199,15 @@ export default function AnimalsShow({
                         </dl>
 
                         <ModalFooter className="sm:justify-end">
+                            {status && status.name === AnimalStatus.Adopted && (
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    onClick={() => setIsChangingStatus(true)}
+                                >
+                                    {t('changeStatus.trigger')}
+                                </Button>
+                            )}
                             <Button
                                 type="button"
                                 variant="outline"
@@ -247,6 +260,19 @@ export default function AnimalsShow({
                         )}
                     </Form>
                 </>
+            )}
+
+            {animal && (
+                <AnimalsChangeStatus
+                    animalId={animal.id}
+                    currentStatusId={String(animal.statusId)}
+                    open={isChangingStatus}
+                    onClose={() => setIsChangingStatus(false)}
+                    onSuccess={() => {
+                        refresh();
+                        setIsChangingStatus(false);
+                    }}
+                />
             )}
         </CustomModal>
     );

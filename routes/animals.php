@@ -18,6 +18,9 @@ Route::put('animals/{animal}', [AnimalController::class, 'update'])
 Route::patch('animals/{animal}/deceased', [AnimalController::class, 'markDeceased'])
     ->name('animals.mark-deceased');
 
+Route::patch('animals/{animal}/recover', [AnimalController::class, 'recoverAnimal'])
+    ->name('animals.recover-animal');
+
 Route::patch('animal-changes/{pendingAnimalChange}/accept', [AnimalChangeController::class, 'acceptChange'])
     ->name('animal-changes.accept');
 

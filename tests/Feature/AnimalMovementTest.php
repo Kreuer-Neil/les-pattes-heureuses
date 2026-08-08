@@ -58,6 +58,44 @@ test('volunteer cannot mark an animal as deceased', function () {
     expect($this->animal->fresh()->status->name)->toBe(Status::Available->value);
 });
 
+test('admin can recover an adopted animal, which records a recovery movement', function () {
+    $adoptedAnimal = Animal::factory()->create([
+        'animal_status_id' => AnimalStatus::where('name', Status::Adopted->value)->value('id'),
+    ]);
+    $healingStatusId = AnimalStatus::where('name', Status::Healing->value)->value('id');
+
+    $this->actingAs($this->admin)
+        ->patch(route('animals.recover-animal', $adoptedAnimal), [
+            'animal_status_id' => $healingStatusId,
+        ])
+        ->assertRedirect();
+
+    $adoptedAnimal->refresh();
+
+    expect($adoptedAnimal->status->name)->toBe(Status::Healing->value)
+        ->and($adoptedAnimal->movements()->where('type', MovementType::Recovery->value)->count())->toBe(1);
+});
+
+test('recoverAnimal is rejected for an animal that is not adopted', function () {
+    $this->actingAs($this->admin)
+        ->patch(route('animals.recover-animal', $this->animal), [
+            'animal_status_id' => AnimalStatus::where('name', Status::Healing->value)->value('id'),
+        ])
+        ->assertForbidden();
+});
+
+test('recoverAnimal rejects a destination status outside the active set', function () {
+    $adoptedAnimal = Animal::factory()->create([
+        'animal_status_id' => AnimalStatus::where('name', Status::Adopted->value)->value('id'),
+    ]);
+
+    $this->actingAs($this->admin)
+        ->patch(route('animals.recover-animal', $adoptedAnimal), [
+            'animal_status_id' => AnimalStatus::where('name', Status::Deceased->value)->value('id'),
+        ])
+        ->assertSessionHasErrors('animal_status_id');
+});
+
 test('excludingDeceased scope hides deceased animals', function () {
     $this->animal->update([
         'animal_status_id' => AnimalStatus::where('name', Status::Deceased->value)->value('id'),

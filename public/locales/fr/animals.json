@@ -164,5 +164,12 @@
         "description": "Mettre à jour les informations de cet animal.",
         "submit": "Enregistrer",
         "cancel": "Annuler"
+    },
+
+    "changeStatus": {
+        "trigger": "Récupérer l'animal",
+        "title": "Récupérer l'animal",
+        "description": "Cet animal revient au refuge — choisissez son nouveau statut (disponible, en soins ou en attente d'adoption).",
+        "submit": "Valider"
     }
 }

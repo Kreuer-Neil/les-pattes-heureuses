@@ -32,26 +32,32 @@ class AnimalWriter
 
     public static function update(Animal $animal, array $attributes, ?array $vaccines): void
     {
+        $previousStatusId = $animal->animal_status_id;
+
         $animal->update($attributes);
 
         if ($vaccines !== null) {
             self::syncVaccines($animal, $vaccines);
         }
 
-        self::recordMovementIfStatusChanged($animal);
+        self::recordMovementIfStatusChanged($animal, $previousStatusId);
     }
 
-    private static function recordMovementIfStatusChanged(Animal $animal): void
+    private static function recordMovementIfStatusChanged(Animal $animal, int $previousStatusId): void
     {
         if (! $animal->wasChanged('animal_status_id')) {
             return;
         }
 
-        $statusName = AnimalStatus::where('id', $animal->animal_status_id)->value('name');
+        $oldStatusName = AnimalStatus::where('id', $previousStatusId)->value('name');
+        $newStatusName = AnimalStatus::where('id', $animal->animal_status_id)->value('name');
 
-        $movementType = match ($statusName) {
-            Status::Adopted->value => MovementType::AdoptedDeparture,
-            Status::Deceased->value => MovementType::DeceasedDeparture,
+        // An animal leaving Adopted (e.g. a return after adoption) counts as a fresh
+        // Recovery, the same as a first-time intake — see AnimalMovement::presentCountAt().
+        $movementType = match (true) {
+            $newStatusName === Status::Adopted->value => MovementType::AdoptedDeparture,
+            $newStatusName === Status::Deceased->value => MovementType::DeceasedDeparture,
+            $oldStatusName === Status::Adopted->value => MovementType::Recovery,
             default => null,
         };
 

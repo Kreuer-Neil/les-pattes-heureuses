@@ -289,8 +289,33 @@ class AnimalController extends Controller
         return redirect()->back();
     }
 
-    public function recover()
+    public function recoverAnimal(Request $request, Animal $animal)
     {
-        // Add a RecoveredAnimal row
+        Gate::authorize('changeStatus', $animal);
+
+        $activeStatusIds = AnimalStatus::whereIn('name', [
+            Status::Available->value,
+            Status::Healing->value,
+            Status::Pending->value,
+        ])->pluck('id');
+
+        $validated = $request->validate([
+            'animal_status_id' => ['required', Rule::in($activeStatusIds)],
+        ]);
+
+        if (Gate::allows('update', $animal)) {
+            AnimalWriter::update($animal, $validated, null);
+        } else {
+            Gate::authorize('suggest', $animal);
+            PendingAnimalChanges::create([
+                'action' => PendingChanges::Update,
+                'status' => PendingApprobationStatus::Pending,
+                'animal_id' => $animal->id,
+                'user_id' => $request->user()->id,
+                'payload' => $validated,
+            ]);
+        }
+
+        return redirect()->back();
     }
 }

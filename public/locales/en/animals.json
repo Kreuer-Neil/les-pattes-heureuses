@@ -164,5 +164,12 @@
         "description": "Update this animal's information.",
         "submit": "Save changes",
         "cancel": "Cancel"
+    },
+
+    "changeStatus": {
+        "trigger": "Recover animal",
+        "title": "Recover animal",
+        "description": "This animal is coming back to the shelter — choose its new status (available, healing, or pending adoption).",
+        "submit": "Confirm"
     }
 }

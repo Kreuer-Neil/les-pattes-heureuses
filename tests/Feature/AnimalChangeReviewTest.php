@@ -137,6 +137,45 @@ test('volunteer cannot accept or deny changes', function () {
         ->assertForbidden();
 });
 
+test('volunteer recovering an adopted animal creates a pending change instead of applying it', function () {
+    $adoptedAnimal = Animal::factory()->create([
+        'animal_status_id' => AnimalStatus::where('name', Status::Adopted->value)->value('id'),
+        'name' => 'Comeback Kid',
+    ]);
+    $availableStatusId = $this->availableStatusId;
+
+    $this->actingAs($this->volunteer)
+        ->patch(route('animals.recover-animal', $adoptedAnimal), [
+            'animal_status_id' => $availableStatusId,
+        ])
+        ->assertRedirect();
+
+    expect($adoptedAnimal->fresh()->status->name)->toBe(Status::Adopted->value)
+        ->and(PendingAnimalChanges::where('animal_id', $adoptedAnimal->id)->count())->toBe(1);
+});
+
+test('accepting a status-only pending change does not wipe the animal vaccines', function () {
+    $adoptedAnimal = Animal::factory()->create([
+        'animal_status_id' => AnimalStatus::where('name', Status::Adopted->value)->value('id'),
+    ]);
+    $adoptedAnimal->vaccines()->attach($this->vaccine->id, ['vaccinated_at' => '2024-01-01']);
+
+    $change = PendingAnimalChanges::create([
+        'action' => PendingChanges::Update,
+        'status' => PendingApprobationStatus::Pending,
+        'animal_id' => $adoptedAnimal->id,
+        'user_id' => $this->volunteer->id,
+        'payload' => ['animal_status_id' => $this->availableStatusId],
+    ]);
+
+    $this->actingAs($this->admin)
+        ->patch(route('animal-changes.accept', $change))
+        ->assertRedirect();
+
+    expect($adoptedAnimal->fresh()->status->name)->toBe(Status::Available->value)
+        ->and($adoptedAnimal->vaccines()->count())->toBe(1);
+});
+
 test('a proposed animal change appears in the admin attention feed', function () {
     $this->actingAs($this->volunteer)
         ->post(route('animals.store'), [
