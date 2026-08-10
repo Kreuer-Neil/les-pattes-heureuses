@@ -50,18 +50,7 @@ class AdoptionRequestController extends Controller
 
         $adoptionRequest->update(['status' => $newStatus]);
 
-        // Contacting the adopter also puts the animal on hold — it's no longer just
-        // "available", someone is actively being considered for it.
-        if ($newStatus === PendingApprobationStatus::Pending) {
-            $this->putAnimalOnHold($adoptionRequest);
-        } elseif ($newStatus === PendingApprobationStatus::Approved) {
-            $adoptionRequest->update(['accepted_at' => Carbon::now()]);
-
-            // "Approved" here means the paperwork is done IRL — the animal has left the shelter.
-            AnimalWriter::update($adoptionRequest->animal, [
-                'animal_status_id' => AnimalStatus::where('name', Status::Adopted->value)->value('id'),
-            ], null);
-        }
+        $this->applyStatusUpdateEffects($adoptionRequest, $newStatus);
 
         return redirect()->back();
     }
@@ -173,14 +162,31 @@ class AdoptionRequestController extends Controller
 
         // Only a positive reply implies the animal is being actively considered.
         // A negative reply automatically rejects the request.
-        if ($validated['outcome'] === 'positive') {
-            $adoptionRequest->update(['status' => PendingApprobationStatus::Pending]);
-            $this->putAnimalOnHold($adoptionRequest);
-        } else {
-            $adoptionRequest->update(['status' => PendingApprobationStatus::Rejected]);
-        }
+        $newStatus = $validated['outcome'] === 'positive'
+            ? PendingApprobationStatus::Pending
+            : PendingApprobationStatus::Rejected;
+
+        $adoptionRequest->update(['status' => $newStatus]);
+
+        $this->applyStatusUpdateEffects($adoptionRequest, $newStatus);
 
         return redirect()->back();
+    }
+
+    private function applyStatusUpdateEffects(AdoptionRequest $adoptionRequest, PendingApprobationStatus $newStatus): void
+    {
+        if ($newStatus === PendingApprobationStatus::Pending) {
+            $this->putAnimalOnHold($adoptionRequest);
+        } elseif ($newStatus === PendingApprobationStatus::Approved) {
+            $adoptionRequest->update(['accepted_at' => Carbon::now()]);
+
+            // "Approved" here means the paperwork is done IRL — the animal has left the shelter.
+            AnimalWriter::update($adoptionRequest->animal, [
+                'animal_status_id' => AnimalStatus::where('name', Status::Adopted->value)->value('id'),
+            ], null);
+        } elseif ($newStatus === PendingApprobationStatus::Rejected) {
+            $adoptionRequest->animal->availableIfUnrequested();
+        }
     }
 
     private function putAnimalOnHold(AdoptionRequest $adoptionRequest): void

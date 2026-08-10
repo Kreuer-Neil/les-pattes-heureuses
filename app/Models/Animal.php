@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Animals\Status;
+use App\Enums\PendingApprobationStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -72,6 +73,24 @@ class Animal extends Model
     public function adoptionRequests(): HasMany
     {
         return $this->hasMany(AdoptionRequest::class);
+    }
+
+    public function availableIfUnrequested(): void
+    {
+        if ($this->status->name !== Status::Pending->value) {
+            return;
+        }
+
+        $hasActiveRequest = $this->adoptionRequests()
+            ->whereIn('status', [PendingApprobationStatus::Unattended->value, PendingApprobationStatus::Pending->value])
+            ->exists();
+
+        if ($hasActiveRequest) {
+            return;
+        }
+
+        $this->animal_status_id = AnimalStatus::where('name', Status::Available->value)->value('id');
+        $this->save();
     }
 
     public function movements(): HasMany

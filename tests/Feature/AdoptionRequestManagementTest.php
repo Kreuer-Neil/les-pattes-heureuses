@@ -88,10 +88,34 @@ test('accepting a request sets the animal status to adopted and records a depart
         ->and($animal->movements()->where('type', MovementType::AdoptedDeparture->value)->count())->toBe(1);
 });
 
-// Refusing should check if another adoptionRequest on this animal is pending and set animal status to available if none is.
-test('rejecting a request does not touch the animal status', function () {
+test('rejecting a request reverts the animal to available when no other active request exists', function () {
+    $this->animal->update([
+        'animal_status_id' => AnimalStatus::where('name', Status::Pending->value)->id,
+    ]);
+
+    $this->actingAs($this->admin)
+        ->patch(route('adoption-requests.update-status', $this->adoptionRequest), [
+            'status' => PendingApprobationStatus::Rejected->value,
+        ])
+        ->assertRedirect();
+
+    expect($this->animal->fresh()->status->name)->toBe(Status::Available->value);
+});
+
+test('rejecting a request does not revert the animal status when another request is still active', function () {
     $this->animal->update([
         'animal_status_id' => AnimalStatus::where('name', Status::Pending->value)->value('id'),
+    ]);
+
+    AdoptionRequest::create([
+        'animal_id' => $this->animal->id,
+        'adopter_profile_id' => AdopterProfile::create([
+            'email' => 'other@example.com',
+            'first_name' => 'Marc',
+            'last_name' => 'Petit',
+        ])->id,
+        'content' => 'Also interested in Moka.',
+        'status' => PendingApprobationStatus::Pending,
     ]);
 
     $this->actingAs($this->admin)
@@ -204,8 +228,12 @@ test('a positive reply queues the reply mail and puts the animal on hold', funct
     );
 });
 
-test('a negative reply rejects the request without touching the animal status', function () {
+test('a negative reply rejects the request and reverts the animal to available', function () {
     Mail::fake();
+
+    $this->animal->update([
+        'animal_status_id' => AnimalStatus::where('name', Status::Pending->value)->value('id'),
+    ]);
 
     $this->actingAs($this->admin)
         ->patch(route('adoption-requests.reply', $this->adoptionRequest), [
