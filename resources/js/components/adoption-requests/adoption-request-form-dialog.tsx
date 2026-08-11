@@ -43,6 +43,7 @@ export default function AdoptionRequestFormDialog({
                                 <FieldLabel htmlFor="animal_id">
                                     {t('create.animal')}
                                 </FieldLabel>
+                                {/* TODO combobox animal search */}
                                 <select
                                     id="animal_id"
                                     name="animal_id"

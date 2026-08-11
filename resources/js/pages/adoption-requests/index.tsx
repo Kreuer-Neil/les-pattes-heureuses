@@ -3,6 +3,15 @@ import AdoptionRequestFormDialog from '@/components/adoption-requests/adoption-r
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import {
+    Item,
+    ItemContent,
+    ItemDescription,
+    ItemGroup,
+    ItemHeader,
+    ItemMedia,
+    ItemTitle,
+} from '@/components/ui/item';
 import { useImage } from '@/hooks/use-image-asset';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
@@ -86,6 +95,59 @@ function AdoptionRequestRow({
     );
 }
 
+function AdoptionRequestCard({
+    request,
+    onClick,
+}: {
+    request: IAdoptionRequest;
+    onClick: () => void;
+}) {
+    const { t } = useTranslation('adoption-requests');
+    const image = useImage(request.animal.image, 'icon');
+
+    return (
+        <Item
+            onClick={onClick}
+            variant="outline"
+            className="cursor-pointer [a]:hover:bg-accent/50"
+        >
+            <ItemMedia>
+                <Avatar>
+                    {image && (
+                        <AvatarImage
+                            src={image.src}
+                            srcSet={image.srcSet}
+                            alt={request.animal.name}
+                        />
+                    )}
+                    <AvatarFallback>
+                        {request.animal.name.slice(0, 2).toUpperCase()}
+                    </AvatarFallback>
+                </Avatar>
+            </ItemMedia>
+            <ItemContent>
+                <ItemHeader>
+                    <ItemTitle>{request.animal.name}</ItemTitle>
+                    <Badge variant={statusVariant[request.status]}>
+                        {t(`status.${request.status}`)}
+                    </Badge>
+                </ItemHeader>
+                <ItemDescription>
+                    {request.adopterProfile.firstName}{' '}
+                    {request.adopterProfile.lastName}
+                    {' — '}
+                    {request.adopterProfile.email ??
+                        request.adopterProfile.otherContact}
+                </ItemDescription>
+                <ItemDescription>{request.content}</ItemDescription>
+                <ItemDescription className="text-xs">
+                    {new Date(request.createdAt).toLocaleDateString()}
+                </ItemDescription>
+            </ItemContent>
+        </Item>
+    );
+}
+
 export default function AdoptionRequestsIndex() {
     const { adoptionRequests: requests, animals } = usePage<PageProps>().props;
     const { t } = useTranslation('adoption-requests');
@@ -112,40 +174,51 @@ export default function AdoptionRequestsIndex() {
                 </div>
 
                 {requests.length > 0 ? (
-                    <div className="overflow-x-auto rounded-md border">
-                        <table className="w-full text-sm">
-                            <thead className="bg-muted/50 text-left">
-                                <tr>
-                                    <th className="p-3 font-medium">
-                                        {t('table.animal')}
-                                    </th>
-                                    <th className="p-3 font-medium">
-                                        {t('table.adopter')}
-                                    </th>
-                                    <th className="p-3 font-medium">
-                                        {t('table.message')}
-                                    </th>
-                                    <th className="p-3 font-medium">
-                                        {t('table.status')}
-                                    </th>
-                                    <th className="p-3 font-medium">
-                                        {t('table.date')}
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y">
-                                {requests.map((request) => (
-                                    <AdoptionRequestRow
-                                        key={request.id}
-                                        request={request}
-                                        onClick={() =>
-                                            setSelectedId(request.id)
-                                        }
-                                    />
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                    <>
+                        <div className="overflow-x-auto rounded-md border @max-xl:hidden">
+                            <table className="w-full text-sm">
+                                <thead className="bg-muted/50 text-left">
+                                    <tr>
+                                        <th className="p-3 font-medium">
+                                            {t('table.animal')}
+                                        </th>
+                                        <th className="p-3 font-medium">
+                                            {t('table.adopter')}
+                                        </th>
+                                        <th className="p-3 font-medium">
+                                            {t('table.message')}
+                                        </th>
+                                        <th className="p-3 font-medium">
+                                            {t('table.status')}
+                                        </th>
+                                        <th className="p-3 font-medium">
+                                            {t('table.date')}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y">
+                                    {requests.map((request) => (
+                                        <AdoptionRequestRow
+                                            key={request.id}
+                                            request={request}
+                                            onClick={() =>
+                                                setSelectedId(request.id)
+                                            }
+                                        />
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                        <ItemGroup className="gap-2 @xl:hidden">
+                            {requests.map((request) => (
+                                <AdoptionRequestCard
+                                    key={request.id}
+                                    request={request}
+                                    onClick={() => setSelectedId(request.id)}
+                                />
+                            ))}
+                        </ItemGroup>
+                    </>
                 ) : (
                     <p className="text-muted-foreground">{t('empty')}</p>
                 )}

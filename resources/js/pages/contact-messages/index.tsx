@@ -2,6 +2,16 @@ import ContactMessageController from '@/actions/App/Http/Controllers/ContactMess
 import ReplyDialog from '@/components/messages/reply-dialog';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import {
+    Item,
+    ItemContent,
+    ItemDescription,
+    ItemFooter,
+    ItemGroup,
+    ItemHeader,
+    ItemMedia,
+    ItemTitle,
+} from '@/components/ui/item';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 import contactMessages from '@/routes/contact-messages';
@@ -96,6 +106,57 @@ function ContactMessageRow({
     );
 }
 
+function ContactMessageCard({
+    message,
+    onClick,
+}: {
+    message: IContactMessage;
+    onClick: () => void;
+}) {
+    const { t } = useTranslation('contact-messages');
+
+    return (
+        <Item
+            onClick={onClick}
+            variant="outline"
+            className="cursor-pointer [a]:hover:bg-accent/50"
+        >
+            <ItemMedia>
+                <StatusIcon status={message.status} />
+            </ItemMedia>
+            <ItemContent>
+                <ItemHeader>
+                    <ItemTitle>
+                        {message.firstName} {message.lastName}
+                    </ItemTitle>
+                    <Badge variant="secondary">
+                        {t(`type.${message.type}`)}
+                    </Badge>
+                </ItemHeader>
+                <ItemDescription>{message.email}</ItemDescription>
+                <ItemDescription>{message.content}</ItemDescription>
+                <ItemFooter>
+                    <span className="text-xs text-muted-foreground">
+                        {new Date(message.createdAt).toLocaleDateString()}
+                    </span>
+                    <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={(event) => {
+                            event.stopPropagation();
+                            router.patch(
+                                contactMessages.markIgnored(message.id).url,
+                            );
+                        }}
+                    >
+                        {t('actions.ignore')}
+                    </Button>
+                </ItemFooter>
+            </ItemContent>
+        </Item>
+    );
+}
+
 export default function ContactMessagesIndex() {
     const { contactMessages: messages } = usePage<PageProps>().props;
     const { t } = useTranslation('contact-messages');
@@ -115,43 +176,54 @@ export default function ContactMessagesIndex() {
                 <h1 className="text-xl font-semibold">{t('title')}</h1>
 
                 {messages.length > 0 ? (
-                    <div className="overflow-x-auto rounded-md border">
-                        <table className="w-full text-sm">
-                            <thead className="bg-muted/50 text-left">
-                                <tr>
-                                    <th className="p-3 font-medium">
-                                        {t('table.status')}
-                                    </th>
-                                    <th className="p-3 font-medium">
-                                        {t('table.from')}
-                                    </th>
-                                    <th className="p-3 font-medium">
-                                        {t('table.type')}
-                                    </th>
-                                    <th className="p-3 font-medium">
-                                        {t('table.message')}
-                                    </th>
-                                    <th className="p-3 font-medium">
-                                        {t('table.date')}
-                                    </th>
-                                    <th className="p-3 font-medium">
-                                        {t('table.actions')}
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y">
-                                {messages.map((message) => (
-                                    <ContactMessageRow
-                                        key={message.id}
-                                        message={message}
-                                        onClick={() =>
-                                            setSelectedId(message.id)
-                                        }
-                                    />
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                    <>
+                        <div className="overflow-x-auto rounded-md border @max-xl:hidden">
+                            <table className="w-full text-sm">
+                                <thead className="bg-muted/50 text-left">
+                                    <tr>
+                                        <th className="p-3 font-medium">
+                                            {t('table.status')}
+                                        </th>
+                                        <th className="p-3 font-medium">
+                                            {t('table.from')}
+                                        </th>
+                                        <th className="p-3 font-medium">
+                                            {t('table.type')}
+                                        </th>
+                                        <th className="p-3 font-medium">
+                                            {t('table.message')}
+                                        </th>
+                                        <th className="p-3 font-medium">
+                                            {t('table.date')}
+                                        </th>
+                                        <th className="p-3 font-medium">
+                                            {t('table.actions')}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y">
+                                    {messages.map((message) => (
+                                        <ContactMessageRow
+                                            key={message.id}
+                                            message={message}
+                                            onClick={() =>
+                                                setSelectedId(message.id)
+                                            }
+                                        />
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                        <ItemGroup className="gap-2 @xl:hidden">
+                            {messages.map((message) => (
+                                <ContactMessageCard
+                                    key={message.id}
+                                    message={message}
+                                    onClick={() => setSelectedId(message.id)}
+                                />
+                            ))}
+                        </ItemGroup>
+                    </>
                 ) : (
                     <p className="text-muted-foreground">{t('empty')}</p>
                 )}

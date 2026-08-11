@@ -3,15 +3,24 @@ import AdoptionRequestDetail from '@/components/adoption-requests/adoption-reque
 import { AttentionItemLabel } from '@/components/attention-item-label';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import {
+    Item,
+    ItemActions,
+    ItemContent,
+    ItemGroup,
+    ItemMedia,
+    ItemTitle,
+} from '@/components/ui/item';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
+import contactMessages from '@/routes/contact-messages';
 import notifications from '@/routes/notifications';
 import {
     IAdoptionRequestAttentionItem,
     IAttentionItem,
     type BreadcrumbItem,
 } from '@/types';
-import { Head, router, usePage } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -65,41 +74,62 @@ export default function NotificationsIndex() {
                 <h1 className="text-xl font-semibold">{t('title')}</h1>
 
                 {unreadMessageCount > 0 && (
-                    <div className="flex items-center gap-3 rounded-md border p-3">
-                        <Badge variant="secondary">{unreadMessageCount}</Badge>
-                        <span className="text-muted-foreground">
-                            {t('unreadMessages', { count: unreadMessageCount })}
-                        </span>
-                    </div>
+                    <Item
+                        asChild
+                        variant="outline"
+                        size="sm"
+                        className="cursor-pointer [a]:hover:bg-accent/50"
+                    >
+                        <Link href={contactMessages.index().url}>
+                            <ItemMedia>
+                                <Badge variant="secondary">
+                                    {unreadMessageCount}
+                                </Badge>
+                            </ItemMedia>
+                            <ItemContent>
+                                <ItemTitle className="font-normal text-muted-foreground">
+                                    {t('unreadMessages', {
+                                        count: unreadMessageCount,
+                                    })}
+                                </ItemTitle>
+                            </ItemContent>
+                        </Link>
+                    </Item>
                 )}
 
                 {items.length > 0 ? (
-                    <ul className="flex flex-col gap-2">
+                    <ItemGroup className="gap-2">
                         {items.map((item) => (
-                            <li
+                            <Item
                                 key={`${item.type}-${item.id}`}
+                                variant="outline"
+                                size="sm"
                                 onClick={() =>
                                     item.type === 'adoption_request' &&
                                     setSelectedRequest(item)
                                 }
-                                className={`flex flex-wrap items-center justify-between gap-4 rounded-md border p-3 ${
+                                className={
                                     item.type === 'adoption_request'
-                                        ? 'cursor-pointer hover:bg-muted/50'
+                                        ? 'cursor-pointer [a]:hover:bg-accent/50'
                                         : ''
-                                }`}
+                                }
                             >
-                                <div className="flex items-center gap-3">
+                                <ItemMedia>
                                     <Badge variant="destructive">!</Badge>
-                                    <span>
+                                </ItemMedia>
+                                <ItemContent>
+                                    <ItemTitle className="font-normal">
                                         <AttentionItemLabel item={item} />
-                                    </span>
-                                </div>
+                                    </ItemTitle>
+                                </ItemContent>
                                 {item.type === 'animal_change' && (
-                                    <AnimalChangeActions id={item.id} />
+                                    <ItemActions>
+                                        <AnimalChangeActions id={item.id} />
+                                    </ItemActions>
                                 )}
-                            </li>
+                            </Item>
                         ))}
-                    </ul>
+                    </ItemGroup>
                 ) : (
                     unreadMessageCount === 0 && (
                         <p className="text-muted-foreground">{t('empty')}</p>

@@ -4,9 +4,10 @@ import {
     AnimalsFilterBar,
     isDefaultAnimalFilters,
 } from '@/components/animals/animals-filter-bar';
-import AnimalRow from '@/components/animals/animals-row';
+import { AnimalCard, AnimalRow } from '@/components/animals/animals-row';
 import AnimalsShow from '@/components/animals/animals-show';
 import { Button } from '@/components/ui/button';
+import { ItemGroup } from '@/components/ui/item';
 import { seedAnimalCache } from '@/hooks/use-animal';
 import { AnimalTaxonomyProvider } from '@/hooks/use-animal-taxonomy';
 import { useDebouncedValue } from '@/hooks/use-debounced-value';
@@ -39,7 +40,7 @@ function AnimalsTable({ children }: { children: ReactNode }) {
     const { t } = useTranslation('animals');
 
     return (
-        <div className="overflow-x-auto rounded-md border">
+        <div className="overflow-x-auto rounded-md border @max-xl:hidden">
             <table className="w-full text-sm">
                 <thead className="bg-muted/50 text-left">
                     <tr>
@@ -177,17 +178,30 @@ export default function AnimalsIndex() {
                             />
 
                             {animals.length > 0 ? (
-                                <AnimalsTable>
-                                    {animals.map((animal) => (
-                                        <AnimalRow
-                                            key={animal.id}
-                                            animal={animal}
-                                            onClick={() =>
-                                                openAnimal(animal.id)
-                                            }
-                                        />
-                                    ))}
-                                </AnimalsTable>
+                                <>
+                                    <AnimalsTable>
+                                        {animals.map((animal) => (
+                                            <AnimalRow
+                                                key={animal.id}
+                                                animal={animal}
+                                                onClick={() =>
+                                                    openAnimal(animal.id)
+                                                }
+                                            />
+                                        ))}
+                                    </AnimalsTable>
+                                    <ItemGroup className="gap-2 @xl:hidden">
+                                        {animals.map((animal) => (
+                                            <AnimalCard
+                                                key={animal.id}
+                                                animal={animal}
+                                                onClick={() =>
+                                                    openAnimal(animal.id)
+                                                }
+                                            />
+                                        ))}
+                                    </ItemGroup>
+                                </>
                             ) : (
                                 <p className="text-muted-foreground">
                                     {t(
