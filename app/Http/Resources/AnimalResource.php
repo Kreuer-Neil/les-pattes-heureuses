@@ -21,6 +21,7 @@ class AnimalResource extends AnimalMiniatureResource
             ],
 
             'vaccines' => AnimalVaccineResource::collection($this->resource->vaccines)->toArray($request),
+            'hasActiveAdoptionRequest' => $this->resource->hasActiveAdoptionRequest(),
             // + notes
         ]);
     }

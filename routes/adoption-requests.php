@@ -12,6 +12,9 @@ Route::patch('adoption-requests/{adoptionRequest}', [AdoptionRequestController::
 Route::post('adoption-requests', [AdoptionRequestController::class, 'storeManual'])
     ->name('adoption-requests.store');
 
+Route::post('adoption-requests/quick-adopt', [AdoptionRequestController::class, 'storeQuickAdopt'])
+    ->name('adoption-requests.quick-adopt');
+
 Route::patch('adoption-requests/{adoptionRequest}/content', [AdoptionRequestController::class, 'update'])
     ->name('adoption-requests.update');
 

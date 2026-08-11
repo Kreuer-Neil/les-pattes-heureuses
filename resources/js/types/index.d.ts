@@ -136,6 +136,7 @@ export interface IAnimal extends IAnimalMiniature {
         value: string;
     };
     vaccines: IAnimalVaccine[];
+    hasActiveAdoptionRequest: boolean;
 }
 
 export type AdoptionRequestStatus =

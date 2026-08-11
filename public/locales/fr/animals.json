@@ -171,5 +171,16 @@
         "title": "Récupérer l'animal",
         "description": "Cet animal revient au refuge — choisissez son nouveau statut (disponible, en soins ou en attente d'adoption).",
         "submit": "Valider"
+    },
+
+    "quickAdopt": {
+        "trigger": "Enregistrer une adoption",
+        "title": "Enregistrer une adoption pour {{animal}}",
+        "description": "Pour une adoption effectuée sur place au refuge. L'animal est mis en attente et Élise doit encore confirmer avant que ce soit définitif.",
+        "content": "Notes",
+        "contentPlaceholder": "ex. dossier complété sur place, animal récupéré aujourd'hui…",
+        "submit": "Enregistrer l'adoption",
+        "activeRequestNotice": "Cet animal a déjà une demande d'adoption active.",
+        "activeRequestWarning": "Cet animal a déjà une demande d'adoption active — vérifiez avant d'en créer une nouvelle pour un autre adoptant."
     }
 }

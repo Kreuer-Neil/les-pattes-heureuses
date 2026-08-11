@@ -171,5 +171,16 @@
         "title": "Recover animal",
         "description": "This animal is coming back to the shelter — choose its new status (available, healing, or pending adoption).",
         "submit": "Confirm"
+    },
+
+    "quickAdopt": {
+        "trigger": "Record an adoption",
+        "title": "Record an adoption for {{animal}}",
+        "description": "For an adoption completed in person at the shelter. The animal is put on hold and Élise still needs to confirm before it's final.",
+        "content": "Notes",
+        "contentPlaceholder": "e.g. paperwork completed in person, picked up today…",
+        "submit": "Record adoption",
+        "activeRequestNotice": "This animal already has an active adoption request.",
+        "activeRequestWarning": "This animal already has an active adoption request — check before creating another one for a different adopter."
     }
 }

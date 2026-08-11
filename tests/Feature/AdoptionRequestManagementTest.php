@@ -5,6 +5,7 @@ use App\Enums\Animals\Status;
 use App\Enums\PendingApprobationStatus;
 use App\Enums\Roles;
 use App\Mail\AdoptionRequestReplyMail;
+use App\Mail\NewAdoptionRequestMail;
 use App\Models\AdopterProfile;
 use App\Models\AdoptionRequest;
 use App\Models\Animal;
@@ -90,7 +91,7 @@ test('accepting a request sets the animal status to adopted and records a depart
 
 test('rejecting a request reverts the animal to available when no other active request exists', function () {
     $this->animal->update([
-        'animal_status_id' => AnimalStatus::where('name', Status::Pending->value)->id,
+        'animal_status_id' => AnimalStatus::where('name', Status::Pending->value)->value('id'),
     ]);
 
     $this->actingAs($this->admin)
@@ -277,6 +278,88 @@ test('cannot reply to a request whose adopter has no email on file', function ()
             'outcome' => 'positive',
         ])
         ->assertSessionHasErrors('message');
+});
+
+test('a volunteer can record a quick adoption, putting the animal on hold', function () {
+    Mail::fake();
+
+    $this->actingAs($this->volunteer)
+        ->post(route('adoption-requests.quick-adopt'), [
+            'animal_id' => $this->animal->id,
+            'first_name' => 'Marc',
+            'last_name' => 'Petit',
+            'email' => 'marc@example.com',
+            'content' => 'Adopted in person, paperwork completed on the spot.',
+        ])
+        ->assertRedirect();
+
+    $quickAdoptRequest = AdoptionRequest::whereHas(
+        'adopterProfile',
+        fn ($q) => $q->where('email', 'marc@example.com'),
+    )->first();
+
+    expect($quickAdoptRequest)->not->toBeNull()
+        ->and($quickAdoptRequest->status)->toBe(PendingApprobationStatus::Pending)
+        ->and($this->animal->fresh()->status->name)->toBe(Status::Pending->value);
+
+    Mail::assertQueued(
+        NewAdoptionRequestMail::class,
+        fn ($mail) => $mail->hasTo($this->admin->email) && $mail->adoptionRequest->is($quickAdoptRequest),
+    );
+});
+
+test('recording a quick adoption for an already-known adopter reuses their profile', function () {
+    $this->actingAs($this->volunteer)
+        ->post(route('adoption-requests.quick-adopt'), [
+            'animal_id' => $this->animal->id,
+            'first_name' => 'Sarah',
+            'last_name' => 'Dupont',
+            'email' => $this->adopterProfile->email,
+            'content' => 'Came back and adopted Moka in person.',
+        ])
+        ->assertRedirect();
+
+    expect(AdopterProfile::where('email', $this->adopterProfile->email)->count())->toBe(1);
+});
+
+test('admin can also record a quick adoption', function () {
+    $this->actingAs($this->admin)
+        ->post(route('adoption-requests.quick-adopt'), [
+            'animal_id' => $this->animal->id,
+            'first_name' => 'Marc',
+            'last_name' => 'Petit',
+            'other_contact' => '06 12 34 56 78',
+            'content' => 'Adopted in person.',
+        ])
+        ->assertRedirect();
+
+    expect($this->animal->fresh()->status->name)->toBe(Status::Pending->value);
+});
+
+test('guest cannot record a quick adoption', function () {
+    $this->post(route('adoption-requests.quick-adopt'), [
+        'animal_id' => $this->animal->id,
+        'first_name' => 'Marc',
+        'last_name' => 'Petit',
+        'email' => 'marc@example.com',
+        'content' => 'Adopted in person.',
+    ])->assertRedirect(route('login'));
+});
+
+test('an animal with an active adoption request reports it on its resource', function () {
+    $response = $this->actingAs($this->volunteer)
+        ->getJson(route('animals.show', $this->animal));
+
+    $response->assertOk()->assertJsonPath('hasActiveAdoptionRequest', true);
+});
+
+test('an animal without an active adoption request reports it on its resource', function () {
+    $this->adoptionRequest->update(['status' => PendingApprobationStatus::Rejected]);
+
+    $response = $this->actingAs($this->volunteer)
+        ->getJson(route('animals.show', $this->animal));
+
+    $response->assertOk()->assertJsonPath('hasActiveAdoptionRequest', false);
 });
 
 test('a submitted adoption request appears in the admin attention feed', function () {

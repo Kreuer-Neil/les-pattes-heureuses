@@ -30,4 +30,9 @@ class AdoptionRequestPolicy
     {
         return $user->isAdmin();
     }
+
+    public function quickAdopt(User $user): bool
+    {
+        return $user->exists();
+    }
 }

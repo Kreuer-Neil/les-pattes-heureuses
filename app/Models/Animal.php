@@ -81,16 +81,19 @@ class Animal extends Model
             return;
         }
 
-        $hasActiveRequest = $this->adoptionRequests()
-            ->whereIn('status', [PendingApprobationStatus::Unattended->value, PendingApprobationStatus::Pending->value])
-            ->exists();
-
-        if ($hasActiveRequest) {
+        if ($this->hasActiveAdoptionRequest()) {
             return;
         }
 
         $this->animal_status_id = AnimalStatus::where('name', Status::Available->value)->value('id');
         $this->save();
+    }
+
+    public function hasActiveAdoptionRequest(): bool
+    {
+        return $this->adoptionRequests()
+            ->whereIn('status', [PendingApprobationStatus::Unattended->value, PendingApprobationStatus::Pending->value])
+            ->exists();
     }
 
     public function movements(): HasMany

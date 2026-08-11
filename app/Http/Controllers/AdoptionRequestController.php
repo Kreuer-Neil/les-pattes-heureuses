@@ -96,7 +96,7 @@ class AdoptionRequestController extends Controller
             'animal_id' => 'required|exists:animals,id',
             'first_name' => 'required|string|min:2|max:255',
             'last_name' => 'required|string|min:2|max:255',
-            'email' => 'nullable|email|unique:adopter_profiles,email|required_without:other_contact',
+            'email' => 'nullable|email|required_without:other_contact',
             'other_contact' => 'nullable|string|required_without:email',
             'content' => 'required|string',
         ]);
@@ -122,6 +122,52 @@ class AdoptionRequestController extends Controller
             'content' => $validated['content'],
             'status' => PendingApprobationStatus::Unattended,
         ]);
+
+        return redirect()->back();
+    }
+
+    /**
+     * An adoption completed in person (e.g. a bénévole handling the paperwork on the spot).
+     * Skips directly to a pending state, letting an admin validate
+     */
+    public function storeQuickAdopt(Request $request)
+    {
+        Gate::authorize('quickAdopt', AdoptionRequest::class);
+
+        $validated = $request->validate([
+            'animal_id' => 'required|exists:animals,id',
+            'first_name' => 'required|string|min:2|max:255',
+            'last_name' => 'required|string|min:2|max:255',
+            'email' => 'nullable|email|required_without:other_contact',
+            'other_contact' => 'nullable|string|required_without:email',
+            'content' => 'required|string',
+        ]);
+
+        $adopterProfile = isset($validated['email'])
+            ? AdopterProfile::firstOrCreate(
+                ['email' => $validated['email']],
+                [
+                    'first_name' => $validated['first_name'],
+                    'last_name' => $validated['last_name'],
+                    'other_contact' => $validated['other_contact'] ?? null,
+                ]
+            )
+            : AdopterProfile::create([
+                'first_name' => $validated['first_name'],
+                'last_name' => $validated['last_name'],
+                'other_contact' => $validated['other_contact'],
+            ]);
+
+        $adoptionRequest = AdoptionRequest::create([
+            'animal_id' => $validated['animal_id'],
+            'adopter_profile_id' => $adopterProfile->id,
+            'content' => $validated['content'],
+            'status' => PendingApprobationStatus::Pending,
+        ]);
+
+        $this->putAnimalOnHold($adoptionRequest);
+
+        Mail::to(User::admins()->get())->queue(new NewAdoptionRequestMail($adoptionRequest));
 
         return redirect()->back();
     }
