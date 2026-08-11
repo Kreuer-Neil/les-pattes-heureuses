@@ -297,20 +297,19 @@ export default function AnimalsShow({
                         </Form>
                     </>
                 )}
-
-                {animal && (
-                    <AnimalsChangeStatus
-                        animalId={animal.id}
-                        currentStatusId={String(animal.statusId)}
-                        open={isChangingStatus}
-                        onClose={() => setIsChangingStatus(false)}
-                        onSuccess={() => {
-                            refresh();
-                            setIsChangingStatus(false);
-                        }}
-                    />
-                )}
             </CustomModal>
+            {animal && (
+                <AnimalsChangeStatus
+                    animalId={animal.id}
+                    currentStatusId={String(animal.statusId)}
+                    open={isChangingStatus}
+                    onClose={() => setIsChangingStatus(false)}
+                    onSuccess={() => {
+                        refresh();
+                        setIsChangingStatus(false);
+                    }}
+                />
+            )}
             {animal && (
                 <AnimalsQuickAdopt
                     animalId={animal.id}
