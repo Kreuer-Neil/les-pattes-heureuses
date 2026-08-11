@@ -45,6 +45,7 @@
         "description": "Pour un contact qui n'est pas passé par le formulaire public (appel téléphonique, visite sur place, ...).",
         "animal": "Animal",
         "animalPlaceholder": "Sélectionner un animal...",
+        "noResults": "Aucun résultat.",
         "firstName": "Prénom",
         "lastName": "Nom",
         "email": "Email",

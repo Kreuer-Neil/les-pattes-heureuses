@@ -1,4 +1,5 @@
 import AdoptionRequestController from '@/actions/App/Http/Controllers/AdoptionRequestController';
+import { ItemCombobox } from '@/components/item-combobox';
 import CustomModal, {
     ModalDescription,
     ModalFooter,
@@ -10,6 +11,7 @@ import { Field, FieldError, FieldLabel, FieldSet } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Form } from '@inertiajs/react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export default function AdoptionRequestFormDialog({
@@ -22,6 +24,16 @@ export default function AdoptionRequestFormDialog({
     animals: { id: number; name: string }[];
 }) {
     const { t } = useTranslation(['adoption-requests', 'modals']);
+    const [animalId, setAnimalId] = useState<string | null>(null);
+
+    const animalOptions = useMemo(
+        () =>
+            animals.map((animal) => ({
+                value: String(animal.id),
+                label: animal.name,
+            })),
+        [animals],
+    );
 
     return (
         <CustomModal showModal={open} onClose={onClose}>
@@ -33,7 +45,10 @@ export default function AdoptionRequestFormDialog({
             <Form
                 {...AdoptionRequestController.storeManual.form()}
                 resetOnSuccess
-                onSuccess={onClose}
+                onSuccess={() => {
+                    setAnimalId(null);
+                    onClose();
+                }}
                 className="flex flex-col gap-6"
             >
                 {({ errors, processing }) => (
@@ -43,27 +58,17 @@ export default function AdoptionRequestFormDialog({
                                 <FieldLabel htmlFor="animal_id">
                                     {t('create.animal')}
                                 </FieldLabel>
-                                {/* TODO combobox animal search */}
-                                <select
+                                <ItemCombobox
                                     id="animal_id"
                                     name="animal_id"
+                                    options={animalOptions}
+                                    value={animalId}
+                                    onValueChange={setAnimalId}
+                                    placeholder={t('create.animalPlaceholder')}
+                                    emptyText={t('create.noResults')}
                                     required
-                                    defaultValue=""
                                     aria-invalid={!!errors.animal_id}
-                                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive"
-                                >
-                                    <option value="" disabled>
-                                        {t('create.animalPlaceholder')}
-                                    </option>
-                                    {animals.map((animal) => (
-                                        <option
-                                            key={animal.id}
-                                            value={animal.id}
-                                        >
-                                            {animal.name}
-                                        </option>
-                                    ))}
-                                </select>
+                                />
                                 <FieldError
                                     errors={[{ message: errors.animal_id }]}
                                 />

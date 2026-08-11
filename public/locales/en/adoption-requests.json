@@ -45,6 +45,7 @@
         "description": "For a contact that didn't come through the public form (phone call, in-person visit, ...).",
         "animal": "Animal",
         "animalPlaceholder": "Select an animal...",
+        "noResults": "No results found.",
         "firstName": "First name",
         "lastName": "Last name",
         "email": "Email",
