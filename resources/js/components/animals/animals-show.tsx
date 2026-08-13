@@ -2,6 +2,7 @@ import AnimalController from '@/actions/App/Http/Controllers/AnimalController';
 import AnimalFields, {
     IAnimalFieldsDefaultValues,
 } from '@/components/animals/animal-fields';
+import AnimalNotes from '@/components/animals/animal-notes';
 import AnimalsChangeStatus from '@/components/animals/animals-change-status';
 import AnimalsQuickAdopt from '@/components/animals/animals-quick-adopt';
 import CustomModal, {
@@ -211,6 +212,11 @@ export default function AnimalsShow({
                                         )}
                                     </dd>
                                 </div>
+                                <AnimalNotes
+                                    animalId={animal.id}
+                                    notes={animal.notes}
+                                    onRefresh={refresh}
+                                />
                             </dl>
 
                             <ModalFooter className="sm:justify-end">

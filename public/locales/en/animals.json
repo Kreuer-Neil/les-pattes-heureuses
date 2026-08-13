@@ -159,6 +159,20 @@
         "edit": "Edit"
     },
 
+    "notes": {
+        "heading": "Internal notes",
+        "empty": "No internal notes yet.",
+        "titlePlaceholder": "Title",
+        "textPlaceholder": "Write an internal note…",
+        "add": "Add note",
+        "edit": "Edit",
+        "delete": "Delete",
+        "confirmDelete": "Delete this note?",
+        "confirmDeleteYes": "Delete",
+        "unknownAuthor": "Unknown",
+        "meta": "{{name}} · {{date}}"
+    },
+
     "edit": {
         "title": "Edit animal",
         "description": "Update this animal's information.",

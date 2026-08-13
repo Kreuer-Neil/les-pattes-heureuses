@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('animal_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->string('title');
             $table->text('text');
 
             $table->index('animal_id');
-            
+
             $table->timestamps();
         });
     }

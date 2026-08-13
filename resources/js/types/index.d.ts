@@ -130,6 +130,15 @@ export interface IAnimalVaccine {
     vaccinatedAt: string;
 }
 
+export interface IAnimalNote {
+    id: number;
+    title: string;
+    text: string;
+    authorId: number | null;
+    authorName: string | null;
+    createdAt: string;
+}
+
 export interface IAnimal extends IAnimalMiniature {
     bornAt: {
         toString: string;
@@ -137,6 +146,7 @@ export interface IAnimal extends IAnimalMiniature {
     };
     vaccines: IAnimalVaccine[];
     hasActiveAdoptionRequest: boolean;
+    notes: IAnimalNote[];
 }
 
 export type AdoptionRequestStatus =
