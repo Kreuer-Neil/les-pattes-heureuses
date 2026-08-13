@@ -2,9 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Enums\Roles;
-use App\Models\User;
-use App\Models\UserRole;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,6 +18,7 @@ class DatabaseSeeder extends Seeder
             UsersSeeder::class,
             VolunteersSeeder::class,
             AnimalsSeeder::class,
+            AdoptionRequestsSeeder::class,
         ]);
     }
 }
