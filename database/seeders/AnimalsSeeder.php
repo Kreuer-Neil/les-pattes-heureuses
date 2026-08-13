@@ -64,7 +64,7 @@ class AnimalsSeeder extends Seeder
             ],
             [
                 'name' => 'Schrödinger',
-                'image' => 'schrodinger',
+                'image' => 'schroedinger',
                 'gender' => Gender::Female,
                 'specie' => Specie::Cat,
                 'breed' => CatBreed::EuropeanShorthair,
@@ -208,6 +208,7 @@ class AnimalsSeeder extends Seeder
 
             $animal = Animal::factory([
                 'name' => $pet['name'],
+                'image' => $pet['image'],
                 'gender' => $pet['gender']->value,
                 'animal_status_id' => AnimalStatus::where('name', $status->value)->first()->id,
                 'specie_id' => SpecieModel::where('name', $pet['specie']->value)->first()->id,
