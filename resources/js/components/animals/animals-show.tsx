@@ -107,7 +107,7 @@ export default function AnimalsShow({
                                 srcSet={image.srcSet}
                                 sizes="(min-width: 640px) 10rem, 100vw"
                                 alt={animal.name}
-                                className="h-48 w-full shrink-0 rounded-md object-cover sm:h-auto sm:w-40 sm:self-stretch"
+                                className="h-48 w-full shrink-0 rounded-md object-cover sm:h-56 sm:w-40 sm:self-start"
                             />
                         )}
 
