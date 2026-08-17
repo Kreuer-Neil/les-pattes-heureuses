@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Animals\Status;
+use App\Enums\NotificationPreference;
 use App\Enums\PendingApprobationStatus;
 use App\Http\Resources\AdoptionRequestResource;
 use App\Mail\AdoptionRequestConfirmationMail;
@@ -78,7 +79,11 @@ class AdoptionRequestController extends Controller
         ]);
 
         // Safe to queue (since it's not the subdomain)
-        Mail::to(User::admins()->get())->queue(new NewAdoptionRequestMail($adoptionRequest));
+        $adminsToNotify = User::admins()->toNotify(NotificationPreference::AdoptionRequests)->get();
+
+        if ($adminsToNotify->isNotEmpty()) {
+            Mail::to($adminsToNotify)->queue(new NewAdoptionRequestMail($adoptionRequest));
+        }
 
         Mail::to($adopterProfile->email)->queue(new AdoptionRequestConfirmationMail($adoptionRequest));
 
@@ -170,7 +175,11 @@ class AdoptionRequestController extends Controller
 
         $this->putAnimalOnHold($adoptionRequest);
 
-        Mail::to(User::admins()->get())->queue(new NewAdoptionRequestMail($adoptionRequest));
+        $adminsToNotify = User::admins()->toNotify(NotificationPreference::AdoptionRequests)->get();
+
+        if ($adminsToNotify->isNotEmpty()) {
+            Mail::to($adminsToNotify)->queue(new NewAdoptionRequestMail($adoptionRequest));
+        }
 
         return redirect()->back();
     }

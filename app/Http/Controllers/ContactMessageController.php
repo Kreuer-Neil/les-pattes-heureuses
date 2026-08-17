@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\ContactMessageStatus;
 use App\Enums\ContactMessageType;
+use App\Enums\NotificationPreference;
 use App\Http\Resources\ContactMessageResource;
 use App\Mail\ContactMessageReplyMail;
 use App\Mail\NewContactMessageMail;
@@ -48,7 +49,11 @@ class ContactMessageController extends Controller
         ]);
 
         // Safe to queue (unlike VolunteerPasswordMail) to avoid problems with the hosting (since it's the admin subdomain)
-        Mail::to(User::admins()->get())->queue(new NewContactMessageMail($contactMessage));
+        $adminsToNotify = User::admins()->toNotify(NotificationPreference::ContactMessages)->get();
+
+        if ($adminsToNotify->isNotEmpty()) {
+            Mail::to($adminsToNotify)->queue(new NewContactMessageMail($contactMessage));
+        }
 
         return redirect()
             ->back()

@@ -25,4 +25,9 @@ class UserPolicy
     {
         return $user->isAdmin();
     }
+
+    public function manageNotificationPreferences(User $user): bool
+    {
+        return $user->isAdmin();
+    }
 }

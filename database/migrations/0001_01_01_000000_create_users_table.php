@@ -19,6 +19,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('must_change_password')->default(false);
+            $table->boolean('notify_adoption_requests')->default(true);
+            $table->boolean('notify_contact_messages')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });

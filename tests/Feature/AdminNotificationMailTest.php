@@ -77,3 +77,38 @@ test('submitting a contact message queues a notification mail to admins', functi
             && $mail->contactMessage->email === 'jean@example.com',
     );
 });
+
+test('an admin who opted out of adoption request alerts is not emailed', function () {
+    Mail::fake();
+
+    $this->admin->update(['notify_adoption_requests' => false]);
+
+    $animal = Animal::factory()->create([
+        'animal_status_id' => AnimalStatus::where('name', Status::Available->value)->value('id'),
+    ]);
+
+    $this->post(route('client.adoption.request', $animal), [
+        'first_name' => 'Jean',
+        'last_name' => 'Dupont',
+        'email' => 'jean@example.com',
+        'message' => 'Interested!',
+    ])->assertRedirect();
+
+    Mail::assertNotQueued(NewAdoptionRequestMail::class);
+});
+
+test('an admin who opted out of contact message alerts is not emailed', function () {
+    Mail::fake();
+
+    $this->admin->update(['notify_contact_messages' => false]);
+
+    $this->post(route('client.contact'), [
+        'first_name' => 'Jean',
+        'last_name' => 'Dupont',
+        'email' => 'jean@example.com',
+        'type' => ContactMessageType::Contact->value,
+        'message' => 'Hello!',
+    ])->assertRedirect();
+
+    Mail::assertNotQueued(NewContactMessageMail::class);
+});
