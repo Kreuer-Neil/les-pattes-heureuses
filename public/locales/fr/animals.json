@@ -1,0 +1,200 @@
+{
+    "our_pets": "Nos animaux",
+    "empty": "Aucun animal enregistré pour le moment.",
+    "create_button": "Ajouter un animal",
+
+    "filters": {
+        "search": "Nom",
+        "searchPlaceholder": "Rechercher par nom…",
+        "status": {
+            "label": "Statut",
+            "active": "Actifs (disponible, en soins, en attente)",
+            "gone": "Partis (adopté, décédé, inconnu)"
+        },
+        "specie": "Espèce",
+        "allSpecies": "Toutes les espèces",
+        "breed": "Race",
+        "allBreeds": "Toutes les races",
+        "gender": "Sexe",
+        "allGenders": "Tous",
+        "clear": "Réinitialiser les filtres",
+        "noResults": "Aucun animal ne correspond à ces filtres."
+    },
+
+    "table": {
+        "name": "Nom",
+        "specie": "Espèce",
+        "gender": "Sexe",
+        "chip": "Puce",
+        "status": "Statut",
+        "personality": "Caractère"
+    },
+
+    "gender": {
+        "M": "Mâle",
+        "F": "Femelle"
+    },
+
+    "status": {
+        "unknown": "Inconnu",
+        "available": "Disponible",
+        "pending": "En attente d'adoption",
+        "adopted": "Adopté",
+        "healing": "En soins",
+        "deceased": "Décédé"
+    },
+
+    "specie": {
+        "dog": "Chien",
+        "cat": "Chat",
+        "bird": "Oiseau",
+        "horse": "Cheval",
+        "reptile": "Reptile"
+    },
+
+    "breed": {
+        "corgi": "Corgi",
+        "chihuahua": "Chihuahua",
+        "german shepherd": "Berger allemand",
+
+        "abyssinian": "Abyssin",
+        "aegean": "Égéen",
+        "american bobtail": "Bobtail américain",
+        "american curl": "American Curl",
+        "american shorthair": "Américain à poil court",
+        "american wirehair": "Américain à poil dur",
+        "aphrodite giant": "Géant d'Aphrodite",
+        "asian": "Asiatique",
+        "asian semi-longhair": "Asiatique à poil mi-long",
+        "european shorthair": "Européen à poil court",
+        "lion": "Lion",
+
+        "canary": "Canari",
+        "chicken": "Poule",
+        "royal eagle": "Aigle royal",
+
+        "horse": "Cheval",
+        "pony": "Poney",
+        "donkey": "Âne",
+
+        "darwin's iguana": "Iguane de Darwin",
+        "cat gecko": "Gecko chat",
+        "persian spider gecko": "Gecko-araignée persan",
+        "sonoran collared lizard": "Lézard à collier du Sonora"
+    },
+
+    "furColor": {
+        "orange": "Orange",
+        "brown": "Marron",
+        "beige": "Beige",
+        "black": "Noir",
+        "white": "Blanc",
+        "grey": "Gris"
+    },
+
+    "furPattern": {
+        "striped": "Rayé",
+        "dotted": "Tacheté",
+        "tabby": "Tigré"
+    },
+
+    "vaccine": {
+        "rabies": "Rage",
+        "distemper": "Maladie de Carré",
+        "canine parvovirus": "Parvovirose canine",
+        "leptospirosis": "Leptospirose",
+        "bordetella": "Bordetella (toux de chenil)",
+        "feline viral rhinotracheitis": "Rhinotrachéite virale féline",
+        "feline calicivirus": "Calicivirose féline",
+        "feline panleukopenia": "Panleucopénie féline",
+        "feline leukemia": "Leucose féline",
+        "avian polyomavirus": "Polyomavirus aviaire",
+        "pacheco disease": "Maladie de Pacheco",
+        "tetanus": "Tétanos",
+        "equine influenza": "Grippe équine",
+        "equine herpesvirus": "Herpèsvirus équin",
+        "west nile virus": "Virus du Nil occidental"
+    },
+
+    "create": {
+        "title": "Ajouter un animal",
+        "description": "Enregistrer un nouvel animal au refuge.",
+        "name": "Nom",
+        "namePlaceholder": "ex. Tommy",
+        "chip": "Numéro de puce",
+        "chipPlaceholder": "ex. e45r6t7ziu",
+        "gender": "Sexe",
+        "status": "Statut",
+        "specie": "Espèce",
+        "breed": "Race",
+        "furColor": "Couleur du pelage",
+        "secondaryFurColor": "Couleur secondaire du pelage",
+        "furPattern": "Motif du pelage",
+        "bornAt": "Date de naissance",
+        "recoveredAt": "Date de recueil",
+        "personality": "Caractère",
+        "personalityPlaceholder": "Tempérament, habitudes, préférences…",
+        "image": "Photo",
+        "selectPlaceholder": "Sélectionner…",
+        "noResults": "Aucun résultat.",
+        "vaccines": "Vaccinations",
+        "vaccine": "Vaccin",
+        "vaccineDate": "Date d'administration",
+        "addVaccine": "Ajouter un vaccin",
+        "removeVaccine": "Retirer le vaccin",
+        "submit": "Ajouter l'animal",
+        "cancel": "Annuler"
+    },
+
+    "show": {
+        "loading": "Chargement…",
+        "error": "Une erreur est survenue lors du chargement de cet animal.",
+        "gender": "Sexe",
+        "bornAt": "Date de naissance",
+        "specie": "Espèce",
+        "furColor": "Couleur du pelage",
+        "personality": "Caractère",
+        "vaccines": "Vaccinations",
+        "noVaccines": "Aucune vaccination enregistrée.",
+        "edit": "Modifier"
+    },
+
+    "notes": {
+        "heading": "Notes internes",
+        "empty": "Aucune note interne pour le moment.",
+        "titlePlaceholder": "Titre",
+        "textPlaceholder": "Rédiger une note interne…",
+        "add": "Ajouter la note",
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "confirmDelete": "Supprimer cette note ?",
+        "confirmDeleteYes": "Supprimer",
+        "unknownAuthor": "Inconnu",
+        "meta": "{{name}} · {{date}}"
+    },
+
+    "edit": {
+        "title": "Modifier l'animal",
+        "description": "Mettre à jour les informations de cet animal.",
+        "submit": "Enregistrer",
+        "cancel": "Annuler"
+    },
+
+    "changeStatus": {
+        "trigger": "Récupérer l'animal",
+        "title": "Récupérer l'animal",
+        "description": "Cet animal revient au refuge — choisissez son nouveau statut (disponible, en soins ou en attente d'adoption).",
+        "submit": "Valider"
+    },
+
+    "quickAdopt": {
+        "trigger": "Enregistrer une adoption",
+        "title": "Enregistrer une adoption pour {{animal}}",
+        "description": "Pour une adoption effectuée sur place au refuge. L'animal est mis en attente et Élise doit encore confirmer avant que ce soit définitif.",
+        "content": "Notes",
+        "contentPlaceholder": "ex. dossier complété sur place, animal récupéré aujourd'hui…",
+        "submit": "Enregistrer l'adoption",
+        "activeRequestNotice": "Cet animal a déjà une demande d'adoption active.",
+        "activeRequestWarning": "Cet animal a déjà une demande d'adoption active — vérifiez avant d'en créer une nouvelle pour un autre adoptant."
+    }
+}

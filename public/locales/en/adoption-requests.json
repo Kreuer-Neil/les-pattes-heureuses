@@ -1,0 +1,57 @@
+{
+    "title": "Adoption requests",
+    "empty": "No adoption requests yet.",
+
+    "table": {
+        "animal": "Animal",
+        "adopter": "Adopter",
+        "message": "Message",
+        "adopter_message": "Adopter's message",
+        "status": "Status",
+        "date": "Date",
+        "actions": "Actions",
+        "adopter_details": "Notes",
+        "adopter_details_placeholder": "Add notes about this adopter",
+        "adopter_update_success": "Notes saved",
+        "adopter_email": "Email",
+        "adopter_other_contact": "Other contact method",
+        "adopter_other_contact_placeholder": "Phone number, or how else to reach them"
+    },
+
+    "status": {
+        "unattended": "New",
+        "pending": "Contacted",
+        "approved": "Accepted",
+        "rejected": "Rejected"
+    },
+
+    "actions": {
+        "markContacted": "Mark contacted",
+        "accept": "Accept",
+        "reject": "Reject",
+        "reply": "Reply",
+        "add": "Log a request"
+    },
+
+    "outcome": {
+        "label": "Outcome of this reply",
+        "placeholder": "Choose an outcome...",
+        "positive": "Positive — the animal is being considered",
+        "negative": "Negative — the request is rejected"
+    },
+
+    "create": {
+        "title": "Log an adoption request",
+        "description": "For a contact that didn't come through the public form (phone call, in-person visit, ...).",
+        "animal": "Animal",
+        "animalPlaceholder": "Select an animal...",
+        "noResults": "No results found.",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "email": "Email",
+        "otherContact": "Other contact method",
+        "otherContactPlaceholder": "Phone number, or how else to reach them",
+        "content": "Message",
+        "contentPlaceholder": "What did they say?"
+    }
+}

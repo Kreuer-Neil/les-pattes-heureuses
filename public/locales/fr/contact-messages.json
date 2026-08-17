@@ -1,0 +1,30 @@
+{
+    "title": "Messages de contact",
+    "empty": "Aucun message pour l'instant.",
+
+    "table": {
+        "from": "De la part de",
+        "type": "Type",
+        "message": "Message",
+        "status": "Statut",
+        "date": "Date",
+        "actions": "Actions"
+    },
+
+    "type": {
+        "contact": "Contact",
+        "volunteer_request": "Demande de bénévolat",
+        "report": "Signalement"
+    },
+
+    "status": {
+        "unanswered": "Pas encore traité",
+        "answered": "Répondu",
+        "ignored": "Ignoré"
+    },
+
+    "actions": {
+        "reply": "Répondre",
+        "ignore": "Ignorer"
+    }
+}

@@ -1,0 +1,200 @@
+{
+    "our_pets": "Our pets",
+    "empty": "No animals registered yet.",
+    "create_button": "Add an animal",
+
+    "filters": {
+        "search": "Name",
+        "searchPlaceholder": "Search by name…",
+        "status": {
+            "label": "Status",
+            "active": "Active (available, healing, pending)",
+            "gone": "Gone (adopted, deceased, unknown)"
+        },
+        "specie": "Species",
+        "allSpecies": "All species",
+        "breed": "Breed",
+        "allBreeds": "All breeds",
+        "gender": "Gender",
+        "allGenders": "All",
+        "clear": "Clear filters",
+        "noResults": "No animals match these filters."
+    },
+
+    "table": {
+        "name": "Name",
+        "specie": "Species",
+        "gender": "Gender",
+        "chip": "Chip",
+        "status": "Status",
+        "personality": "Personality"
+    },
+
+    "gender": {
+        "M": "Male",
+        "F": "Female"
+    },
+
+    "status": {
+        "unknown": "Unknown",
+        "available": "Available",
+        "pending": "Pending adoption",
+        "adopted": "Adopted",
+        "healing": "Healing",
+        "deceased": "Deceased"
+    },
+
+    "specie": {
+        "dog": "Dog",
+        "cat": "Cat",
+        "bird": "Bird",
+        "horse": "Horse",
+        "reptile": "Reptile"
+    },
+
+    "breed": {
+        "corgi": "Corgi",
+        "chihuahua": "Chihuahua",
+        "german shepherd": "German Shepherd",
+
+        "abyssinian": "Abyssinian",
+        "aegean": "Aegean",
+        "american bobtail": "American Bobtail",
+        "american curl": "American Curl",
+        "american shorthair": "American Shorthair",
+        "american wirehair": "American Wirehair",
+        "aphrodite giant": "Aphrodite Giant",
+        "asian": "Asian",
+        "asian semi-longhair": "Asian Semi-longhair",
+        "european shorthair": "European Shorthair",
+        "lion": "Lion",
+
+        "canary": "Canary",
+        "chicken": "Chicken",
+        "royal eagle": "Royal Eagle",
+
+        "horse": "Horse",
+        "pony": "Pony",
+        "donkey": "Donkey",
+
+        "darwin's iguana": "Darwin's Iguana",
+        "cat gecko": "Cat Gecko",
+        "persian spider gecko": "Persian Spider Gecko",
+        "sonoran collared lizard": "Sonoran Collared Lizard"
+    },
+
+    "furColor": {
+        "orange": "Orange",
+        "brown": "Brown",
+        "beige": "Beige",
+        "black": "Black",
+        "white": "White",
+        "grey": "Grey"
+    },
+
+    "furPattern": {
+        "striped": "Striped",
+        "dotted": "Dotted",
+        "tabby": "Tabby"
+    },
+
+    "vaccine": {
+        "rabies": "Rabies",
+        "distemper": "Distemper",
+        "canine parvovirus": "Canine parvovirus",
+        "leptospirosis": "Leptospirosis",
+        "bordetella": "Bordetella (kennel cough)",
+        "feline viral rhinotracheitis": "Feline viral rhinotracheitis",
+        "feline calicivirus": "Feline calicivirus",
+        "feline panleukopenia": "Feline panleukopenia",
+        "feline leukemia": "Feline leukemia",
+        "avian polyomavirus": "Avian polyomavirus",
+        "pacheco disease": "Pacheco's disease",
+        "tetanus": "Tetanus",
+        "equine influenza": "Equine influenza",
+        "equine herpesvirus": "Equine herpesvirus",
+        "west nile virus": "West Nile virus"
+    },
+
+    "create": {
+        "title": "Add an animal",
+        "description": "Register a new animal at the shelter.",
+        "name": "Name",
+        "namePlaceholder": "e.g. Tommy",
+        "chip": "Chip number",
+        "chipPlaceholder": "e.g. e45r6t7ziu",
+        "gender": "Gender",
+        "status": "Status",
+        "specie": "Species",
+        "breed": "Breed",
+        "furColor": "Fur color",
+        "secondaryFurColor": "Secondary fur color",
+        "furPattern": "Fur pattern",
+        "bornAt": "Date of birth",
+        "recoveredAt": "Recovery date",
+        "personality": "Personality",
+        "personalityPlaceholder": "Temperament, habits, likes and dislikes…",
+        "image": "Photo",
+        "selectPlaceholder": "Select…",
+        "noResults": "No results found.",
+        "vaccines": "Vaccinations",
+        "vaccine": "Vaccine",
+        "vaccineDate": "Date administered",
+        "addVaccine": "Add vaccine",
+        "removeVaccine": "Remove vaccine",
+        "submit": "Add animal",
+        "cancel": "Cancel"
+    },
+
+    "show": {
+        "loading": "Loading…",
+        "error": "Something went wrong while loading this animal.",
+        "gender": "Gender",
+        "bornAt": "Date of birth",
+        "specie": "Species",
+        "furColor": "Fur color",
+        "personality": "Personality",
+        "vaccines": "Vaccinations",
+        "noVaccines": "No vaccinations recorded.",
+        "edit": "Edit"
+    },
+
+    "notes": {
+        "heading": "Internal notes",
+        "empty": "No internal notes yet.",
+        "titlePlaceholder": "Title",
+        "textPlaceholder": "Write an internal note…",
+        "add": "Add note",
+        "edit": "Edit",
+        "delete": "Delete",
+        "confirmDelete": "Delete this note?",
+        "confirmDeleteYes": "Delete",
+        "unknownAuthor": "Unknown",
+        "meta": "{{name}} · {{date}}"
+    },
+
+    "edit": {
+        "title": "Edit animal",
+        "description": "Update this animal's information.",
+        "submit": "Save changes",
+        "cancel": "Cancel"
+    },
+
+    "changeStatus": {
+        "trigger": "Recover animal",
+        "title": "Recover animal",
+        "description": "This animal is coming back to the shelter — choose its new status (available, healing, or pending adoption).",
+        "submit": "Confirm"
+    },
+
+    "quickAdopt": {
+        "trigger": "Record an adoption",
+        "title": "Record an adoption for {{animal}}",
+        "description": "For an adoption completed in person at the shelter. The animal is put on hold and Élise still needs to confirm before it's final.",
+        "content": "Notes",
+        "contentPlaceholder": "e.g. paperwork completed in person, picked up today…",
+        "submit": "Record adoption",
+        "activeRequestNotice": "This animal already has an active adoption request.",
+        "activeRequestWarning": "This animal already has an active adoption request — check before creating another one for a different adopter."
+    }
+}

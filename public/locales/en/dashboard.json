@@ -1,0 +1,14 @@
+{
+    "statistics": {
+        "title": "Statistics",
+        "thisMonth": "This month",
+        "lastMonth": "Last month",
+        "from": "From",
+        "to": "To",
+        "apply": "Apply",
+        "downloadPdf": "Download PDF report",
+        "animalsReceived": "Animals received",
+        "successfulAdoptions": "Successful adoptions",
+        "animalsStillPresent": "Animals still present"
+    }
+}

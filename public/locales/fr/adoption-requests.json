@@ -1,0 +1,57 @@
+{
+    "title": "Demandes d'adoption",
+    "empty": "Aucune demande d'adoption pour l'instant.",
+
+    "table": {
+        "animal": "Animal",
+        "adopter": "Adoptant",
+        "message": "Message",
+        "adopter_message": "Message de l'adoptant",
+        "status": "Statut",
+        "date": "Date",
+        "actions": "Actions",
+        "adopter_details": "Notes",
+        "adopter_details_placeholder": "Ajouter des notes sur cet adoptant",
+        "adopter_update_success": "Notes enregistrées",
+        "adopter_email": "Email",
+        "adopter_other_contact": "Autre moyen de contact",
+        "adopter_other_contact_placeholder": "Numéro de téléphone, ou tout autre moyen de le/la joindre"
+    },
+
+    "status": {
+        "unattended": "Nouvelle",
+        "pending": "Contactée",
+        "approved": "Acceptée",
+        "rejected": "Refusée"
+    },
+
+    "actions": {
+        "markContacted": "Marquer comme contactée",
+        "accept": "Accepter",
+        "reject": "Refuser",
+        "reply": "Répondre",
+        "add": "Enregistrer une demande"
+    },
+
+    "outcome": {
+        "label": "Résultat de cette réponse",
+        "placeholder": "Choisir un résultat...",
+        "positive": "Positif — l'animal est mis en considération",
+        "negative": "Négatif — la demande est refusée"
+    },
+
+    "create": {
+        "title": "Enregistrer une demande d'adoption",
+        "description": "Pour un contact qui n'est pas passé par le formulaire public (appel téléphonique, visite sur place, ...).",
+        "animal": "Animal",
+        "animalPlaceholder": "Sélectionner un animal...",
+        "noResults": "Aucun résultat.",
+        "firstName": "Prénom",
+        "lastName": "Nom",
+        "email": "Email",
+        "otherContact": "Autre moyen de contact",
+        "otherContactPlaceholder": "Numéro de téléphone, ou tout autre moyen de le/la joindre",
+        "content": "Message",
+        "contentPlaceholder": "Qu'a-t-il/elle dit ?"
+    }
+}

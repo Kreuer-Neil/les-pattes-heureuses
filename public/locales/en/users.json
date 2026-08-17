@@ -1,0 +1,50 @@
+{
+    "title": "Volunteers",
+    "empty": "No accounts yet.",
+    "new": "New volunteer",
+
+    "table": {
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "created": "Created",
+        "pendingFirstLogin": "Pending first login",
+        "actions": "Actions"
+    },
+
+    "roles": {
+        "admin": "Admin",
+        "volunteer": "Volunteer"
+    },
+
+    "create": {
+        "title": "New volunteer",
+        "description": "An email with temporary login credentials will be sent to this address."
+    },
+
+    "edit": {
+        "title": "Edit account",
+        "description": "Changing the email address will issue a new temporary password and email it to the account."
+    },
+
+    "fields": {
+        "name": "Name",
+        "namePlaceholder": "Full name",
+        "email": "Email",
+        "emailPlaceholder": "Email address",
+        "role": "Role",
+        "rolePlaceholder": "Select a role"
+    },
+
+    "actions": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "save": "Save",
+        "create": "Create account"
+    },
+
+    "delete": {
+        "title": "Delete this account?",
+        "description": "This permanently deletes {{name}}'s account. This cannot be undone."
+    }
+}

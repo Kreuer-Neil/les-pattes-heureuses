@@ -1,0 +1,12 @@
+{
+    "reply": {
+        "title": "Reply to {{recipient}}",
+        "originalMessage": "Original message",
+        "messageLabel": "Your reply",
+        "messagePlaceholder": "Write your reply...",
+        "signatureLabel": "Signature",
+        "editSignature": "Edit",
+        "noEmail": "This person has no email on file — there is nothing to send to.",
+        "send": "Send reply"
+    }
+}
