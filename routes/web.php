@@ -7,9 +7,14 @@ use App\Http\Controllers\HomeController;
 use App\Http\Middleware\EnsurePasswordHasBeenChanged;
 use Illuminate\Support\Facades\Route;
 
+
 // Laravel recommends putting subdomain routes before root routes, to not let URIs get overwritten
 // Just in case.
-Route::domain('admin.'.'les-pattes-heureuses.test')->group(function () {
+
+Route::domain(parse_url(config('app.url'), PHP_URL_HOST).'/admin')->group(function () {
+//* Removing subdomain uses for Laravel Cloud compatibility
+//Route::domain('admin.'.parse_url(config('app.url'), PHP_URL_HOST))->group(function () {
+
     Route::middleware(['guest'])->group(function () {
         //        Route::get('/login', function () {
         //            return Inertia::render('auth/login', [
