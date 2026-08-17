@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 // Laravel recommends putting subdomain routes before root routes, to not let URIs get overwritten
 // Just in case.
 
-Route::domain(parse_url(config('app.url'), PHP_URL_HOST).'/admin')->group(function () {
+Route::prefix('admin')->group(function () {
 //* Removing subdomain uses for Laravel Cloud compatibility
 //Route::domain('admin.'.parse_url(config('app.url'), PHP_URL_HOST))->group(function () {
 
@@ -49,4 +49,4 @@ Route::get('/adoption/{animal}', [AdoptionController::class, 'show'])
 Route::post('/adoption/{animal}/request', [AdoptionRequestController::class, 'store'])
     ->name('client.adoption.request');
 
-require __DIR__.'/settings.php';
+require __DIR__ . '/settings.php';
