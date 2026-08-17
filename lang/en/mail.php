@@ -23,6 +23,13 @@ return [
         'button' => 'Review the request',
     ],
 
+    'adoption_request_confirmation' => [
+        'subject' => 'Your adoption request for :animal was received',
+        'greeting' => 'Hello :name,',
+        'intro' => 'We have received your adoption request for :animal. Someone from the shelter will get back to you soon.',
+        'button' => 'View :animal\'s profile',
+    ],
+
     'new_contact_message' => [
         'subject' => 'New message received',
         'intro' => 'A new message was submitted through the contact form.',

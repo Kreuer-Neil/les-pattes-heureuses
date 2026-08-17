@@ -3,6 +3,7 @@
 use App\Enums\Animals\Status;
 use App\Enums\ContactMessageType;
 use App\Enums\Roles;
+use App\Mail\AdoptionRequestConfirmationMail;
 use App\Mail\NewAdoptionRequestMail;
 use App\Mail\NewContactMessageMail;
 use App\Models\Animal;
@@ -34,6 +35,27 @@ test('submitting an adoption request queues a notification mail to admins', func
     Mail::assertQueued(
         NewAdoptionRequestMail::class,
         fn ($mail) => $mail->hasTo($this->admin->email)
+            && $mail->adoptionRequest->animal->is($animal),
+    );
+});
+
+test('submitting an adoption request queues a confirmation mail to the adopter', function () {
+    Mail::fake();
+
+    $animal = Animal::factory()->create([
+        'animal_status_id' => AnimalStatus::where('name', Status::Available->value)->value('id'),
+    ]);
+
+    $this->post(route('client.adoption.request', $animal), [
+        'first_name' => 'Jean',
+        'last_name' => 'Dupont',
+        'email' => 'jean@example.com',
+        'message' => 'Interested!',
+    ])->assertRedirect();
+
+    Mail::assertQueued(
+        AdoptionRequestConfirmationMail::class,
+        fn ($mail) => $mail->hasTo('jean@example.com')
             && $mail->adoptionRequest->animal->is($animal),
     );
 });
