@@ -3,7 +3,7 @@
 import '../css/app.css';
 
 import i18n from '@/utils/i18n';
-import { createInertiaApp } from '@inertiajs/react';
+import { createInertiaApp, type ResolvedComponent } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -16,8 +16,10 @@ createInertiaApp({
     resolve: (name) =>
         resolvePageComponent(
             `./pages/${name}.tsx`,
-            import.meta.glob('./pages/**/*.tsx'),
-        ),
+            import.meta.glob<{ default: ResolvedComponent }>(
+                './pages/**/*.tsx',
+            ),
+        ).then((module) => module.default),
     setup({ el, App, props }) {
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         i18n;
