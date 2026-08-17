@@ -45,7 +45,10 @@ return [
 
     'img' => [
         'cat_dog' => 'Un chien noir et blanc et un chat roux faisant les grands yeux',
-        'shelter' => 'L’abri dans lequel logent les animaux. Il y a des rangées de grandes cages de chaque côté, un haut plafond, et de la lumière partout.',
+        'infrastructure' => 'L’abri dans lequel logent les animaux. Il y a des rangées de grandes cages de chaque côté, un haut plafond, et de la lumière partout.',
+        'care' => 'Deux bénévoles coupant les griffes d’un chat noir et blanc.',
+        'adopt' => 'Deux chiens derrière un grillage qui espèrent être adoptés.',
+        'wait' => 'Un chien poilu derrière un grillage, attendant qu’on s’occupe de lui.',
     ],
 
     'contact' => [

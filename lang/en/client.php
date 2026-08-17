@@ -45,7 +45,10 @@ return [
 
     'img' => [
         'cat_dog' => 'A black and white dog and a ginger cat with big eyes',
-        'shelter' => 'The shelter where the animals live. There are rows of large cages on each side, a high ceiling, and light everywhere.',
+        'infrastructure' => 'The shelter where the animals live. There are rows of large cages on each side, a high ceiling, and light everywhere.',
+        'care' => 'Two volunteers trimming a black and white cat’s claws.',
+        'adopt' => 'Two dogs behind a wire fence, hoping to be adopted.',
+        'wait' => 'A shaggy dog behind a wire fence, waiting to be looked after.',
     ],
 
     'contact' => [
