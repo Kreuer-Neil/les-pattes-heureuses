@@ -63,7 +63,7 @@ export function RecentAnimalsWidget({ animals }: { animals: IDashboardAnimal[] }
             </div>
 
             {animals.length > 0 ? (
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                <div className="grid grid-cols-2 gap-3 @xl:grid-cols-3 @3xl:grid-cols-4">
                     {animals.map((animal) => (
                         <RecentAnimalCard key={animal.id} animal={animal} />
                     ))}
