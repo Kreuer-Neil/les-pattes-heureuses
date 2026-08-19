@@ -10,16 +10,9 @@ import {
 } from '@/components/ui/item';
 import { useAnimalLabels } from '@/hooks/use-animal-labels';
 import { useImage } from '@/hooks/use-image-asset';
+import { statusVariant } from '@/lib/animal-enums';
 import { IAnimalMiniature } from '@/types';
 import { useTranslation } from 'react-i18next';
-
-const statusVariant: Record<string, 'default' | 'secondary' | 'outline'> = {
-    available: 'default',
-    pending: 'secondary',
-    healing: 'secondary',
-    adopted: 'outline',
-    unknown: 'outline',
-};
 
 export function AnimalRow({
     animal,

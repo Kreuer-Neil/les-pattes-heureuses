@@ -2,11 +2,11 @@ import { dashboard, login } from '@/routes';
 import { type SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
 
-export default function Welcome({
+export default function Welcome(/*{
     canRegister = true,
 }: {
     canRegister?: boolean;
-}) {
+}*/) {
     const { auth } = usePage<SharedData>().props;
 
     return (

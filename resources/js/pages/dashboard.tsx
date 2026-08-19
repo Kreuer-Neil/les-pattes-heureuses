@@ -1,14 +1,14 @@
 import { AttentionItemLabel } from '@/components/attention-item-label';
+import { RecentAnimalsWidget } from '@/components/animals/recent-animals';
 import {
     StatisticsSection,
     type StatisticsData,
 } from '@/components/statistics-section';
 import { Badge } from '@/components/ui/badge';
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 import notifications from '@/routes/notifications';
-import { IAttentionItem, type BreadcrumbItem } from '@/types';
+import { IAttentionItem, IDashboardAnimal, type BreadcrumbItem } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
 
@@ -23,6 +23,7 @@ type PageProps = {
     needsAttention: IAttentionItem[];
     unreadMessageCount: number;
     statistics: StatisticsData | null;
+    recentlyAddedAnimals: IDashboardAnimal[];
 };
 
 type NeedsAttentionProps = {
@@ -42,7 +43,7 @@ function NeedsAttentionWidget({
                 <h2 className="font-medium">{t('widget.title')}</h2>
                 <Link
                     href={notifications.index().url}
-                    className="text-sm text-muted-foreground hover:underline"
+                    className="text-sm text-muted-foreground hover:underline text-right"
                 >
                     {t('widget.viewAll')}
                 </Link>
@@ -83,7 +84,7 @@ function NeedsAttentionWidget({
 }
 
 export default function Dashboard() {
-    const { needsAttention, unreadMessageCount, statistics } =
+    const { needsAttention, unreadMessageCount, statistics, recentlyAddedAnimals } =
         usePage<PageProps>().props;
 
     return (
@@ -95,9 +96,7 @@ export default function Dashboard() {
                     unreadMessageCount={unreadMessageCount}
                 />
                 {statistics && <StatisticsSection statistics={statistics} />}
-                <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                </div>
+                <RecentAnimalsWidget animals={recentlyAddedAnimals} />
             </div>
         </AppLayout>
     );

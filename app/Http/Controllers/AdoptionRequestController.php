@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Animals\Status;
+use App\Enums\NotificationPreference;
 use App\Enums\PendingApprobationStatus;
 use App\Http\Resources\AdoptionRequestResource;
+use App\Mail\AdoptionRequestConfirmationMail;
 use App\Mail\AdoptionRequestReplyMail;
 use App\Mail\NewAdoptionRequestMail;
 use App\Models\AdopterProfile;
@@ -76,8 +78,14 @@ class AdoptionRequestController extends Controller
             'status' => PendingApprobationStatus::Unattended,
         ]);
 
-        // Safe to queue (unlike VolunteerPasswordMail) to avoid problems with the hosting (since it's the admin subdomain)
-        Mail::to(User::admins()->get())->queue(new NewAdoptionRequestMail($adoptionRequest));
+        // Safe to queue (since it's not the subdomain)
+        $adminsToNotify = User::admins()->toNotify(NotificationPreference::AdoptionRequests)->get();
+
+        if ($adminsToNotify->isNotEmpty()) {
+            Mail::to($adminsToNotify)->queue(new NewAdoptionRequestMail($adoptionRequest));
+        }
+
+        Mail::to($adopterProfile->email)->queue(new AdoptionRequestConfirmationMail($adoptionRequest));
 
         return redirect()
             ->route('client.animal.show', $animal)
@@ -167,7 +175,11 @@ class AdoptionRequestController extends Controller
 
         $this->putAnimalOnHold($adoptionRequest);
 
-        Mail::to(User::admins()->get())->queue(new NewAdoptionRequestMail($adoptionRequest));
+        $adminsToNotify = User::admins()->toNotify(NotificationPreference::AdoptionRequests)->get();
+
+        if ($adminsToNotify->isNotEmpty()) {
+            Mail::to($adminsToNotify)->queue(new NewAdoptionRequestMail($adoptionRequest));
+        }
 
         return redirect()->back();
     }

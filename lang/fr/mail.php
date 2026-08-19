@@ -23,6 +23,13 @@ return [
         'button' => 'Consulter la demande',
     ],
 
+    'adoption_request_confirmation' => [
+        'subject' => 'Votre demande d\'adoption pour :animal a bien été reçue',
+        'greeting' => 'Bonjour :name,',
+        'intro' => 'Nous avons bien reçu votre demande d\'adoption pour :animal. Quelqu\'un du refuge va prochainement reprendre contact avec vous.',
+        'button' => 'Voir la fiche de :animal',
+    ],
+
     'new_contact_message' => [
         'subject' => 'Nouveau message reçu',
         'intro' => 'Un nouveau message a été soumis via le formulaire de contact.',

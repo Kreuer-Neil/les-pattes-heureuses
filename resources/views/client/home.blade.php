@@ -5,10 +5,7 @@
 
         <x-client.section align="right"
                           :content="__('client.homepage.article1')"
-                          :img="[
-                            'url' => asset('/images/cat_dog.jpg'),
-                            'alt' => 'cat_dog',
-                          ]" />
+                          img="cat_dog" />
         <section class="general-section items-center bg-background-1">
             <h2 class="title">{{ __('client.stats_title') }}</h2>
             <div class="flex gap-12 items-center justify-center flex-wrap">
@@ -19,32 +16,20 @@
         </section>
         <x-client.section align="left"
                           :content="__('client.homepage.article2')"
-                          :img="[
-                            'url' => asset('/images/infrastructure.jpg'),
-                            'alt' => 'shelter',
-                          ]" />
+                          img="infrastructure" />
         <x-client.section align="right"
                           :content="__('client.homepage.article3')"
-                          :img="[
-                            'url' => asset('/images/cat_dog.jpg'),
-                            'alt' => 'cat_dog',
-                          ]" />
+                          img="care" />
         <x-client.section align="left"
                           :content="__('client.homepage.article4')"
-                          :img="[
-                            'url' => asset('/images/cat_dog.jpg'),
-                            'alt' => 'cat_dog',
-                          ]"
+                          img="adopt"
                           :button="[
                             'url' => route('client.animals'),
                             'text' => 'see_animals',
                           ]" />
         <x-client.section align="right"
                           :content="__('client.homepage.article5')"
-                          :img="[
-                            'url' => asset('/images/cat_dog.jpg'),
-                            'alt' => 'cat_dog',
-                          ]"
+                          img="wait"
                           :button="[
                             'dialog' => 'volunteer-dialog',
                             'text' => 'volunteer',

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\NotificationPreference;
 use App\Enums\Roles;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -28,6 +29,8 @@ class User extends Authenticatable
         'password',
         'user_role_id',
         'must_change_password',
+        'notify_adoption_requests',
+        'notify_contact_messages',
     ];
 
     /**
@@ -63,6 +66,8 @@ class User extends Authenticatable
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
             'must_change_password' => 'boolean',
+            'notify_adoption_requests' => 'boolean',
+            'notify_contact_messages' => 'boolean',
         ];
     }
 
@@ -102,5 +107,11 @@ class User extends Authenticatable
     public function scopeAdmins(Builder $query): Builder
     {
         return $query->whereHas('userRole', fn (Builder $role) => $role->where('name', Roles::Admin->value));
+    }
+
+    // Composes with ::admins() (or any other role scope, if a preference is ever opened up to volunteers).
+    public function scopeToNotify(Builder $query, NotificationPreference $preference): Builder
+    {
+        return $query->where($preference->value, true);
     }
 }

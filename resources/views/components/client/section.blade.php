@@ -2,10 +2,7 @@
     'align' => 'right',
     'class',
     'content' => [],
-    'img' => [
-        'url' => '/',
-        'alt' => 'Alt text'
-    ],
+    'img',
     'button',
 ])
 
@@ -36,6 +33,11 @@
                 @endif
             @endif
         </div>
-        <img src="{{ $img['url'] }}" alt="{{ __('client.img.' . $img['alt']) }}"
-             class="rounded-lg mx-3 max-w-3xl w-full lg:w-3/5 aspect-[570/290] {{ $alignmentClasses }}">
+        <img src="{{ asset("images/frontpage/$img.jpg") }}"
+             srcset="{{ asset("images/frontpage-sm/$img.jpg") }} 354w,
+                     {{ asset("images/frontpage/$img.jpg") }} 768w,
+                     {{ asset("images/frontpage-x2/$img.jpg") }} 1536w"
+             sizes="(min-width: 1024px) min(60vw, 48rem), min(100vw, 48rem)"
+             alt="{{ __('client.img.' . $img) }}"
+             class="rounded-lg mx-3 max-w-3xl w-full lg:w-3/5 aspect-[570/290] {{ $alignmentClasses }} object-cover">
 </article>
