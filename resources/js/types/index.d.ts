@@ -113,6 +113,14 @@ export interface IAnimalMiniature {
     personality: string;
 }
 
+export interface IDashboardAnimal {
+    id: number;
+    name: string;
+    image: string | null;
+    statusName: string;
+    specieName: string;
+}
+
 export interface IAnimalFilters {
     status: 'active' | 'gone' | AnimalStatusName;
     specie: number | null;

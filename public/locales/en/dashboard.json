@@ -10,5 +10,10 @@
         "animalsReceived": "Animals received",
         "successfulAdoptions": "Successful adoptions",
         "animalsStillPresent": "Animals still present"
+    },
+    "recentlyAdded": {
+        "title": "Recently recovered",
+        "viewAll": "View all",
+        "empty": "No animals recovered in the last month."
     }
 }

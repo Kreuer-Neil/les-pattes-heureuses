@@ -17,3 +17,11 @@ export const Specie = {
     Horse: 'horse',
     Reptile: 'reptile',
 } as const;
+
+export const statusVariant: Record<string, 'default' | 'secondary' | 'outline'> = {
+    available: 'default',
+    pending: 'secondary',
+    healing: 'secondary',
+    adopted: 'outline',
+    unknown: 'outline',
+};

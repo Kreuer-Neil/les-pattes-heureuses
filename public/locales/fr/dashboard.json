@@ -10,5 +10,10 @@
         "animalsReceived": "Animaux accueillis",
         "successfulAdoptions": "Adoptions réussies",
         "animalsStillPresent": "Animaux encore présents"
+    },
+    "recentlyAdded": {
+        "title": "Récemment récupérés",
+        "viewAll": "Voir tout",
+        "empty": "Aucun animal récupéré ce dernier mois."
     }
 }
