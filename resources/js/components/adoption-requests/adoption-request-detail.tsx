@@ -70,6 +70,7 @@ export default function AdoptionRequestDetail({
                                 request.adopterProfile.id,
                             )}
                             onSuccess={onUpdateAdopterSuccess}
+                            className="flex flex-col gap-2"
                         >
                             {({ errors }) => (
                                 <>
@@ -172,7 +173,7 @@ export default function AdoptionRequestDetail({
                         </Form>
                     </dl>
 
-                    <article>
+                    <article className="mb-2">
                         <h2 className="font-semibold">
                             {t('table.adopter_message')}
                         </h2>
