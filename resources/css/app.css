@@ -247,12 +247,16 @@
 
     .navbar-item {
         @apply flex h-full items-center justify-center text-xl font-medium underline hover:bg-navbar-hover lg:px-4;
+        & > span {
+            @apply p-2 px-4;
+        }
     }
 
     .navbar-item-active > span {
         background: url('/resources/icons/active-navicon.svg') top left
             no-repeat;
         background-size: 24px 24px;
+        padding-left: 1rem;
     }
 
     .general-section {

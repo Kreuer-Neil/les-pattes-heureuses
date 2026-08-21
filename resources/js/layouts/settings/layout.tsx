@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { cn, isSameUrl, resolveUrl } from '@/lib/utils';
 import { edit as editAppearance } from '@/routes/appearance';
+import { edit as editLanguage } from '@/routes/language';
 import { edit as editNotificationPreferences } from '@/routes/notification-preferences';
 import { edit } from '@/routes/profile';
 import { show } from '@/routes/two-factor';
@@ -10,42 +11,49 @@ import { edit as editPassword } from '@/routes/user-password';
 import { type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
-
-const sidebarNavItems: NavItem[] = [
-    {
-        title: 'Profile',
-        href: edit(),
-        icon: null,
-    },
-    {
-        title: 'Password',
-        href: editPassword(),
-        icon: null,
-    },
-    {
-        title: 'Two-Factor Auth',
-        href: show(),
-        icon: null,
-    },
-    {
-        title: 'Appearance',
-        href: editAppearance(),
-        icon: null,
-    },
-];
-
-// Notifications settings is admin only (for now)
-const adminOnlySidebarNavItems: NavItem[] = [
-    {
-        title: 'Notifications',
-        href: editNotificationPreferences(),
-        icon: null,
-    },
-];
+import { useTranslation } from 'react-i18next';
 
 export default function SettingsLayout({ children }: PropsWithChildren) {
     const { auth } = usePage<SharedData>().props;
     const isAdmin = auth.user.role === 'admin';
+    const { t } = useTranslation('auth');
+
+    const sidebarNavItems: NavItem[] = [
+        {
+            title: t('nav.profile'),
+            href: edit(),
+            icon: null,
+        },
+        {
+            title: t('nav.password'),
+            href: editPassword(),
+            icon: null,
+        },
+        {
+            title: t('nav.twoFactor'),
+            href: show(),
+            icon: null,
+        },
+        {
+            title: t('nav.appearance'),
+            href: editAppearance(),
+            icon: null,
+        },
+        {
+            title: t('nav.language'),
+            href: editLanguage(),
+            icon: null,
+        },
+    ];
+
+    // Notifications settings is admin only (for now)
+    const adminOnlySidebarNavItems: NavItem[] = [
+        {
+            title: t('nav.notifications'),
+            href: editNotificationPreferences(),
+            icon: null,
+        },
+    ];
 
     // When server-side rendering, we only render the layout on the client...
     if (typeof window === 'undefined') {
@@ -60,8 +68,8 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
     return (
         <div className="px-4 py-6">
             <Heading
-                title="Settings"
-                description="Manage your profile and account settings"
+                title={t('settings.title')}
+                description={t('settings.description')}
             />
 
             <div className="flex flex-col lg:flex-row lg:space-x-12">

@@ -1,5 +1,26 @@
 {
     "app_name": "Les pattes heureuses",
 
-    "nav_animals": "Animals"
+    "nav_animals": "Animals",
+
+    "sidebar": {
+        "dashboard": "Dashboard",
+        "animals": "Animals",
+        "adoptionRequests": "Adoption requests",
+        "contactMessages": "Contact messages",
+        "notifications": "Notifications",
+        "volunteers": "Volunteers",
+        "platform": "Platform",
+        "toggle": "Toggle Sidebar",
+        "mobileTitle": "Sidebar",
+        "mobileDescription": "Displays the mobile sidebar."
+    },
+
+    "close": "Close",
+    "somethingWentWrong": "Something went wrong.",
+
+    "userMenu": {
+        "settings": "Settings",
+        "logout": "Log out"
+    }
 }

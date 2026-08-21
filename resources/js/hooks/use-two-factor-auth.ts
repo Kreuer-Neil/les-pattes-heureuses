@@ -1,5 +1,6 @@
 import { qrCode, recoveryCodes, secretKey } from '@/routes/two-factor';
 import { useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface TwoFactorSetupData {
     svg: string;
@@ -25,6 +26,7 @@ const fetchJson = async <T>(url: string): Promise<T> => {
 };
 
 export const useTwoFactorAuth = () => {
+    const { t } = useTranslation('auth');
     const [qrCodeSvg, setQrCodeSvg] = useState<string | null>(null);
     const [manualSetupKey, setManualSetupKey] = useState<string | null>(null);
     const [recoveryCodesList, setRecoveryCodesList] = useState<string[]>([]);
@@ -40,10 +42,10 @@ export const useTwoFactorAuth = () => {
             const { svg } = await fetchJson<TwoFactorSetupData>(qrCode.url());
             setQrCodeSvg(svg);
         } catch {
-            setErrors((prev) => [...prev, 'Failed to fetch QR code']);
+            setErrors((prev) => [...prev, t('twoFactor.errors.qrCode')]);
             setQrCodeSvg(null);
         }
-    }, []);
+    }, [t]);
 
     const fetchSetupKey = useCallback(async (): Promise<void> => {
         try {
@@ -52,10 +54,10 @@ export const useTwoFactorAuth = () => {
             );
             setManualSetupKey(key);
         } catch {
-            setErrors((prev) => [...prev, 'Failed to fetch a setup key']);
+            setErrors((prev) => [...prev, t('twoFactor.errors.setupKey')]);
             setManualSetupKey(null);
         }
-    }, []);
+    }, [t]);
 
     const clearErrors = useCallback((): void => {
         setErrors([]);
@@ -73,10 +75,10 @@ export const useTwoFactorAuth = () => {
             const codes = await fetchJson<string[]>(recoveryCodes.url());
             setRecoveryCodesList(codes);
         } catch {
-            setErrors((prev) => [...prev, 'Failed to fetch recovery codes']);
+            setErrors((prev) => [...prev, t('twoFactor.errors.recoveryCodes')]);
             setRecoveryCodesList([]);
         }
-    }, [clearErrors]);
+    }, [clearErrors, t]);
 
     const fetchSetupData = useCallback(async (): Promise<void> => {
         try {

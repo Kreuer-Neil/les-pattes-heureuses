@@ -26,6 +26,7 @@ import {
     PawPrint,
     Users,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import AppLogo from './app-logo';
 
 /*const footerNavItems: NavItem[] = [
@@ -43,37 +44,38 @@ import AppLogo from './app-logo';
 
 export function AppSidebar() {
     const { auth } = usePage<SharedData>().props;
+    const { t } = useTranslation('common');
 
     const mainNavItems: NavItem[] = [
         {
-            title: 'Dashboard',
+            title: t('sidebar.dashboard'),
             href: dashboard(),
             icon: LayoutGrid,
         },
         {
-            title: 'Animals',
+            title: t('sidebar.animals'),
             href: animals.index(),
             icon: PawPrint,
         },
         {
-            title: 'Adoption requests',
+            title: t('sidebar.adoptionRequests'),
             href: adoptionRequests.index(),
             icon: HeartHandshake,
         },
         {
-            title: 'Contact messages',
+            title: t('sidebar.contactMessages'),
             href: contactMessages.index(),
             icon: Mail,
         },
         {
-            title: 'Notifications',
+            title: t('sidebar.notifications'),
             href: notifications.index(),
             icon: Bell,
         },
         ...(auth.user.role === 'admin'
             ? [
                   {
-                      title: 'Volunteers',
+                      title: t('sidebar.volunteers'),
                       href: users.index(),
                       icon: Users,
                   },

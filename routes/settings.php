@@ -24,6 +24,13 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('settings/appearance');
     })->name('appearance.edit');
 
+    Route::get('settings/language', function () {
+        return Inertia::render('settings/language', [
+            'currentLocale' => app()->getLocale(),
+            'locales' => config('app.locales'),
+        ]);
+    })->name('language.edit');
+
     Route::get('settings/two-factor', [TwoFactorAuthenticationController::class, 'show'])
         ->name('two-factor.show');
 

@@ -18,13 +18,6 @@ type PageProps = {
     notifyContactMessages: boolean;
 };
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Notification settings',
-        href: edit().url,
-    },
-];
-
 export default function Notifications() {
     const { notifyAdoptionRequests, notifyContactMessages } =
         usePage<PageProps>().props;
@@ -40,6 +33,13 @@ export default function Notifications() {
     );
 
     const { t } = useTranslation('auth');
+
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: t('notifications.title'),
+            href: edit().url,
+        },
+    ];
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>

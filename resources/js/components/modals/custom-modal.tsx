@@ -9,6 +9,7 @@ import {
     useRef,
     useState,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const ModalContainerContext = createContext<HTMLElement | null>(null);
 
@@ -89,6 +90,7 @@ export default function CustomModal({
     const [dialogNode, setDialogNode] = useState<HTMLDialogElement | null>(
         null,
     );
+    const { t } = useTranslation('common');
 
     useEffect(() => {
         if (showModal) {
@@ -116,7 +118,7 @@ export default function CustomModal({
                 className="absolute top-4 right-4 rounded-xs text-foreground opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
             >
                 <XIcon />
-                <span className="sr-only">Close</span>
+                <span className="sr-only">{t('close')}</span>
             </Button>
             <ModalContainerContext.Provider value={dialogNode}>
                 {children}

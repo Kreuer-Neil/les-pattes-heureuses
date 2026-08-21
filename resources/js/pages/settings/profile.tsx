@@ -14,18 +14,18 @@ import SettingsLayout from '@/layouts/settings/layout';
 import { edit } from '@/routes/profile';
 import { useTranslation } from 'react-i18next';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Profile settings',
-        href: edit().url,
-    },
-];
-
 export default function Profile() {
     const { auth } = usePage<SharedData>().props;
     const isAdmin = auth.user.role === 'admin';
 
     const { t } = useTranslation('auth');
+
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: t('profile.title'),
+            href: edit().url,
+        },
+    ];
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>

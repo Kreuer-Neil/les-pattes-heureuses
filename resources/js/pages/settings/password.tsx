@@ -16,14 +16,7 @@ import { edit } from '@/routes/user-password';
 
 type PageProps = {
     mustChangePassword: boolean;
-}
-
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Password settings',
-        href: edit().url,
-    },
-];
+};
 
 export default function Password() {
     const { mustChangePassword } = usePage<PageProps>().props;
@@ -31,6 +24,13 @@ export default function Password() {
     const currentPasswordInput = useRef<HTMLInputElement>(null);
 
     const { t } = useTranslation('auth');
+
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: t('password.title'),
+            href: edit().url,
+        },
+    ];
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
