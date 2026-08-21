@@ -4,6 +4,7 @@ use App\Http\Controllers\AdoptionController;
 use App\Http\Controllers\AdoptionRequestController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Middleware\EnsurePasswordHasBeenChanged;
 use Illuminate\Support\Facades\Route;
 
@@ -50,3 +51,6 @@ Route::post('/adoption/{animal}/request', [AdoptionRequestController::class, 'st
     ->name('client.adoption.request');
 
 require __DIR__ . '/settings.php';
+
+Route::get('lang', [LanguageController::class, 'switchLanguage'])
+    ->name('lang');

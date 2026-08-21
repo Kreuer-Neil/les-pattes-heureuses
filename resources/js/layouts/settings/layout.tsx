@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { cn, isSameUrl, resolveUrl } from '@/lib/utils';
 import { edit as editAppearance } from '@/routes/appearance';
+import { edit as editLanguage } from '@/routes/language';
 import { edit as editNotificationPreferences } from '@/routes/notification-preferences';
 import { edit } from '@/routes/profile';
 import { show } from '@/routes/two-factor';
@@ -30,6 +31,11 @@ const sidebarNavItems: NavItem[] = [
     {
         title: 'Appearance',
         href: editAppearance(),
+        icon: null,
+    },
+    {
+        title: 'Language',
+        href: editLanguage(),
         icon: null,
     },
 ];
