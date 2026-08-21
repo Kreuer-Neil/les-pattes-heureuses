@@ -1,5 +1,5 @@
-import { AttentionItemLabel } from '@/components/attention-item-label';
 import { RecentAnimalsWidget } from '@/components/animals/recent-animals';
+import { AttentionItemLabel } from '@/components/attention-item-label';
 import {
     StatisticsSection,
     type StatisticsData,
@@ -11,13 +11,6 @@ import notifications from '@/routes/notifications';
 import { IAttentionItem, IDashboardAnimal, type BreadcrumbItem } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { useTranslation } from 'react-i18next';
-
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard().url,
-    },
-];
 
 type PageProps = {
     needsAttention: IAttentionItem[];
@@ -43,7 +36,7 @@ function NeedsAttentionWidget({
                 <h2 className="font-medium">{t('widget.title')}</h2>
                 <Link
                     href={notifications.index().url}
-                    className="text-sm text-muted-foreground hover:underline text-right"
+                    className="text-right text-sm text-muted-foreground hover:underline"
                 >
                     {t('widget.viewAll')}
                 </Link>
@@ -84,12 +77,24 @@ function NeedsAttentionWidget({
 }
 
 export default function Dashboard() {
-    const { needsAttention, unreadMessageCount, statistics, recentlyAddedAnimals } =
-        usePage<PageProps>().props;
+    const {
+        needsAttention,
+        unreadMessageCount,
+        statistics,
+        recentlyAddedAnimals,
+    } = usePage<PageProps>().props;
+    const { t } = useTranslation('dashboard');
+
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: t('title'),
+            href: dashboard().url,
+        },
+    ];
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Dashboard" />
+            <Head title={t('title')} />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <NeedsAttentionWidget
                     needsAttention={needsAttention}

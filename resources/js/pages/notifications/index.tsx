@@ -58,11 +58,12 @@ function AnimalChangeActions({ id }: { id: number }) {
 export default function NotificationsIndex() {
     const { items, unreadMessageCount } = usePage<PageProps>().props;
     const { t } = useTranslation('notifications');
+    const { t: tCommon } = useTranslation('common');
     const [selectedRequest, setSelectedRequest] =
         useState<IAdoptionRequestAttentionItem | null>(null);
 
     const breadcrumbs: BreadcrumbItem[] = [
-        { title: 'Dashboard', href: dashboard().url },
+        { title: tCommon('sidebar.dashboard'), href: dashboard().url },
         { title: t('title'), href: notifications.index().url },
     ];
 

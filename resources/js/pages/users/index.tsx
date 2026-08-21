@@ -107,13 +107,14 @@ function UserCard({
 export default function UsersIndex() {
     const { users: accounts } = usePage<PageProps>().props;
     const { t } = useTranslation('users');
+    const { t: tCommon } = useTranslation('common');
 
     const [showCreate, setShowCreate] = useState(false);
     const [editTarget, setEditTarget] = useState<IUserAccount | null>(null);
     const [deleteTarget, setDeleteTarget] = useState<IUserAccount | null>(null);
 
     const breadcrumbs: BreadcrumbItem[] = [
-        { title: 'Dashboard', href: dashboard().url },
+        { title: tCommon('sidebar.dashboard'), href: dashboard().url },
         { title: t('title'), href: users.index().url },
     ];
 

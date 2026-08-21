@@ -151,13 +151,14 @@ function AdoptionRequestCard({
 export default function AdoptionRequestsIndex() {
     const { adoptionRequests: requests, animals } = usePage<PageProps>().props;
     const { t } = useTranslation('adoption-requests');
+    const { t: tCommon } = useTranslation('common');
     const [selectedId, setSelectedId] = useState<number | null>(null);
     const [showCreate, setShowCreate] = useState<boolean>(false);
     const selectedRequest =
         requests.find((request) => request.id === selectedId) ?? null;
 
     const breadcrumbs: BreadcrumbItem[] = [
-        { title: 'Dashboard', href: dashboard().url },
+        { title: tCommon('sidebar.dashboard'), href: dashboard().url },
         { title: t('title'), href: adoptionRequests.index().url },
     ];
 

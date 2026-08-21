@@ -160,11 +160,12 @@ function ContactMessageCard({
 export default function ContactMessagesIndex() {
     const { contactMessages: messages } = usePage<PageProps>().props;
     const { t } = useTranslation('contact-messages');
+    const { t: tCommon } = useTranslation('common');
     const [selectedId, setSelectedId] = useState<number | null>(null);
     const selected = messages.find((m) => m.id === selectedId) ?? null;
 
     const breadcrumbs: BreadcrumbItem[] = [
-        { title: 'Dashboard', href: dashboard().url },
+        { title: tCommon('sidebar.dashboard'), href: dashboard().url },
         { title: t('title'), href: contactMessages.index().url },
     ];
 

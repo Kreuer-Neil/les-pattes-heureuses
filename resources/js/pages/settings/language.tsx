@@ -1,4 +1,5 @@
 import { Head } from '@inertiajs/react';
+import { useTranslation } from 'react-i18next';
 
 import HeadingSmall from '@/components/heading-small';
 import { type BreadcrumbItem } from '@/types';
@@ -9,13 +10,6 @@ import SettingsLayout from '@/layouts/settings/layout';
 import { cn } from '@/lib/utils';
 import { edit as editLanguage } from '@/routes/language';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Language settings',
-        href: editLanguage().url,
-    },
-];
-
 export default function Language({
     currentLocale,
     locales,
@@ -23,15 +17,24 @@ export default function Language({
     currentLocale: string;
     locales: string[];
 }) {
+    const { t } = useTranslation('auth');
+
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: t('language.title'),
+            href: editLanguage().url,
+        },
+    ];
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Language settings" />
+            <Head title={t('language.title')} />
 
             <SettingsLayout>
                 <div className="space-y-6">
                     <HeadingSmall
-                        title="Language settings"
-                        description="Choose the language used across the site"
+                        title={t('language.title')}
+                        description={t('language.description')}
                     />
 
                     <div className="inline-flex gap-1 rounded-lg bg-neutral-100 p-1 dark:bg-neutral-800">

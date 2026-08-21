@@ -1,0 +1,55 @@
+{
+    "login": {
+        "title": "Connectez-vous à votre compte",
+        "description": "Entrez votre email et votre mot de passe ci-dessous pour vous connecter",
+        "headTitle": "Connexion",
+        "email": "Adresse email",
+        "emailPlaceholder": "email@exemple.com",
+        "password": "Mot de passe",
+        "passwordPlaceholder": "Mot de passe",
+        "forgotPassword": "Mot de passe oublié ?",
+        "rememberMe": "Se souvenir de moi",
+        "submit": "Se connecter"
+    },
+    "forgotPassword": {
+        "title": "Mot de passe oublié",
+        "description": "Entrez votre email pour recevoir un lien de réinitialisation du mot de passe",
+        "headTitle": "Mot de passe oublié",
+        "email": "Adresse email",
+        "emailPlaceholder": "email@exemple.com",
+        "submit": "Envoyer le lien de réinitialisation",
+        "returnTo": "Ou, retournez à la",
+        "login": "connexion"
+    },
+    "resetPassword": {
+        "title": "Réinitialiser le mot de passe",
+        "description": "Veuillez entrer votre nouveau mot de passe ci-dessous",
+        "headTitle": "Réinitialiser le mot de passe",
+        "email": "Email",
+        "password": "Mot de passe",
+        "passwordPlaceholder": "Mot de passe",
+        "confirmPassword": "Confirmer le mot de passe",
+        "confirmPasswordPlaceholder": "Confirmer le mot de passe",
+        "submit": "Réinitialiser le mot de passe"
+    },
+    "confirmPassword": {
+        "title": "Confirmez votre mot de passe",
+        "description": "Ceci est une zone sécurisée de l'application. Veuillez confirmer votre mot de passe avant de continuer.",
+        "headTitle": "Confirmer le mot de passe",
+        "password": "Mot de passe",
+        "passwordPlaceholder": "Mot de passe",
+        "submit": "Confirmer le mot de passe"
+    },
+    "twoFactorChallenge": {
+        "recoveryTitle": "Code de récupération",
+        "recoveryDescription": "Veuillez confirmer l'accès à votre compte en entrant l'un de vos codes de récupération d'urgence.",
+        "recoveryToggle": "se connecter avec un code d'authentification",
+        "codeTitle": "Code d'authentification",
+        "codeDescription": "Entrez le code d'authentification fourni par votre application d'authentification.",
+        "codeToggle": "se connecter avec un code de récupération",
+        "headTitle": "Authentification à deux facteurs",
+        "recoveryPlaceholder": "Entrez le code de récupération",
+        "continue": "Continuer",
+        "orYouCan": "ou vous pouvez "
+    }
+}

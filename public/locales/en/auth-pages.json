@@ -1,0 +1,55 @@
+{
+    "login": {
+        "title": "Log in to your account",
+        "description": "Enter your email and password below to log in",
+        "headTitle": "Log in",
+        "email": "Email address",
+        "emailPlaceholder": "email@example.com",
+        "password": "Password",
+        "passwordPlaceholder": "Password",
+        "forgotPassword": "Forgot password?",
+        "rememberMe": "Remember me",
+        "submit": "Log in"
+    },
+    "forgotPassword": {
+        "title": "Forgot password",
+        "description": "Enter your email to receive a password reset link",
+        "headTitle": "Forgot password",
+        "email": "Email address",
+        "emailPlaceholder": "email@example.com",
+        "submit": "Email password reset link",
+        "returnTo": "Or, return to",
+        "login": "log in"
+    },
+    "resetPassword": {
+        "title": "Reset password",
+        "description": "Please enter your new password below",
+        "headTitle": "Reset password",
+        "email": "Email",
+        "password": "Password",
+        "passwordPlaceholder": "Password",
+        "confirmPassword": "Confirm password",
+        "confirmPasswordPlaceholder": "Confirm password",
+        "submit": "Reset password"
+    },
+    "confirmPassword": {
+        "title": "Confirm your password",
+        "description": "This is a secure area of the application. Please confirm your password before continuing.",
+        "headTitle": "Confirm password",
+        "password": "Password",
+        "passwordPlaceholder": "Password",
+        "submit": "Confirm password"
+    },
+    "twoFactorChallenge": {
+        "recoveryTitle": "Recovery Code",
+        "recoveryDescription": "Please confirm access to your account by entering one of your emergency recovery codes.",
+        "recoveryToggle": "login using an authentication code",
+        "codeTitle": "Authentication Code",
+        "codeDescription": "Enter the authentication code provided by your authenticator application.",
+        "codeToggle": "login using a recovery code",
+        "headTitle": "Two-Factor Authentication",
+        "recoveryPlaceholder": "Enter recovery code",
+        "continue": "Continue",
+        "orYouCan": "or you can "
+    }
+}
