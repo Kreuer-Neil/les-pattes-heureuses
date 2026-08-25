@@ -16,7 +16,7 @@ class VolunteersSeeder extends Seeder
     public function run(): void
     {
         User::firstOrCreate(
-            ['email' => 'thomas@les-pattes-heureuses.test'],
+            ['email' => 'thomas@les-pattes-heureuses.be'],
             [
                 'name' => 'Thomas',
                 'password' => 'password',
