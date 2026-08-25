@@ -36,8 +36,8 @@ class AnimalsSeeder extends Seeder
     public function run(): void
     {
         // Volunteers/notes authors — both already exist by this point (UsersSeeder/VolunteersSeeder run first).
-        $elise = User::where('email', 'test@example.com')->first();
-        $thomas = User::where('email', 'thomas@les-pattes-heureuses.test')->first();
+        $elise = User::where('email', 'elise@les-pattes-heureuses.be')->first();
+        $thomas = User::where('email', 'thomas@les-pattes-heureuses.be')->first();
 
         $pets = [
             [
